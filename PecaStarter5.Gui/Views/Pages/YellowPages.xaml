@@ -1,0 +1,25 @@
+﻿<UserControl x:Class="Progressive.PecaStarter.View.Page.YellowPages"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" DataContextChanged="OnDataContextChanged"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <ResourceDictionary Source="..\Styles\ResourceDictionary.xaml"/>
+    </UserControl.Resources>
+    <StackPanel>
+        <Grid>
+            <StackPanel Name="CheckboxesStackPanel"/>
+            <DockPanel>
+                <StackPanel Name="LabelsStackPanel"/>
+                <StackPanel Name="InputsStackPanel"/>
+            </DockPanel>
+        </Grid>
+        <UserControl>
+            <CheckBox TabIndex="100" IsChecked="{Binding IsAccepted}" IsEnabled="{Binding IsStaticParameterEnabled}">
+                <TextBlock><Hyperlink Click="Hyperlink_Click" DataContext="{Binding NoticeUrl}">規約</Hyperlink> を確認し、同意した</TextBlock>
+            </CheckBox>
+        </UserControl>
+    </StackPanel>
+</UserControl>

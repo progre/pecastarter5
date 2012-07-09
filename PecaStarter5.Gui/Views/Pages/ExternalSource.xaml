@@ -1,0 +1,45 @@
+﻿<UserControl x:Class="Progressive.PecaStarter.View.Page.ExternalSource"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:c="clr-namespace:Progressive.PecaStarter.View.Control"
+    xmlns:e="clr-namespace:Xceed.Wpf.Toolkit;assembly=WPFToolkit.Extended">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="..\Styles\ResourceDictionary.xaml"/>
+                <ResourceDictionary Source="..\Styles\ExternalSourceStyle.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Label Grid.Column="0" Grid.Row="0" Content="ストリームURL:"/>
+        <e:WatermarkTextBox Grid.Column="1" Grid.Row="0" Watermark="http://…" IsEnabled="{Binding IsStreamUrlEnabled}" Text="{Binding StreamUrl}"/>
+        <Label Grid.Column="0" Grid.Row="1" Content="チャンネル名:"/>
+        <UserControl Grid.Column="1" Grid.Row="1" IsEnabled="{Binding IsNameEnabled}">
+            <c:TextBoxWithHistory DataContext="{Binding Name, Mode=OneWay}"/>
+        </UserControl>
+        <Label Grid.Column="0" Grid.Row="2" Content="ジャンル:"/>
+        <DockPanel Grid.Column="1" Grid.Row="2">
+            <Label ToolTip="プレフィックス" Content="{Binding Prefix}" Visibility="{Binding PrefixVisibility}"/>
+            <c:TextBoxWithHistory DataContext="{Binding Genre}"/>
+        </DockPanel>
+        <Label Grid.Column="0" Grid.Row="3" Content="詳細:"/>
+        <c:TextBoxWithHistory Grid.Column="1" Grid.Row="3" DataContext="{Binding Description}"/>
+        <Label Grid.Column="0" Grid.Row="4" Content="コンタクトURL:"/>
+        <c:TextBoxWithHistory Grid.Column="1" Grid.Row="4" DataContext="{Binding ContactUrl}"/>
+        <Label Grid.Column="0" Grid.Row="5" Content="コメント:"/>
+        <c:TextBoxWithHistory Grid.Column="1" Grid.Row="5" DataContext="{Binding Comment}"/>
+    </Grid>
+</UserControl>

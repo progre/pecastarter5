@@ -12,9 +12,9 @@ using Progressive.Peercast4Net.Dao;
 
 namespace Progressive.Peercast4Net
 {
-    class Peercast
+    public class Peercast
     {
-        private string address;
+        private string address = "localhost:7144";
         public string Address
         {
             get { return address; }
@@ -42,9 +42,12 @@ namespace Progressive.Peercast4Net
             throw new NotImplementedException();// TODO:
         }
 
-        public Task<IEnumerable<Channel>> GetChannelsAsync()
+        public async Task<IEnumerable<IChannel>> GetChannelsAsync()
         {
-            throw new NotImplementedException();// TODO:
+            using (var dao = new PeercastDao(Address))
+            {
+                return new XmlStatus(await dao.GetViewXmlAsync()).Channels;
+            }
         }
 
         public async Task BroadcastAsync(

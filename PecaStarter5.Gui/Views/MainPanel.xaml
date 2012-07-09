@@ -1,0 +1,49 @@
+﻿<UserControl x:Class="Progressive.PecaStarter5.Views.MainPanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:c="clr-namespace:Progressive.PecaStarter.View.Control"
+             xmlns:p="clr-namespace:Progressive.PecaStarter.View.Page"
+             xmlns:c2="clr-namespace:Progressive.PecaStarter5.Views.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="400">
+    <DockPanel>
+        <c:Alert Visibility="Collapsed" Content="{Binding Alert}"/>
+        <StatusBar DockPanel.Dock="Bottom" Height="23" BorderThickness="1" BorderBrush="{x:Static SystemColors.ControlDarkBrush}">
+            <StatusBarItem>
+                <TextBlock Text="{Binding Feedback}"/>
+            </StatusBarItem>
+        </StatusBar>
+        <Grid>
+            <TabControl SelectedIndex="{Binding SelectedIndex}">
+                <TabItem Header="リレー一覧">
+                    <p:RelayList DataContext="{Binding RelayListViewModel}"/>
+                </TabItem>
+                <TabItem Visibility="Hidden"/>
+                <TabItem Header="イエローページ">
+                    <p:YellowPageses DataContext="{Binding YellowPagesesViewModel}"/>
+                </TabItem>
+                <TabItem Header="ソース">
+                    <TabItem.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="入力をヒストリに反映する" Click="OnUpdateHistoryItemClicked"/>
+                        </ContextMenu>
+                    </TabItem.ContextMenu>
+                    <p:ExternalSource DataContext="{Binding ExternalSourceViewModel}"/>
+                </TabItem>
+                <TabItem Visibility="Hidden"/>
+                <TabItem Header="設定">
+                    <TabItem.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="アプリケーションのフォルダを開く" Click="OnAssemblyPathItemClicked"/>
+                            <MenuItem Header="設定ファイルのフォルダを開く" Click="OnConfigurationPathItemClicked"/>
+                        </ContextMenu>
+                    </TabItem.ContextMenu>
+                    <p:Settings DataContext="{Binding SettingsViewModel}"/>
+                </TabItem>
+            </TabControl>
+            <c2:BroadcastControl/>
+        </Grid>
+    </DockPanel>
+</UserControl>

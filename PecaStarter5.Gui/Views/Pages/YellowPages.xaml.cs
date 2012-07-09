@@ -1,0 +1,103 @@
+﻿using System;
+using System.Collections;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.ComponentModel;
+using System.Reflection;
+using PecaStarter5.Gui.Views.Pages;
+
+namespace Progressive.PecaStarter.View.Page
+{
+    /// <summary>
+    /// Parameters.xaml の相互作用ロジック
+    /// </summary>
+    public partial class YellowPages : UserControl
+    {
+        public YellowPages()
+        {
+            InitializeComponent();
+        }
+
+        private void Hyperlink_Click(object sender, RoutedEventArgs e)
+        {
+            Process.Start((((Hyperlink)sender).DataContext as string));
+        }
+
+        /// <summary>
+        /// (DataContextの変更通知を受けて)Viewを更新
+        /// disabled?
+        /// </summary>
+        public void UpdateTarget()
+        {
+            // foreach (var input in InputsStackPanel.Children)
+            Parallel.ForEach(InputsStackPanel.Children.Cast<UIElement>(), (input) =>
+            {
+                if (!(input is UserControl))
+                {
+                    return;
+                }
+                var content = (input as UserControl).Content;
+                if (content is ComboBox)
+                {
+                    var comboBox = content as ComboBox;
+                    comboBox.GetBindingExpression(ComboBox.SelectedValueProperty).UpdateTarget();
+                    return;
+                }
+                if (content is TextBox)
+                {
+                    (content as TextBox).GetBindingExpression(TextBox.TextProperty).UpdateTarget();
+                    return;
+                }
+            });
+            // foreach (var input in CheckboxesStackPanel.Children)
+            Parallel.ForEach(CheckboxesStackPanel.Children.Cast<UIElement>(), (input) =>
+            {
+                if (!(input is UserControl))
+                {
+                    return;
+                }
+                ((input as UserControl).Content as CheckBox).GetBindingExpression(CheckBox.IsCheckedProperty).UpdateTarget();
+                return;
+            });
+        }
+
+        /// <summary>
+        /// コントロールを生成
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            Clear();
+            var components = e.NewValue as INotifyPropertyChanged;
+            if (components == null)
+            {
+                if (e.NewValue.GetType().Name == "WpfBindingWrapper")
+                {
+                    return;
+                }
+                throw new ArgumentException();
+            }
+            int i = 11;
+            foreach (string key in ((dynamic)components).Keys)
+            {
+                ComponentFactory.AddComponent(
+                    LabelsStackPanel.Children, InputsStackPanel.Children, CheckboxesStackPanel.Children,
+                    key, components, i);
+                i++;
+            }
+        }
+
+        private void Clear()
+        {
+            LabelsStackPanel.Children.Clear();
+            InputsStackPanel.Children.Clear();
+            CheckboxesStackPanel.Children.Clear();
+        }
+    }
+}

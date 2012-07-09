@@ -1,0 +1,17 @@
+﻿<UserControl x:Class="Progressive.PecaStarter.View.Page.YellowPageses"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:l="clr-namespace:Progressive.PecaStarter.View.Page">
+    <UserControl.Resources>
+        <ResourceDictionary Source="..\Styles\ResourceDictionary.xaml"/>
+    </UserControl.Resources>
+    <StackPanel>
+        <DockPanel IsEnabled="{Binding IsSelectorEnabled}">
+            <Label Content="イエローページ:"/>
+            <ComboBox TabIndex="10" DisplayMemberPath="Key" SelectedValuePath="Value" ItemsSource="{Binding YellowPageses}" SelectedValue="{Binding SelectedYellowPages}"/>
+        </DockPanel>
+        <UserControl Height="Auto" Visibility="{Binding SelectedYellowPagesVisibility, Mode=OneWay}">
+            <l:YellowPages DataContext="{Binding SelectedYellowPages}"/>
+        </UserControl>
+    </StackPanel>
+</UserControl>
