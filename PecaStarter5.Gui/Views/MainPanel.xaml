@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:c="clr-namespace:Progressive.PecaStarter.View.Control"
              xmlns:p="clr-namespace:Progressive.PecaStarter.View.Page"
+             xmlns:p2="clr-namespace:Progressive.PecaStarter5.Views.Pages"
              xmlns:c2="clr-namespace:Progressive.PecaStarter5.Views.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="400">
@@ -18,7 +19,7 @@
         <Grid>
             <TabControl SelectedIndex="{Binding SelectedIndex}">
                 <TabItem Header="リレー一覧">
-                    <p:RelayList DataContext="{Binding RelayListViewModel}"/>
+                    <p2:RelayList DataContext="{Binding RelayListViewModel}"/>
                 </TabItem>
                 <TabItem Visibility="Hidden"/>
                 <TabItem Header="イエローページ">

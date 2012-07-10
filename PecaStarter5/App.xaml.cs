@@ -3,7 +3,7 @@ using Progressive.PecaStarter5.ViewModel;
 using Progressive.PecaStarter5.Views;
 using Progressive.PecaStarter5.Model;
 
-namespace Progressive.PecaStarter5.Gui
+namespace Progressive.PecaStarter5
 {
     /// <summary>
     /// App.xaml の相互作用ロジック

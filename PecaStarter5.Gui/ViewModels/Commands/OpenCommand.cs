@@ -5,7 +5,7 @@ using Progressive.PecaStarter5.Models;
 using Progressive.PecaStarter5.ViewModels.Pages;
 using Progressive.Peercast4Net;
 
-namespace Progressive.PecaStarter.ViewModel.Command
+namespace Progressive.PecaStarter5.ViewModels.Commands
 {
     public class OpenCommand : ICommand
     {

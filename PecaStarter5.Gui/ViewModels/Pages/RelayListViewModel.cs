@@ -6,7 +6,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Input;
 using Progressive.Commons.ViewModels;
-using Progressive.PecaStarter.ViewModel.Command;
+using Progressive.PecaStarter5.ViewModels.Commands;
 using Progressive.PecaStarter5.Models;
 using Progressive.Peercast4Net;
 
@@ -21,7 +21,7 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
             set
             {
                 isListEnabled = value;
-                NotifyPropertyChanged("IsListEnabled");
+                OnPropertyChanged("IsListEnabled");
             }
         }
 
@@ -32,7 +32,7 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
             set
             {
                 channels = value;
-                NotifyPropertyChanged("Channels");
+                OnPropertyChanged("Channels");
             }
         }
 
@@ -43,7 +43,7 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
             set
             {
                 selectedChannel = value;
-                NotifyPropertyChanged("SelectedChannel");
+                OnPropertyChanged("SelectedChannel");
             }
         }
 
@@ -58,7 +58,7 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
             set
             {
                 selectedYellowPages = value;
-                NotifyPropertyChanged("SelectedYellowPages");
+                OnPropertyChanged("SelectedYellowPages");
             }
         }
 

@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Windows;
 using Progressive.PecaStarter5.Properties;
 
-namespace Progressive.PecaStarter5.Views
+namespace Progressive.Commons.Views
 {
     class TaskTrayIconManager : IDisposable
     {

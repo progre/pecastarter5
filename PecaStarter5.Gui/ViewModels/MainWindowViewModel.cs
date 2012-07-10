@@ -20,7 +20,7 @@ namespace Progressive.PecaStarter5.ViewModel
                 settings.PropertyChanged += (sender, e) =>
                 {
                     if (e.PropertyName == "HasTaskTrayIcon")
-                        NotifyPropertyChanged("HasTaskTrayIcon");
+                        OnPropertyChanged("HasTaskTrayIcon");
                 };
             }
         }
