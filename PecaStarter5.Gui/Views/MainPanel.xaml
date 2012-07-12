@@ -23,7 +23,7 @@
                 </TabItem>
                 <TabItem Visibility="Hidden"/>
                 <TabItem Header="イエローページ">
-                    <p:YellowPageses DataContext="{Binding YellowPagesesViewModel}"/>
+                    <p2:YellowPagesList DataContext="{Binding YellowPagesListViewModel}"/>
                 </TabItem>
                 <TabItem Header="ソース">
                     <TabItem.ContextMenu>

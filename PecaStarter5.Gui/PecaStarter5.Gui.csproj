@@ -79,11 +79,13 @@
     <Compile Include="ViewModels\MainPanelViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\Pages\RelayListViewModel.cs" />
+    <Compile Include="ViewModels\Pages\YellowPagesListViewModel.cs" />
+    <Compile Include="ViewModels\Pages\YellowPagesViewModel.cs" />
     <Compile Include="Views\Controls\BroadcastControl.xaml.cs">
       <DependentUpon>BroadcastControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Converters\AgeConverter.cs" />
-    <Compile Include="Commons\Converters\VisibilityConverter.cs" />
+    <Compile Include="Commons\Views\Converters\VisibilityConverter.cs" />
     <Compile Include="Commons\Views\GlassWindow.cs" />
     <Compile Include="Views\MainPanel.xaml.cs">
       <DependentUpon>MainPanel.xaml</DependentUpon>
@@ -104,8 +106,8 @@
     <Compile Include="Views\Pages\YellowPages.xaml.cs">
       <DependentUpon>YellowPages.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Pages\YellowPageses.xaml.cs">
-      <DependentUpon>YellowPageses.xaml</DependentUpon>
+    <Compile Include="Views\Pages\YellowPagesList.xaml.cs">
+      <DependentUpon>YellowPagesList.xaml</DependentUpon>
     </Compile>
     <Compile Include="Commons\Views\TaskTrayIconManager.cs" />
   </ItemGroup>
@@ -154,7 +156,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Views\Pages\YellowPageses.xaml">
+    <Page Include="Views\Pages\YellowPagesList.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

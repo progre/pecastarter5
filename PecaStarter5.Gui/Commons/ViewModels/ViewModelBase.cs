@@ -21,7 +21,7 @@ namespace Progressive.Commons.ViewModels
             PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        protected void SetProperty<T>(ref T obj, string propertyName, T value)
+        protected void SetProperty<T>(string propertyName, ref T obj, T value)
         {
             if (obj.Equals(value))
                 return;

@@ -2,14 +2,14 @@
 using System.Windows;
 using System.Windows.Documents;
 
-namespace Progressive.PecaStarter.View.Page
+namespace Progressive.PecaStarter5.Views.Pages
 {
     /// <summary>
     /// YellowPages.xaml の相互作用ロジック
     /// </summary>
-    public partial class YellowPageses
+    public partial class YellowPagesList
     {
-        public YellowPageses()
+        public YellowPagesList()
         {
             InitializeComponent();
         }

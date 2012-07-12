@@ -34,36 +34,33 @@ namespace Progressive.PecaStarter.View.Page
         /// </summary>
         public void UpdateTarget()
         {
-            // foreach (var input in InputsStackPanel.Children)
-            Parallel.ForEach(InputsStackPanel.Children.Cast<UIElement>(), (input) =>
+            foreach (var input in InputsStackPanel.Children)
             {
                 if (!(input is UserControl))
                 {
                     return;
                 }
-                var content = (input as UserControl).Content;
+                var content = ((UserControl)input).Content;
                 if (content is ComboBox)
                 {
-                    var comboBox = content as ComboBox;
-                    comboBox.GetBindingExpression(ComboBox.SelectedValueProperty).UpdateTarget();
+                    ((ComboBox)content).GetBindingExpression(ComboBox.SelectedValueProperty).UpdateTarget();
                     return;
                 }
                 if (content is TextBox)
                 {
-                    (content as TextBox).GetBindingExpression(TextBox.TextProperty).UpdateTarget();
+                    ((TextBox)content).GetBindingExpression(TextBox.TextProperty).UpdateTarget();
                     return;
                 }
-            });
-            // foreach (var input in CheckboxesStackPanel.Children)
-            Parallel.ForEach(CheckboxesStackPanel.Children.Cast<UIElement>(), (input) =>
+            }
+            foreach (var input in CheckboxesStackPanel.Children)
             {
                 if (!(input is UserControl))
                 {
                     return;
                 }
-                ((input as UserControl).Content as CheckBox).GetBindingExpression(CheckBox.IsCheckedProperty).UpdateTarget();
+                ((CheckBox)((UserControl)input).Content).GetBindingExpression(CheckBox.IsCheckedProperty).UpdateTarget();
                 return;
-            });
+            }
         }
 
         /// <summary>
