@@ -5,6 +5,8 @@ using System.Text;
 using System.IO;
 using System.Reflection;
 using Progressive.PecaStarter5.Models.YellowPagesXml;
+using Progressive.PecaStarter5.Model;
+using Progressive.PecaStarter5.Models.Dao;
 
 namespace Progressive.PecaStarter5.Models
 {
@@ -34,6 +36,17 @@ namespace Progressive.PecaStarter5.Models
             {
                 return Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + Path.DirectorySeparatorChar;
             }
+        }
+
+        public static Settings Settings
+        {
+            get { return new SettingsDao() { FilePath = SettingsFilePath }.Get(); }
+            set { new SettingsDao() { FilePath = SettingsFilePath }.Put(value); }
+        }
+
+        private static string SettingsFilePath
+        {
+            get { return ApplicationPath + Path.GetFileNameWithoutExtension(Assembly.GetEntryAssembly().Location) + ".xml"; }
         }
     }
 }

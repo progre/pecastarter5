@@ -15,13 +15,6 @@ namespace Progressive.PecaStarter5
             MainWindow = new MainWindow()
             {
                 DataContext = new MainWindowViewModel()
-                {
-                    // ファイルロードを仕込みたい
-                    Settings = new Settings()
-                    {
-                        Width = 640
-                    }
-                }
             };
             MainWindow.Show();
 
