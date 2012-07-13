@@ -29,7 +29,7 @@ namespace Progressive.PecaStarter5.Views
 
         private void OnUpdateHistoryItemClicked(object sender, System.Windows.RoutedEventArgs e)
         {
-            //(DataContext as MainWindowViewModel).ExternalSourceViewModel.UpdateHistory();
+            ((dynamic)DataContext).ExternalSourceViewModel.UpdateHistory();
         }
 
         private void OnAssemblyPathItemClicked(object sender, System.Windows.RoutedEventArgs e)

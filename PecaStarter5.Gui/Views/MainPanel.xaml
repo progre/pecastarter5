@@ -31,7 +31,7 @@
                             <MenuItem Header="入力をヒストリに反映する" Click="OnUpdateHistoryItemClicked"/>
                         </ContextMenu>
                     </TabItem.ContextMenu>
-                    <p:ExternalSource DataContext="{Binding ExternalSourceViewModel}"/>
+                    <p2:ExternalSource DataContext="{Binding ExternalSourceViewModel}"/>
                 </TabItem>
                 <TabItem Visibility="Hidden"/>
                 <TabItem Header="設定">

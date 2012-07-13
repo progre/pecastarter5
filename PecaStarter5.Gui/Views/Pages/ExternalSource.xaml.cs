@@ -1,4 +1,4 @@
-﻿namespace Progressive.PecaStarter.View.Page
+﻿namespace Progressive.PecaStarter5.Views.Pages
 {
     /// <summary>
     /// ExternalSource.xaml の相互作用ロジック

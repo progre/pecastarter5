@@ -57,6 +57,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commons\ViewModels\Controls\TextBoxWithHistoryViewModel.cs" />
     <Compile Include="ViewModels\Commands\OpenCommand.cs" />
     <Compile Include="ViewModels\Commands\ReloadCommand.cs" />
     <Compile Include="Commons\ViewModels\ViewModelBase.cs" />
@@ -76,8 +77,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Commons\ViewModels\Commands\RemoveItemCommand.cs" />
     <Compile Include="ViewModels\MainPanelViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="ViewModels\Pages\ExternalSourceViewModel.cs" />
     <Compile Include="ViewModels\Pages\RelayListViewModel.cs" />
     <Compile Include="ViewModels\Pages\YellowPagesListViewModel.cs" />
     <Compile Include="ViewModels\Pages\YellowPagesViewModel.cs" />

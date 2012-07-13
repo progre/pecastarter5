@@ -15,10 +15,12 @@ namespace Progressive.PecaStarter5.ViewModels
             IEnumerable<IYellowPages> yellowPages = PecaStarter5Factory.YellowPagesList;
             RelayListViewModel = new RelayListViewModel(peercast, yellowPages);
             YellowPagesListViewModel = new YellowPagesListViewModel(yellowPages);
+            ExternalSourceViewModel = new ExternalSourceViewModel();
         }
 
         public RelayListViewModel RelayListViewModel { get; private set; }
         public YellowPagesListViewModel YellowPagesListViewModel { get; private set; }
+        public ExternalSourceViewModel ExternalSourceViewModel { get; private set; }
 
         private int selectedIndex;
         public int SelectedIndex
