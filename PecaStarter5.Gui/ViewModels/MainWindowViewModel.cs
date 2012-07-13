@@ -7,20 +7,26 @@ namespace Progressive.PecaStarter5.ViewModel
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        private Settings settings = new Settings();
+        public MainWindowViewModel()
+        {
+            MainPanelViewModel = new MainPanelViewModel();
+        }
+
+        private Settings settings;
         public Settings Settings
         {
             set
             {
-                if (settings == null)
+                if (value == null)
                     throw new ArgumentNullException();
                 if (settings == value)
                     return;
                 settings = value;
+                MainPanelViewModel.Settings = settings;
                 settings.PropertyChanged += (sender, e) =>
                 {
-                    if (e.PropertyName == "HasTaskTrayIcon")
-                        OnPropertyChanged("HasTaskTrayIcon");
+                    if (e.PropertyName == "HasNotifyIcon")
+                        OnPropertyChanged("HasNotifyIcon");
                 };
             }
         }
@@ -48,16 +54,8 @@ namespace Progressive.PecaStarter5.ViewModel
         public bool HasNotifyIcon
         {
             get { return settings.HasNotifyIcon; }
-            set { settings.HasNotifyIcon = value; }
         }
 
         public MainPanelViewModel MainPanelViewModel { get; private set; }
-
-        public MainWindowViewModel()
-        {
-            Height = 240;
-            Width = 640;
-            MainPanelViewModel = new MainPanelViewModel();
-        }
     }
 }

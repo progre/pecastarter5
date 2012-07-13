@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.ComponentModel;
 using System.Runtime.Serialization;
+using System.IO;
 
 namespace Progressive.PecaStarter5.Model
 {
@@ -14,7 +15,7 @@ namespace Progressive.PecaStarter5.Model
         public double Width { get; set; }
         public double Height { get; set; }
 
-        private bool hasNotifyIcon = true;
+        private bool hasNotifyIcon;
         public bool HasNotifyIcon
         {
             get { return hasNotifyIcon; }
@@ -23,8 +24,27 @@ namespace Progressive.PecaStarter5.Model
                 if (hasNotifyIcon == value)
                     return;
                 hasNotifyIcon = value;
+                OnPropertyChanged("HasNotifyIcon");
             }
         }
+
+        public bool IsSavePosition { get; set; }
+        public bool Logging { get; set; }
+        private string logPath;
+        public string LogPath
+        {
+            get { return logPath; }
+            set
+            {
+                if (!string.IsNullOrWhiteSpace(value))
+                    logPath=value;
+                else
+                    logPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal)
+                        + Path.DirectorySeparatorChar + "PeercastLog";
+            }
+        }
+        public int Delay { get; set; }
+        public int Port { get; set; }
 
         #region INotifyPropertyChanged メンバー
 

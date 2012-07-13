@@ -4,8 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:c="clr-namespace:Progressive.PecaStarter.View.Control"
-             xmlns:p="clr-namespace:Progressive.PecaStarter.View.Page"
-             xmlns:p2="clr-namespace:Progressive.PecaStarter5.Views.Pages"
+             xmlns:p="clr-namespace:Progressive.PecaStarter5.Views.Pages"
              xmlns:c2="clr-namespace:Progressive.PecaStarter5.Views.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="400">
@@ -19,11 +18,11 @@
         <Grid>
             <TabControl SelectedIndex="{Binding SelectedIndex}">
                 <TabItem Header="リレー一覧">
-                    <p2:RelayList DataContext="{Binding RelayListViewModel}"/>
+                    <p:RelayList DataContext="{Binding RelayListViewModel}"/>
                 </TabItem>
                 <TabItem Visibility="Hidden"/>
                 <TabItem Header="イエローページ">
-                    <p2:YellowPagesList DataContext="{Binding YellowPagesListViewModel}"/>
+                    <p:YellowPagesList DataContext="{Binding YellowPagesListViewModel}"/>
                 </TabItem>
                 <TabItem Header="ソース">
                     <TabItem.ContextMenu>
@@ -31,7 +30,7 @@
                             <MenuItem Header="入力をヒストリに反映する" Click="OnUpdateHistoryItemClicked"/>
                         </ContextMenu>
                     </TabItem.ContextMenu>
-                    <p2:ExternalSource DataContext="{Binding ExternalSourceViewModel}"/>
+                    <p:ExternalSource DataContext="{Binding ExternalSourceViewModel}"/>
                 </TabItem>
                 <TabItem Visibility="Hidden"/>
                 <TabItem Header="設定">

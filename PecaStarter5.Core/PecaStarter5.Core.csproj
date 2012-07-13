@@ -43,16 +43,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\IYellowPages.cs" />
+    <Compile Include="Models\YellowPages\IYellowPages.cs" />
+    <Compile Include="Models\Logger.cs" />
     <Compile Include="Models\PecaStarter5Factory.cs" />
-    <Compile Include="Models\PeercastYellowPages.cs" />
+    <Compile Include="Models\YellowPages\PeercastYellowPages.cs" />
     <Compile Include="Models\Settings.cs" />
-    <Compile Include="Models\WebApiYellowPages.cs" />
-    <Compile Include="Models\YellowPages.cs" />
-    <Compile Include="Models\YellowPagesXml\PeercastYellowPagesPaser.cs" />
-    <Compile Include="Models\YellowPagesXml\WebApiYelloaPagesParser.cs" />
-    <Compile Include="Models\YellowPagesXml\YellowPagesParser.cs" />
-    <Compile Include="Models\YellowPagesXml\YellowPagesParserFactory.cs" />
+    <Compile Include="Models\YellowPages\WebApiYellowPages.cs" />
+    <Compile Include="Models\YellowPages\YellowPages.cs" />
+    <Compile Include="Models\YellowPages\YellowPagesXml\PeercastYellowPagesPaser.cs" />
+    <Compile Include="Models\YellowPages\YellowPagesXml\WebApiYelloaPagesParser.cs" />
+    <Compile Include="Models\YellowPages\YellowPagesXml\YellowPagesParser.cs" />
+    <Compile Include="Models\YellowPages\YellowPagesXml\YellowPagesParserFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

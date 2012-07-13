@@ -6,7 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using Forms = System.Windows.Forms;
 
-namespace Progressive.PecaStarter.View.Page
+namespace Progressive.PecaStarter5.Views.Pages
 {
     /// <summary>
     /// Settings.xaml の相互作用ロジック
@@ -23,11 +23,11 @@ namespace Progressive.PecaStarter.View.Page
             var fbd = new Forms.FolderBrowserDialog();
             fbd.Description = "フォルダを指定してください。";
             fbd.RootFolder = Environment.SpecialFolder.Desktop;
-            fbd.SelectedPath = @"C:\Windows";
+            fbd.SelectedPath = @"C:\";
             fbd.ShowNewFolderButton = true;
             if (fbd.ShowDialog() == Forms.DialogResult.OK)
             {
-                (sender as Button).DataContext = fbd.SelectedPath;
+                ((Button)sender).DataContext = fbd.SelectedPath;
             }
         }
     }
