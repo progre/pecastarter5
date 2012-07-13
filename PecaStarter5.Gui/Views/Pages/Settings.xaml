@@ -1,6 +1,7 @@
 ﻿<UserControl x:Class="Progressive.PecaStarter5.Views.Pages.Settings"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:c="clr-namespace:Progressive.Commons.Views.Converters"
     Height="Auto">
     <UserControl.Resources>
         <ResourceDictionary Source="..\Styles\ResourceDictionary.xaml"/>

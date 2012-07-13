@@ -89,7 +89,7 @@
       <DependentUpon>BroadcastControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Converters\AgeConverter.cs" />
-    <Compile Include="Commons\Views\Converters\VisibilityConverter.cs" />
+    <Compile Include="Commons\Views\Converters\VisibilityConverters.cs" />
     <Compile Include="Commons\Views\GlassWindow.cs" />
     <Compile Include="Views\MainPanel.xaml.cs">
       <DependentUpon>MainPanel.xaml</DependentUpon>

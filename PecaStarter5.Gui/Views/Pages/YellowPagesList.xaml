@@ -5,9 +5,7 @@
     xmlns:c="clr-namespace:Progressive.Commons.Views.Converters">
     <UserControl.Resources>
         <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="..\Styles\ResourceDictionary.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
+            <ResourceDictionary.Source>..\Styles\ResourceDictionary.xaml</ResourceDictionary.Source>
             <c:ReferenceVisibilityConverter x:Key="ReferenceVisibilityConverter"/>
         </ResourceDictionary>
     </UserControl.Resources>
