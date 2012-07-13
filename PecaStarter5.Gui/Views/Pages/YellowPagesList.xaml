@@ -14,10 +14,10 @@
     <StackPanel>
         <StackPanel.Resources>
         </StackPanel.Resources>
-        <DockPanel IsEnabled="{Binding IsSelectorEnabled}">
+        <DockPanel>
             <Label Content="イエローページ:"/>
-            <ComboBox TabIndex="10" DisplayMemberPath="Key" SelectedValuePath="Value"
-                      ItemsSource="{Binding YellowPagesList}" SelectedValue="{Binding SelectedYellowPages}"/>
+            <ComboBox TabIndex="10" DisplayMemberPath="Name"
+                      ItemsSource="{Binding YellowPagesViewModels}" SelectedValue="{Binding SelectedYellowPages}"/>
         </DockPanel>
         <UserControl Height="Auto"
                      Visibility="{Binding SelectedYellowPages, Converter={StaticResource ReferenceVisibilityConverter}}">

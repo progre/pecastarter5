@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<yellowpages>
+  <name>TP</name>
+  <notice>http://temp.orz.hm/yp/rule.html</notice>
+  <!--
+  <components>
+    <component type="namespace"/>
+    <component type="listeners_invisibility"/>
+    <component type="port_bandwidth_check"/>
+    <component type="no_log"/>
+  </components>
+  -->
+  <peercast>
+    <host>temp.orz.hm</host>
+    <prefix header="tp">
+      <namespace/>
+      <listeners_invisibility/>
+      <port_bandwidth_check/>
+      <no_log/>
+    </prefix>
+  </peercast>
+</yellowpages>

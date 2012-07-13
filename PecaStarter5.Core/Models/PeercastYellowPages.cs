@@ -5,25 +5,8 @@ using System.Text;
 
 namespace Progressive.PecaStarter5.Models
 {
-    public class PeercastYellowPages : IYellowPages
+    class PeercastYellowPages : YellowPages
     {
-        #region IYellowPages メンバー
-
-        public string Name
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        public string NoticeUrl
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        public IEnumerable<string> Components
-        {
-            get { throw new NotImplementedException(); }
-        }
-
         public string GetPrefix(Dictionary<string, string> parameters)
         {
             var sb = new StringBuilder();
@@ -49,8 +32,6 @@ namespace Progressive.PecaStarter5.Models
             }
             return Tuple.Create(dictionary, value.Substring(index));
         }
-
-        #endregion
 
         public string Header { get; set; }
 

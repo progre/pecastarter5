@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<yellowpages>
+  <name>芝YP</name>
+  <notice>http://takami98.sakura.ne.jp/peca-navi/turf-page/about.php</notice>
+  <peercast>
+    <host>takami98.ddo.jp</host>
+    <prefix header="tp">
+      <listeners_invisibility/>
+      <port_bandwidth_check/>
+      <no_log/>
+    </prefix>
+  </peercast>
+</yellowpages>

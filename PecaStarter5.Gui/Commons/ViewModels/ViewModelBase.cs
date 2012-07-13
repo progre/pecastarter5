@@ -23,7 +23,7 @@ namespace Progressive.Commons.ViewModels
 
         protected void SetProperty<T>(string propertyName, ref T obj, T value)
         {
-            if (obj.Equals(value))
+            if (obj != null && obj.Equals(value))
                 return;
             obj = value;
             OnPropertyChanged(propertyName);

@@ -81,7 +81,7 @@ namespace PecaStarter5.Gui.Views.Pages
             labelCollection.Add(new Label() { Content = content });
             var control = new PasswordBox() { DataContext = dataContext, TabIndex = index };
             dynamic indexAccessible = dataContext;
-            control.Password = indexAccessible[key];
+            control.Password = indexAccessible.Parameters[key];
             PropertyChangedEventHandler onSourceChanged = (sender, e) =>
             {
                 if (e.PropertyName != key)

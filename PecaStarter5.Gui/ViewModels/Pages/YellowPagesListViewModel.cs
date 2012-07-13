@@ -11,7 +11,7 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
     {
         public YellowPagesListViewModel(IEnumerable<IYellowPages> yellowPagesList)
         {
-            YellowPagesViewModels = yellowPagesList.Select(x => new YellowPagesViewModel(x));
+            YellowPagesViewModels = yellowPagesList.Select(x => new YellowPagesViewModel(x)).ToArray();
         }
 
         public IEnumerable<YellowPagesViewModel> YellowPagesViewModels { get; set; }

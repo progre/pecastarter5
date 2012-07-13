@@ -16,7 +16,8 @@
     <Grid>
         <DockPanel IsEnabled="{Binding IsListEnabled}">
             <StackPanel DockPanel.Dock="Bottom" HorizontalAlignment="Right" Orientation="Horizontal">
-                <ComboBox MinWidth="80" DisplayMemberPath="Key" SelectedValuePath="Value" ItemsSource="{Binding YellowPageses}" SelectedValue="{Binding SelectedYellowPages}"/>
+                <ComboBox MinWidth="80" DisplayMemberPath="Name"
+                          ItemsSource="{Binding YellowPagesList}" SelectedValue="{Binding SelectedYellowPages}"/>
                 <TextBlock VerticalAlignment="Center" Text="でこのチャンネルを"/>
                 <c:AskButton Message="編集中のフォームはクリアされます。よろしいですか？" Content="開く"
                     Command="{Binding OpenCommand}" CommandParameter="{Binding ElementName=List, Path=SelectedItem}"/>

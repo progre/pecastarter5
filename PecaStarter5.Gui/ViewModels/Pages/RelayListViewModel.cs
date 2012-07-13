@@ -49,7 +49,7 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
 
         public Visibility LoadingVisibility { get { return IsListEnabled ? Visibility.Collapsed : Visibility.Visible; } }
 
-        public IEnumerable<IYellowPages> YellowPages { get; set; }
+        public IEnumerable<IYellowPages> YellowPagesList { get; private set; }
 
         private IYellowPages selectedYellowPages;
         public IYellowPages SelectedYellowPages
@@ -67,13 +67,13 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
 
         public event EventHandler<SelectedEventArgs> ChannelSelected;
 
-        public RelayListViewModel(Peercast peercast, IEnumerable<IYellowPages> yellowPageses)
+        public RelayListViewModel(Peercast peercast, IEnumerable<IYellowPages> yellowPagesList)
         {
-            selectedYellowPages = null;
+            YellowPagesList = yellowPagesList;
             isListEnabled = true;
             Channels = Enumerable.Empty<IChannel>();
             ReloadCommand = new ReloadCommand(this, peercast);
-            OpenCommand = new OpenCommand(this, peercast, yellowPageses);
+            OpenCommand = new OpenCommand(this, peercast, yellowPagesList);
         }
 
         internal void OnChannelSelected()

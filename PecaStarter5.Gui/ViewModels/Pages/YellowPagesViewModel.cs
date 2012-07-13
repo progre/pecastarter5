@@ -12,6 +12,7 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
 
         public YellowPagesViewModel(IYellowPages model)
         {
+            this.Parameters = new Dictionary<string, string>();
             this.model = model;
             foreach (var component in model.Components)
             {

@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AsyncCtpLibrary">
+      <HintPath>..\lib\AsyncCtpLibrary.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -41,9 +44,43 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\IYellowPages.cs" />
+    <Compile Include="Models\PecaStarter5Factory.cs" />
     <Compile Include="Models\PeercastYellowPages.cs" />
     <Compile Include="Models\Settings.cs" />
+    <Compile Include="Models\WebApiYellowPages.cs" />
+    <Compile Include="Models\YellowPages.cs" />
+    <Compile Include="Models\YellowPagesXml\PeercastYellowPagesPaser.cs" />
+    <Compile Include="Models\YellowPagesXml\WebApiYelloaPagesParser.cs" />
+    <Compile Include="Models\YellowPagesXml\YellowPagesParser.cs" />
+    <Compile Include="Models\YellowPagesXml\YellowPagesParserFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PecaStarter5.ExternalLibrary\PecaStarter5.ExternalLibrary.csproj">
+      <Project>{55EFCA17-BE39-4976-BA28-E5C0FABF8E89}</Project>
+      <Name>PecaStarter5.ExternalLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="yellowpages\CycleYP.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="yellowpages\hktv.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="yellowpages\sp.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="yellowpages\tp.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="yellowpages\TurfYP.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="yellowpages\wp.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

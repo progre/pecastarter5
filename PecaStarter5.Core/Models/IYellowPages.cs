@@ -11,6 +11,6 @@ namespace Progressive.PecaStarter5.Models
         string NoticeUrl { get; }
         IEnumerable<string> Components { get; }
         string GetPrefix(Dictionary<string, string> parameters);
-        Tuple<Dictionary<string, string>, string> Parse(string value);
+        Dictionary<string, string> Parse(string value);
     }
 }
