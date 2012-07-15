@@ -22,7 +22,11 @@ namespace Progressive.PecaStarter5.ViewModels
 
         public Settings Settings
         {
-            set { SettingsViewModel.Settings = value; }
+            set
+            {
+                ExternalSourceViewModel.Settings = value;
+                SettingsViewModel.Settings = value;
+            }
         }
 
         public RelayListViewModel RelayListViewModel { get; private set; }
@@ -34,7 +38,12 @@ namespace Progressive.PecaStarter5.ViewModels
         public int SelectedIndex
         {
             get { return selectedIndex; }
-            set { SetProperty("SelectedIndex", ref selectedIndex, value); }
+            set
+            {
+                SetProperty("SelectedIndex", ref selectedIndex, value);
+                if (value == 3 && YellowPagesListViewModel.SelectedYellowPages != null)
+                    ExternalSourceViewModel.Prefix = YellowPagesListViewModel.SelectedYellowPages.Prefix;
+            }
         }
     }
 }

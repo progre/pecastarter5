@@ -10,6 +10,8 @@ using System.Windows.Documents;
 using System.ComponentModel;
 using System.Reflection;
 using PecaStarter5.Gui.Views.Pages;
+using System.Collections.Generic;
+using Progressive.PecaStarter5.Commons.Models;
 
 namespace Progressive.PecaStarter.View.Page
 {
@@ -80,12 +82,13 @@ namespace Progressive.PecaStarter.View.Page
                 }
                 throw new ArgumentException();
             }
+            DynamicDictionary<string> parameters = ((dynamic)components).Parameters;
             int i = 11;
-            foreach (string key in ((dynamic)components).Keys)
+            foreach (string key in parameters.Dictionary.Keys)
             {
                 ComponentFactory.AddComponent(
                     LabelsStackPanel.Children, InputsStackPanel.Children, CheckboxesStackPanel.Children,
-                    key, components, i);
+                    key, parameters, i);
                 i++;
             }
         }

@@ -11,6 +11,8 @@ namespace Progressive.PecaStarter5.Models
 
         public string Name { get; set; }
 
+        public bool IsCheckNoticeUrl { get; set; }
+
         public string NoticeUrl { get; set; }
 
         public IEnumerable<string> Components { get; set; }

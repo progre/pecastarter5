@@ -6,8 +6,12 @@
              xmlns:c="clr-namespace:Progressive.PecaStarter.View.Control"
              xmlns:p="clr-namespace:Progressive.PecaStarter5.Views.Pages"
              xmlns:c2="clr-namespace:Progressive.PecaStarter5.Views.Controls"
+             xmlns:cv="clr-namespace:Progressive.PecaStarter5.Views.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="400">
+    <UserControl.Resources>
+        <cv:BroadcastVisibilityConverter x:Key="BroadcastVisibilityConverter"/>
+    </UserControl.Resources>
     <DockPanel>
         <c:Alert Visibility="Collapsed" Content="{Binding Alert}"/>
         <StatusBar DockPanel.Dock="Bottom" Height="23" BorderThickness="1" BorderBrush="{x:Static SystemColors.ControlDarkBrush}">
@@ -43,7 +47,8 @@
                     <p:Settings DataContext="{Binding SettingsViewModel}"/>
                 </TabItem>
             </TabControl>
-            <c2:BroadcastControl/>
+            <c2:BroadcastControl
+                Visibility="{Binding SelectedIndex, Converter={StaticResource BroadcastVisibilityConverter}}"/>
         </Grid>
     </DockPanel>
 </UserControl>

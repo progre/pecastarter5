@@ -7,7 +7,7 @@ namespace Progressive.PecaStarter5.Models
 {
     class PeercastYellowPages : YellowPages
     {
-        public string GetPrefix(Dictionary<string, string> parameters)
+        public override string GetPrefix(Dictionary<string, string> parameters)
         {
             var sb = new StringBuilder();
             sb.Append(Header);

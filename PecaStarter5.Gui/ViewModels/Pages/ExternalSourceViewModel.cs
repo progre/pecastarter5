@@ -1,10 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Windows;
 using System;
+using System.Linq;
 using System.Windows.Input;
 using Progressive.Commons.ViewModels;
 using Progressive.Commons.ViewModels.Controls;
 using Progressive.Commons.ViewModels.Commands;
+using Progressive.PecaStarter5.Model;
+using System.Collections.Specialized;
+using System.Collections.ObjectModel;
 
 namespace Progressive.PecaStarter5.ViewModels.Pages
 {
@@ -12,11 +16,43 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
     {
         private readonly ICommand removeItemCommand;
 
-        private string streamUrl = "http://";
+        public ExternalSourceViewModel()
+        {
+            removeItemCommand = new RemoveItemCommand();
+            Name = new TextBoxWithHistoryViewModel(removeItemCommand);
+            Genre = new TextBoxWithHistoryViewModel(removeItemCommand);
+            Description = new TextBoxWithHistoryViewModel(removeItemCommand);
+            Comment = new TextBoxWithHistoryViewModel(removeItemCommand);
+        }
+
+        private Settings settings;
+        public Settings Settings
+        {
+            set
+            {
+                settings = value;
+                StreamUrl = settings.StreamUrl;
+                Name.History = new ObservableCollection<string>(settings.NameHistory);
+                settings.NameHistory = Name.History;
+                Genre.History = new ObservableCollection<string>(settings.GenreHistory);
+                settings.GenreHistory = Genre.History;
+                Description.History = new ObservableCollection<string>(settings.DescriptionHistory);
+                settings.DescriptionHistory = Description.History;
+                Comment.History = new ObservableCollection<string>(settings.CommentHistory);
+                settings.CommentHistory = Comment.History;
+            }
+        }
+
         public string StreamUrl
         {
-            get { return streamUrl; }
-            set { SetProperty("StreamUrl", ref streamUrl, value); }
+            get { return settings.StreamUrl; }
+            set
+            {
+                if (settings.StreamUrl == value)
+                    return;
+                settings.StreamUrl = value;
+                OnPropertyChanged("StreamUrl");
+            }
         }
 
         private string prefix;
@@ -29,25 +65,26 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
         public TextBoxWithHistoryViewModel Name { get; private set; }
         public TextBoxWithHistoryViewModel Genre { get; private set; }
         public TextBoxWithHistoryViewModel Description { get; private set; }
-        public TextBoxWithHistoryViewModel ContactUrl { get; private set; }
-        public TextBoxWithHistoryViewModel Comment { get; private set; }
 
-        public ExternalSourceViewModel()
+        public string ContactUrl
         {
-            removeItemCommand = new RemoveItemCommand();
-            Name = new TextBoxWithHistoryViewModel(removeItemCommand);
-            Genre = new TextBoxWithHistoryViewModel(removeItemCommand);
-            Description = new TextBoxWithHistoryViewModel(removeItemCommand);
-            ContactUrl = new TextBoxWithHistoryViewModel(removeItemCommand);
-            Comment = new TextBoxWithHistoryViewModel(removeItemCommand);
+            get { return settings.ContactUrl; }
+            set
+            {
+                if (settings.ContactUrl == value)
+                    return;
+                settings.ContactUrl = value;
+                OnPropertyChanged("ContactUrl");
+            }
         }
+
+        public TextBoxWithHistoryViewModel Comment { get; private set; }
 
         public void UpdateHistory()
         {
             Name.UpdateHistory();
             Genre.UpdateHistory();
             Description.UpdateHistory();
-            ContactUrl.UpdateHistory();
             Comment.UpdateHistory();
         }
 

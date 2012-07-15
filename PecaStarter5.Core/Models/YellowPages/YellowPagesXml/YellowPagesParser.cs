@@ -18,6 +18,14 @@ namespace Progressive.PecaStarter5.Models.YellowPagesXml
         {
             get { return Xml.Element("yellowpages").Element("notice").Value; }
         }
+        public bool IsCheckNoticeUrl
+        {
+            get
+            {
+                var check = Xml.Element("yellowpages").Element("notice").Attribute("check");
+                return check == null || check.Value == "true";
+            }
+        }
         public virtual IList<string> Components
         {
             get
@@ -55,20 +63,6 @@ namespace Progressive.PecaStarter5.Models.YellowPagesXml
         }
 
         public abstract IYellowPages GetInstance();
-
-        public bool CanGetNoticeHash()
-        {
-            var check = Xml.Element("yellowpages").Element("notice").Attribute("check");
-            if (check == null)
-            {
-                return true;
-            }
-            if (check.Value == "true")
-            {
-                return true;
-            }
-            return false;
-        }
 
         public int GetNoticeHash()
         {

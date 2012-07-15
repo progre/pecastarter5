@@ -5,15 +5,31 @@ using System.Text;
 using System.ComponentModel;
 using System.Runtime.Serialization;
 using System.IO;
+using System.Collections.ObjectModel;
+using System.Xml.Serialization;
 
 namespace Progressive.PecaStarter5.Model
 {
     public class Settings : INotifyPropertyChanged
     {
+        public Settings()
+        {
+            NameHistory = new Collection<string>();
+            GenreHistory = new Collection<string>();
+            DescriptionHistory = new Collection<string>();
+            CommentHistory = new Collection<string>();
+        }
         public double Left { get; set; }
         public double Top { get; set; }
         public double Width { get; set; }
         public double Height { get; set; }
+
+        public string StreamUrl { get; set; }
+        public Collection<string> NameHistory { get; set; }
+        public Collection<string> GenreHistory { get; set; }
+        public Collection<string> DescriptionHistory { get; set; }
+        public string ContactUrl { get; set; }
+        public Collection<string> CommentHistory { get; set; }
 
         private bool hasNotifyIcon;
         public bool HasNotifyIcon
@@ -37,7 +53,7 @@ namespace Progressive.PecaStarter5.Model
             set
             {
                 if (!string.IsNullOrWhiteSpace(value))
-                    logPath=value;
+                    logPath = value;
                 else
                     logPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal)
                         + Path.DirectorySeparatorChar + "PeercastLog";

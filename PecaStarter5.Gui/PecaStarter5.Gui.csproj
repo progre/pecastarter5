@@ -57,7 +57,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commons\Models\DynamicDictionary.cs" />
     <Compile Include="Commons\ViewModels\Controls\TextBoxWithHistoryViewModel.cs" />
+    <Compile Include="ViewModels\Commands\BroadcastCommand.cs" />
     <Compile Include="ViewModels\Commands\OpenCommand.cs" />
     <Compile Include="ViewModels\Commands\ReloadCommand.cs" />
     <Compile Include="Commons\ViewModels\ViewModelBase.cs" />
@@ -91,6 +93,7 @@
     <Compile Include="Views\Converters\AgeConverter.cs" />
     <Compile Include="Commons\Views\Converters\VisibilityConverters.cs" />
     <Compile Include="Commons\Views\GlassWindow.cs" />
+    <Compile Include="Views\Converters\BroadcastVisibilityConverter.cs" />
     <Compile Include="Views\MainPanel.xaml.cs">
       <DependentUpon>MainPanel.xaml</DependentUpon>
     </Compile>

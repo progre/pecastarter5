@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\Dao\SettingsDao.cs" />
+    <Compile Include="Models\Services\PeercastService.cs" />
     <Compile Include="Models\YellowPages\IYellowPages.cs" />
     <Compile Include="Models\Logger.cs" />
     <Compile Include="Models\PecaStarter5Factory.cs" />
@@ -61,6 +62,10 @@
     <ProjectReference Include="..\PecaStarter5.ExternalLibrary\PecaStarter5.ExternalLibrary.csproj">
       <Project>{55EFCA17-BE39-4976-BA28-E5C0FABF8E89}</Project>
       <Name>PecaStarter5.ExternalLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Peercast4Net\Peercast4Net.csproj">
+      <Project>{F6BD0F22-BD5F-4E1B-A80A-BF47E28D1558}</Project>
+      <Name>Peercast4Net</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

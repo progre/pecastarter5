@@ -170,6 +170,7 @@ namespace Progressive.PecaStarter5.Models.YellowPagesXml
                 Components = Components,
                 Name = Name,
                 NoticeUrl = NoticeUrl,
+                IsCheckNoticeUrl = IsCheckNoticeUrl,
                 StopUrl = StopUrl,
                 UpdateUrl = UpdateUrl,
             };

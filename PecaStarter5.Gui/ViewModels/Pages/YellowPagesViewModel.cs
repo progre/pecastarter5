@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Progressive.PecaStarter5.Models;
 using Progressive.Commons.ViewModels;
+using Progressive.PecaStarter5.Commons.Models;
 
 namespace Progressive.PecaStarter5.ViewModels.Pages
 {
@@ -12,7 +13,7 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
 
         public YellowPagesViewModel(IYellowPages model)
         {
-            this.Parameters = new Dictionary<string, string>();
+            this.Parameters = new DynamicDictionary<string>();
             this.model = model;
             foreach (var component in model.Components)
             {
@@ -22,10 +23,10 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
                     case "listeners_visibility":
                     case "no_log":
                     case "time_invisibility":
-                        Parameters[component] = "False";
+                        Parameters.Dictionary[component] = "False";
                         continue;
                     default:
-                        Parameters[component] = "";
+                        Parameters.Dictionary[component] = "";
                         continue;
                 }
             }
@@ -44,14 +45,14 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
             set { SetProperty("IsAccepted", ref isAccepted, value); }
         }
 
-        public IEnumerable<string> Keys { get { return Parameters.Keys; } }
-        public Dictionary<string, string> Parameters { get; set; }
+        public IEnumerable<string> Keys { get { return Parameters.Dictionary.Keys; } }
+        public DynamicDictionary<string> Parameters { get; set; }
 
         public string Prefix
         {
             get
             {
-                return model.GetPrefix(Parameters);
+                return model.GetPrefix(Parameters.Dictionary);
             }
         }
     }

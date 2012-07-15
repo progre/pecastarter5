@@ -40,7 +40,7 @@
         <Label Grid.Column="0" Grid.Row="3" Content="詳細:"/>
         <c:TextBoxWithHistory Grid.Column="1" Grid.Row="3" DataContext="{Binding Description}"/>
         <Label Grid.Column="0" Grid.Row="4" Content="コンタクトURL:"/>
-        <c:TextBoxWithHistory Grid.Column="1" Grid.Row="4" DataContext="{Binding ContactUrl}"/>
+        <TextBox Grid.Column="1" Grid.Row="4" Text="{Binding ContactUrl}"/>
         <Label Grid.Column="0" Grid.Row="5" Content="コメント:"/>
         <c:TextBoxWithHistory Grid.Column="1" Grid.Row="5" DataContext="{Binding Comment}"/>
     </Grid>

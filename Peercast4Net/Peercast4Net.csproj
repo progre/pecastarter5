@@ -33,7 +33,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AsyncCtpLibrary">
-      <HintPath>..\..\lib\AsyncCtpLibrary.dll</HintPath>
+      <HintPath>..\lib\AsyncCtpLibrary.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -52,6 +52,7 @@
     <Compile Include="Dao\PeercastDao.cs" />
     <Compile Include="Dao\TestingPeercastDao.cs" />
     <Compile Include="IChannel.cs" />
+    <Compile Include="Parameters.cs" />
     <Compile Include="Peercast.cs" />
     <Compile Include="PeercastException.cs" />
     <Compile Include="PeercastServerDefine.cs" />

@@ -50,19 +50,17 @@ namespace Progressive.Peercast4Net
             }
         }
 
-        public async Task BroadcastAsync(
-            string streamUrl, string name, string genre, string description, string type,
-            string contactUrl, string comment,
-            string trackArtist, string trackTitle, string trackAlbum, string trackGenre, string trackContact)
+        public async Task BroadcastAsync(BroadcastParameter parameter)
         {
             using (var dao = new PeercastDao(Address))
             {
-                if (await ExistsAsync(dao, name))
+                if (await ExistsAsync(dao, parameter.Name))
                 {
                     throw new PeercastException("Channel was duplicated.");
                 }
-                await dao.FetchAsync(streamUrl, name, genre, description, contactUrl, type);
-                var id = await GetChannelIdAsync(dao, name);
+                await dao.FetchAsync(parameter.StreamUrl, parameter.Name, parameter.Genre, parameter.Description,
+                    parameter.ContactUrl, parameter.Type);
+                var id = await GetChannelIdAsync(dao, parameter.Name);
                 if (id == "")
                 {
                     await dao.StopAsync(id);
@@ -72,9 +70,7 @@ namespace Progressive.Peercast4Net
             }
         }
 
-        public Task UpdateAsync(string genre, string description,
-            string contactUrl, string comment,
-            string trackArtist, string trackTitle, string trackAlbum, string trackGenre, string trackContact)
+        public Task UpdateAsync(UpdateParameter parameter)
         {
             throw new NotImplementedException();// TODO:
         }

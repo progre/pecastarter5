@@ -29,7 +29,7 @@ namespace Progressive.PecaStarter5.Models.Dao
 
         public void Put(Settings entity)
         {
-            using (var fileStream = new FileStream(FilePath, FileMode.OpenOrCreate))
+            using (var fileStream = new FileStream(FilePath, FileMode.Create))
             {
                 new XmlSerializer(typeof(Settings)).Serialize(fileStream, entity);
             }
