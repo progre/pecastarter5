@@ -11,7 +11,7 @@ namespace Progressive.PecaStarter5.Models.Services
     {
         private Peercast peercast;
 
-        public Task BroadcastAsync()
+        public Task BroadcastAsync(BroadcastParameter parameter)
         {
         //    // YPの更新確認
         //    if (yp.CanGetNoticeHash())

@@ -5,6 +5,8 @@ using Progressive.PecaStarter5.Models;
 using Progressive.PecaStarter5.ViewModels.Pages;
 using Progressive.Peercast4Net;
 using Progressive.PecaStarter5.Model;
+using System.Windows.Input;
+using Progressive.PecaStarter5.ViewModels.Controls;
 
 namespace Progressive.PecaStarter5.ViewModels
 {
@@ -14,6 +16,7 @@ namespace Progressive.PecaStarter5.ViewModels
         {
             var peercast = new Peercast();
             var yellowPages = PecaStarter5Factory.YellowPagesList;
+            BroadcastControlViewModel = new BroadcastControlViewModel(this);
             RelayListViewModel = new RelayListViewModel(peercast, yellowPages);
             YellowPagesListViewModel = new YellowPagesListViewModel(yellowPages);
             ExternalSourceViewModel = new ExternalSourceViewModel();
@@ -29,6 +32,7 @@ namespace Progressive.PecaStarter5.ViewModels
             }
         }
 
+        public BroadcastControlViewModel BroadcastControlViewModel { get; private set; }
         public RelayListViewModel RelayListViewModel { get; private set; }
         public YellowPagesListViewModel YellowPagesListViewModel { get; private set; }
         public ExternalSourceViewModel ExternalSourceViewModel { get; private set; }

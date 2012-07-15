@@ -80,6 +80,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Commons\ViewModels\Commands\RemoveItemCommand.cs" />
+    <Compile Include="ViewModels\Controls\BroadcastControlViewModel.cs" />
     <Compile Include="ViewModels\MainPanelViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\Pages\ExternalSourceViewModel.cs" />

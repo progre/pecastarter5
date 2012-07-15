@@ -6,7 +6,7 @@ using System.IO;
 using System.Reflection;
 using Progressive.PecaStarter5.Models.YellowPagesXml;
 using Progressive.PecaStarter5.Model;
-using Progressive.PecaStarter5.Models.Dao;
+using Progressive.PecaStarter5.Models.Daos;
 
 namespace Progressive.PecaStarter5.Models
 {

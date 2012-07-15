@@ -2,6 +2,7 @@
 using System.Windows.Input;
 using Progressive.PecaStarter5.Models.Services;
 using System;
+using Progressive.Peercast4Net;
 
 namespace Progressive.PecaStarter.ViewModel.Command
 {
@@ -46,7 +47,7 @@ namespace Progressive.PecaStarter.ViewModel.Command
 
         public void Execute(object parameter)
         {
-            new PeercastService().BroadcastAsync().ContinueWith(t =>
+            new PeercastService().BroadcastAsync((BroadcastParameter)parameter).ContinueWith(t =>
             {
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }
