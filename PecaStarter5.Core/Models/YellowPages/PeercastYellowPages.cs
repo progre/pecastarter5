@@ -7,6 +7,10 @@ namespace Progressive.PecaStarter5.Models
 {
     class PeercastYellowPages : YellowPages
     {
+        public string Header { get; set; }
+
+        public override string Host { get; set; }
+
         public override string GetPrefix(Dictionary<string, string> parameters)
         {
             var sb = new StringBuilder();
@@ -37,8 +41,6 @@ namespace Progressive.PecaStarter5.Models
             dictionary.Add("genre", value.Substring(index));
             return dictionary;
         }
-
-        public string Header { get; set; }
 
         private string GetPrefixParameter(string component, string value)
         {
@@ -75,6 +77,8 @@ namespace Progressive.PecaStarter5.Models
                     }
                     switch (value)
                     {
+                        case "0":
+                            return "";
                         case "1":
                             return "#";
                         case "2":

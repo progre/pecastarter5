@@ -15,22 +15,22 @@ namespace Progressive.PecaStarter5.Models
         public string UpdateUrl { get; set; }
         public string StopUrl { get; set; }
 
-        public async Task<string> Broadcast(NameValueCollection parameters)
+        public Task OnBroadcastAsync(NameValueCollection parameters)
         {
-            return await Post(BroadcastUrl, parameters);
+            return Post(BroadcastUrl, parameters);
         }
 
-        public async Task<string> Update(NameValueCollection parameters)
+        public Task UpdateAsync(NameValueCollection parameters)
         {
-            return await Post(UpdateUrl, parameters);
+            return Post(UpdateUrl, parameters);
         }
 
-        public async Task<string> Stop(NameValueCollection parameters)
+        public Task StopAsync(NameValueCollection parameters)
         {
-            return await Post(StopUrl, parameters);
+            return Post(StopUrl, parameters);
         }
 
-        private async Task<string> Post(string url, NameValueCollection parameters)
+        private async Task Post(string url, NameValueCollection parameters)
         {
             string response;
             using (var client = new WebClient())
@@ -42,7 +42,6 @@ namespace Progressive.PecaStarter5.Models
             {
                 throw new YellowPagesException(json.message);
             }
-            return json.message;
         }
     }
 

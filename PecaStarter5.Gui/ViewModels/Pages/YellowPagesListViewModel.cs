@@ -23,7 +23,7 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
                 settings = value;
                 var selectedYellowPages = value.SelectedYellowPages;
                 if (!string.IsNullOrEmpty(selectedYellowPages))
-                    SelectedYellowPages = YellowPagesViewModels.Single(x => x.Name == selectedYellowPages);
+                    SelectedYellowPages = YellowPagesViewModels.SingleOrDefault(x => x.Name == selectedYellowPages);
                 foreach (var yp in YellowPagesViewModels)
                 {
                     var ypSetting = value.YellowPagesList.FirstOrDefault(x => x.Name == yp.Name);

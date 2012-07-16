@@ -10,6 +10,15 @@ namespace Progressive.PecaStarter5.Models.YellowPagesXml
     {
         protected XDocument Xml { get; private set; }
 
+        public YellowPagesParser(string text)
+        {
+            Xml = XDocument.Parse(text);
+        }
+        public YellowPagesParser(XDocument xml)
+        {
+            Xml = xml;
+        }
+
         public string Name
         {
             get { return Xml.Element("yellowpages").Element("name").Value; }
@@ -51,15 +60,6 @@ namespace Progressive.PecaStarter5.Models.YellowPagesXml
                 return new WebApiYellowPagesParser(xml);
             }
             throw new ArgumentException();
-        }
-
-        public YellowPagesParser(string text)
-        {
-            Xml = XDocument.Parse(text);
-        }
-        public YellowPagesParser(XDocument xml)
-        {
-            Xml = xml;
         }
 
         public abstract IYellowPages GetInstance();

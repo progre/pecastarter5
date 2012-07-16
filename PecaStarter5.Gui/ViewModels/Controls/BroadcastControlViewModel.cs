@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Input;
 using Progressive.Peercast4Net;
+using Progressive.PecaStarter.ViewModel.Command;
+using Progressive.PecaStarter5.Models;
 
 namespace Progressive.PecaStarter5.ViewModels.Controls
 {
@@ -14,29 +16,34 @@ namespace Progressive.PecaStarter5.ViewModels.Controls
         public BroadcastControlViewModel(MainPanelViewModel parent)
         {
             this.parent = parent;
+            BroadcastCommand = new BroadcastCommand();
         }
 
         public ICommand BroadcastCommand { get; private set; }
-        public BroadcastParameter BroadcastParameter
+        public object BroadcastParameter
         {
             get
             {
+                var yp = parent.YellowPagesListViewModel.SelectedYellowPages;
                 var es = parent.ExternalSourceViewModel;
-                return new BroadcastParameter()
-                {
-                    StreamUrl = es.StreamUrl,
-                    Name = es.Name.History[0],
-                    Genre = es.Genre.History[0],
-                    Description = es.Description.History[0],
-                    Type = "WMV",
-                    ContactUrl = es.ContactUrl,
-                    Comment = es.Comment.History[0],
-                    TrackArtist = "",
-                    TrackTitle = "",
-                    TrackAlbum = "",
-                    TrackGenre = "",
-                    TrackContact = "",
-                };
+                return Tuple.Create(
+                    yp.Model,
+                    yp.AcceptedHash,
+                    new BroadcastParameter()
+                    {
+                        StreamUrl = es.StreamUrl,
+                        Name = es.Name.Value,
+                        Genre = es.Genre.Value,
+                        Description = es.Description.Value,
+                        Type = "WMV",
+                        ContactUrl = es.ContactUrl,
+                        Comment = es.Comment.Value,
+                        TrackArtist = "",
+                        TrackTitle = "",
+                        TrackAlbum = "",
+                        TrackGenre = "",
+                        TrackContact = "",
+                    });
             }
         }
     }

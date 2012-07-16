@@ -3,6 +3,7 @@ using System.Windows.Input;
 using Progressive.PecaStarter5.Models.Services;
 using System;
 using Progressive.Peercast4Net;
+using Progressive.PecaStarter5.Models;
 
 namespace Progressive.PecaStarter.ViewModel.Command
 {
@@ -10,6 +11,8 @@ namespace Progressive.PecaStarter.ViewModel.Command
     {
         public BroadcastCommand()
         {
+
+            // 実行後にUIを更新する必要がある
         }
 
         #region ICommand メンバー
@@ -47,8 +50,16 @@ namespace Progressive.PecaStarter.ViewModel.Command
 
         public void Execute(object parameter)
         {
-            new PeercastService().BroadcastAsync((BroadcastParameter)parameter).ContinueWith(t =>
+            var param = (Tuple<IYellowPages, int, BroadcastParameter>)parameter;
+            new PeercastService().BroadcastAsync(param.Item1, param.Item2, param.Item3,
+                new Progress<string>(x => { }))
+                .ContinueWith(t =>
             {
+                if (t.IsFaulted)
+                {
+                    // ダイアログ通知
+                    System.Windows.MessageBox.Show(t.Exception.InnerException.Message, "仮");
+                }
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 

@@ -32,6 +32,11 @@ namespace Progressive.Peercast4Net
         {
         }
 
+        public Task<string> GetYellowPagesAsync()
+        {
+            throw new NotImplementedException();// TODO:
+        }
+
         public Task SetYellowPagesAsync(string yellowPagesAddress)
         {
             throw new NotImplementedException();// TODO:

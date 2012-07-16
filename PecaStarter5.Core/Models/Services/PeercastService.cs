@@ -11,79 +11,60 @@ namespace Progressive.PecaStarter5.Models.Services
     {
         private Peercast peercast;
 
-        public Task BroadcastAsync(BroadcastParameter parameter)
+        public async Task BroadcastAsync(IYellowPages yellowPages, int acceptedHash, BroadcastParameter parameter,
+            IProgress<string> progress)
         {
-        //    // YPの更新確認
-        //    if (yp.CanGetNoticeHash())
-        //    {
-        //        viewModel.Feedback = "規約の更新を確認中...";
-        //        if (ypvm.AcceptedHash != await yp.GetNoticeHashAsync())
-        //        {
-        //            ypvm.IsAccepted = false;
-        //            viewModel.Feedback = "中止";
-        //            viewModel.NotifyAlert("イエローページの規約が更新されています。規約を再確認してください。");
-        //            return;
-        //        }
-        //    }
+            if (yellowPages.IsCheckNoticeUrl)
+            {
+                // YPの更新確認
+                progress.Report("規約の更新を確認中...");
+                if (await IsUpdatedYellowPagesAsync(yellowPages, acceptedHash))
+                {
+                    throw new ApplicationException("イエローページの規約が更新されています。規約を再確認してください。");
+                }
+                // YP更新
+                if (yellowPages.Host != await peercast.GetYellowPagesAsync())
+                {
+                    await peercast.SetYellowPagesAsync(yellowPages.Host);
+                }
+                // 開始
+                await peercast.BroadcastAsync(parameter);
+                try
+                {
+                    yellowPages.OnBroadcastAsync();
+                }
+                catch (Exception ex)
+                {
+                    //peercast.StopAsync();
+                    throw ex;
+                }
+                // ログ出力など
+                // logger.OnBroadcast();
+                progress.Report("チャンネルを作成しました");
+            }
 
-        //    // 開始
-
-        //    // ログ出力
-
-        //    if (yp is PeercastYellowPages)
-        //    {
-        //        var result = await PeercastYpExecute(yp as PeercastYellowPages, ypvm, viewModel.ExternalSourceViewModel);
-        //        if (result != Result.Success)
-        //        {
-        //            viewModel.Feedback = "中止";
-        //            viewModel.NotifyAlert("チャンネルの作成時にエラーが発生しました。\n原因: " + GetErrorMessage(result));
-        //            return;
-        //        }
-        //    }
-        //    else
-        //    {
-        //        var info = await WebApiYpExecute(yp as WebApiYellowPages, ypvm, viewModel.ExternalSourceViewModel);
-        //        if (info.Result != Result.Success)
-        //        {
-        //            viewModel.Feedback = "中止";
-        //            viewModel.NotifyAlert("チャンネルの作成時にエラーが発生しました。\n原因: " + GetErrorMessage(info));
-        //            return;
-        //        }
-        //    }
-        //    if (viewModel.SettingsViewModel.Logging)
-        //    {
-        //        var esvm = viewModel.ExternalSourceViewModel;
-        //        logger.Name = esvm.Name.Value;
-        //        logger.StartAt = DateTime.Now;
-        //        logger.insert("0", "0", esvm.Genre.Value, esvm.Description.Value, esvm.Comment.Value);
-        //    }
-        //    if (yp is WebApiYellowPages || viewModel.SettingsViewModel.Logging)
-        //    {
-        //        viewModel.BeginTimer();
-        //    }
-        //    viewModel.Feedback = "チャンネルを作成しました";
-            return null;
+            //    // ログ出力
+            //    if (viewModel.SettingsViewModel.Logging)
+            //    {
+            //        var esvm = viewModel.ExternalSourceViewModel;
+            //        logger.Name = esvm.Name.Value;
+            //        logger.StartAt = DateTime.Now;
+            //        logger.insert("0", "0", esvm.Genre.Value, esvm.Description.Value, esvm.Comment.Value);
+            //    }
+            //    if (yp is WebApiYellowPages || viewModel.SettingsViewModel.Logging)
+            //    {
+            //        viewModel.BeginTimer();
+            //    }
+            //    viewModel.Feedback = "チャンネルを作成しました";
         }
 
-        //private async Task<Result> PeercastYpExecute(PeercastYellowPages pyp, YellowPagesViewModel yp, ExternalSourceViewModel es)
-        //{
-        //    return (await peercast.Broadcast(pyp.Host, es.StreamUrl, es.Name.Value, yp.Prefix + es.Genre.Value, es.Description.Value, "WMV", es.ContactUrl.Value, es.Comment.Value, "", "", "", "", "")).Result;
-        //}
-
-        //private async Task<ResultInfo<string>> WebApiYpExecute(WebApiYellowPages wyp, YellowPagesViewModel ypvm, ExternalSourceViewModel esvm)
-        //{
-        //    var info = await peercast.Broadcast("", esvm.StreamUrl, esvm.Name.Value, esvm.Genre.Value, esvm.Description.Value, "WMV", esvm.ContactUrl.Value, esvm.Comment.Value, "", "", "", "", "");
-        //    if (info.Result != Result.Success)
-        //    {
-        //        return ResultInfo.Create(info.Result, "");
-        //    }
-        //    var wypInfo = await wyp.Broadcast(GetWebApiParameters(wyp.BroadcastParameters, info.Value.Item1, ypvm, esvm, "http://localhost:7144/pls/" + info.Value.Item2));
-        //    if (wypInfo.Result != Result.Success)
-        //    {
-        //        await peercast.Stop();
-        //        return wypInfo;
-        //    }
-        //    return wypInfo;
-        //}
+        private async Task<bool> IsUpdatedYellowPagesAsync(IYellowPages yellowPages, int acceptedHash)
+        {
+            if (acceptedHash != await yellowPages.GetNoticeHashAsync())
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }

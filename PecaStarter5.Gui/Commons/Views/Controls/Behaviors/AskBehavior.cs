@@ -1,6 +1,6 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
 using Progressive.Commons.Views.Utils;
-using System.Windows;
 
 namespace Progressive.PecaStarter.View.Control.Behavior
 {
@@ -12,7 +12,9 @@ namespace Progressive.PecaStarter.View.Control.Behavior
 
         public bool OnClick()
         {
-            if (Xceed.Wpf.Toolkit.MessageBox.Show(WpfUtils.GetRoot(Called), Message, "確認", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) != MessageBoxResult.Yes)
+            if (Xceed.Wpf.Toolkit.MessageBox.Show(WpfUtils.GetRoot(Called), Message, "確認",
+                MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No)
+                != MessageBoxResult.Yes)
             {
                 return false;
             }

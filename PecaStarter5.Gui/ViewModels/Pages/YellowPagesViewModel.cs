@@ -7,12 +7,12 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
 {
     public class YellowPagesViewModel : ViewModelBase
     {
-        private IYellowPages model;
+        public IYellowPages Model { get; private set; }
 
         public YellowPagesViewModel(IYellowPages model)
         {
             this.Parameters = new DynamicStringDictionary();
-            this.model = model;
+            this.Model = model;
             foreach (var component in model.Components)
             {
                 switch (component)
@@ -42,7 +42,7 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
             {
                 settings = value;
                 var dic = parameters.Dictionary;
-                foreach (var kv in model.Parse(value.Prefix))
+                foreach (var kv in Model.Parse(value.Prefix))
                 {
                     dic[kv.Key] = kv.Value;
                 }
@@ -55,9 +55,9 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
             set { settings.AcceptedHash = value; }
         }
 
-        public string Name { get { return model.Name; } }
+        public string Name { get { return Model.Name; } }
 
-        public string NoticeUrl { get { return model.NoticeUrl; } }
+        public string NoticeUrl { get { return Model.NoticeUrl; } }
 
         private bool isAccepted;
         public bool IsAccepted
@@ -75,7 +75,7 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
 
         public string Prefix
         {
-            get { return model.GetPrefix(Parameters.Dictionary); }
+            get { return Model.GetPrefix(Parameters.Dictionary); }
         }
     }
 }

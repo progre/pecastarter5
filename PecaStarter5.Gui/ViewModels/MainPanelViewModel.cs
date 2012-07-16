@@ -50,5 +50,12 @@ namespace Progressive.PecaStarter5.ViewModels
                     ExternalSourceViewModel.Prefix = YellowPagesListViewModel.SelectedYellowPages.Prefix;
             }
         }
+
+        private string alert;
+        public string Alert
+        {
+            get { return alert; }
+            set { SetProperty("Alert", ref alert, value); }
+        }
     }
 }

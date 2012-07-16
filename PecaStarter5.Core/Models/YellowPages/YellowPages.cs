@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
+using System.Net;
+using System.Threading.Tasks;
 
 namespace Progressive.PecaStarter5.Models
 {
@@ -10,6 +9,8 @@ namespace Progressive.PecaStarter5.Models
         #region IYellowPages メンバー
 
         public string Name { get; set; }
+
+        public virtual string Host { get { return "localhost"; } set { } }
 
         public bool IsCheckNoticeUrl { get; set; }
 
@@ -22,6 +23,16 @@ namespace Progressive.PecaStarter5.Models
         public virtual Dictionary<string, string> Parse(string value)
         {
             return new Dictionary<string, string>();
+        }
+
+        public virtual Task OnBroadcastAsync()
+        {
+            return Task.Factory.StartNew(() => { });
+        }
+
+        public async Task<int> GetNoticeHashAsync()
+        {
+            return (await new WebClient().DownloadStringTaskAsync(NoticeUrl)).GetHashCode();
         }
 
         #endregion

@@ -44,6 +44,7 @@ namespace Progressive.PecaStarter5.Models.YellowPagesXml
                 Components = Components,
                 Header = Header,
                 Name = Name,
+                Host = Host,
                 NoticeUrl = NoticeUrl,
                 IsCheckNoticeUrl = IsCheckNoticeUrl
             };

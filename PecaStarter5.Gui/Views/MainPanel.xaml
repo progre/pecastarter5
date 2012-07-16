@@ -47,8 +47,9 @@
                     <p:Settings DataContext="{Binding SettingsViewModel}"/>
                 </TabItem>
             </TabControl>
-            <c2:BroadcastControl
-                Visibility="{Binding SelectedIndex, Converter={StaticResource BroadcastVisibilityConverter}}"/>
+            <ContentControl Visibility="{Binding SelectedIndex, Converter={StaticResource BroadcastVisibilityConverter}}">
+                <c2:BroadcastControl DataContext="{Binding BroadcastControlViewModel}"/>
+            </ContentControl>
         </Grid>
     </DockPanel>
 </UserControl>
