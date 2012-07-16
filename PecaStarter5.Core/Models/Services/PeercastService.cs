@@ -11,14 +11,16 @@ namespace Progressive.PecaStarter5.Models.Services
     {
         private Peercast peercast;
 
-        public async Task BroadcastAsync(IYellowPages yellowPages, int acceptedHash, BroadcastParameter parameter,
+        public async Task BroadcastAsync(IYellowPages yellowPages, int? acceptedHash, BroadcastParameter parameter,
             IProgress<string> progress)
         {
             if (yellowPages.IsCheckNoticeUrl)
             {
                 // YPの更新確認
                 progress.Report("規約の更新を確認中...");
-                if (await IsUpdatedYellowPagesAsync(yellowPages, acceptedHash))
+                if (yellowPages.IsCheckNoticeUrl
+                    && acceptedHash.HasValue
+                    && await IsUpdatedYellowPagesAsync(yellowPages, acceptedHash.Value))
                 {
                     throw new ApplicationException("イエローページの規約が更新されています。規約を再確認してください。");
                 }

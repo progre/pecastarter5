@@ -83,7 +83,7 @@ namespace Progressive.PecaStarter5.Models
         public class YellowPages
         {
             public string Name { get; set; }
-            public int AcceptedHash { get; set; }
+            public int? AcceptedHash { get; set; }
             public string Prefix { get; set; }
         }
     }

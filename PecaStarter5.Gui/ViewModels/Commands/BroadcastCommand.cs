@@ -50,7 +50,7 @@ namespace Progressive.PecaStarter.ViewModel.Command
 
         public void Execute(object parameter)
         {
-            var param = (Tuple<IYellowPages, int, BroadcastParameter>)parameter;
+            var param = (Tuple<IYellowPages, int?, BroadcastParameter>)parameter;
             new PeercastService().BroadcastAsync(param.Item1, param.Item2, param.Item3,
                 new Progress<string>(x => { }))
                 .ContinueWith(t =>

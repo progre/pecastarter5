@@ -12,13 +12,15 @@ namespace Progressive.PecaStarter5.ViewModels
 {
     public class MainPanelViewModel : ViewModelBase
     {
+        private TaskQueue taskQueue = new TaskQueue();
+
         public MainPanelViewModel()
         {
             var peercast = new Peercast();
             var yellowPages = PecaStarter5Factory.YellowPagesList;
             BroadcastControlViewModel = new BroadcastControlViewModel(this);
             RelayListViewModel = new RelayListViewModel(peercast, yellowPages);
-            YellowPagesListViewModel = new YellowPagesListViewModel(yellowPages);
+            YellowPagesListViewModel = new YellowPagesListViewModel(yellowPages, taskQueue);
             ExternalSourceViewModel = new ExternalSourceViewModel();
             SettingsViewModel = new SettingsViewModel();
         }

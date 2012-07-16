@@ -2,15 +2,17 @@
 using Progressive.Commons.ViewModels;
 using Progressive.PecaStarter5.Commons.Models;
 using Progressive.PecaStarter5.Models;
+using System.Threading.Tasks;
 
 namespace Progressive.PecaStarter5.ViewModels.Pages
 {
     public class YellowPagesViewModel : ViewModelBase
     {
-        public IYellowPages Model { get; private set; }
+        private TaskQueue taskQueue;
 
-        public YellowPagesViewModel(IYellowPages model)
+        public YellowPagesViewModel(IYellowPages model, TaskQueue taskQueue)
         {
+            this.taskQueue = taskQueue;
             this.Parameters = new DynamicStringDictionary();
             this.Model = model;
             foreach (var component in model.Components)
@@ -35,6 +37,8 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
             };
         }
 
+        public IYellowPages Model { get; private set; }
+
         private Settings.YellowPages settings;
         public Settings.YellowPages Settings
         {
@@ -46,10 +50,11 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
                 {
                     dic[kv.Key] = kv.Value;
                 }
+                isAccepted = settings.AcceptedHash.HasValue;
             }
         }
 
-        public int AcceptedHash
+        public int? AcceptedHash
         {
             get { return settings.AcceptedHash; }
             set { settings.AcceptedHash = value; }
@@ -63,7 +68,22 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
         public bool IsAccepted
         {
             get { return isAccepted; }
-            set { SetProperty("IsAccepted", ref isAccepted, value); }
+            set
+            {
+                if (!SetProperty("IsAccepted", ref isAccepted, value))
+                    return;
+                if (value)
+                {
+                    taskQueue.Enqueue(() =>
+                        Model.GetNoticeHashAsync().ContinueWith(t =>
+                            AcceptedHash = t.Result));
+                }
+                else
+                {
+                    settings.AcceptedHash = null;
+                    return;
+                }
+            }
         }
 
         private DynamicStringDictionary parameters;

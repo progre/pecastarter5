@@ -10,9 +10,9 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
 {
     public class YellowPagesListViewModel : ViewModelBase
     {
-        public YellowPagesListViewModel(IEnumerable<IYellowPages> yellowPagesList)
+        public YellowPagesListViewModel(IEnumerable<IYellowPages> yellowPagesList, TaskQueue taskQueue)
         {
-            YellowPagesViewModels = yellowPagesList.Select(x => new YellowPagesViewModel(x)).ToArray();
+            YellowPagesViewModels = yellowPagesList.Select(x => new YellowPagesViewModel(x, taskQueue)).ToArray();
         }
 
         private Settings settings;

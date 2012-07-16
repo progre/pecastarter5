@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Models\Daos\SettingsDao.cs" />
     <Compile Include="Models\Services\PeercastService.cs" />
+    <Compile Include="Models\TaskQueue.cs" />
     <Compile Include="Models\YellowPages\IYellowPages.cs" />
     <Compile Include="Models\Logger.cs" />
     <Compile Include="Models\PecaStarter5Factory.cs" />

@@ -21,12 +21,13 @@ namespace Progressive.Commons.ViewModels
             PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        protected void SetProperty<T>(string propertyName, ref T obj, T value)
+        protected bool SetProperty<T>(string propertyName, ref T obj, T value)
         {
             if (obj != null && obj.Equals(value))
-                return;
+                return false;
             obj = value;
             OnPropertyChanged(propertyName);
+            return true;
         }
     }
 }
