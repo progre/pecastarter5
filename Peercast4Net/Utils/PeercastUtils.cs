@@ -13,6 +13,8 @@ namespace Progressive.Peercast4Net.Utils
     {
         public static string PercentEncode(string text)
         {
+            if (text == null)
+                return "";
             if (ShiftJisEncodings.CanEncodeShiftJis(text))
             {
                 return HttpUtils.ToRfc3986(text, ShiftJisEncodings.ShiftJis);

@@ -1,12 +1,12 @@
-﻿using System.Linq;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Progressive.Commons.ViewModels;
 using Progressive.PecaStarter5.Models;
+using Progressive.PecaStarter5.Models.Services;
+using Progressive.PecaStarter5.Models.YellowPagesXml;
+using Progressive.PecaStarter5.ViewModels.Controls;
 using Progressive.PecaStarter5.ViewModels.Pages;
 using Progressive.Peercast4Net;
-using Progressive.PecaStarter5.Models;
-using System.Windows.Input;
-using Progressive.PecaStarter5.ViewModels.Controls;
 
 namespace Progressive.PecaStarter5.ViewModels
 {
@@ -14,25 +14,19 @@ namespace Progressive.PecaStarter5.ViewModels
     {
         private TaskQueue taskQueue = new TaskQueue();
 
-        public MainPanelViewModel()
+        public MainPanelViewModel(IEnumerable<string> yellowPagesList, Settings settings)
         {
             var peercast = new Peercast();
-            var yellowPages = PecaStarter5Factory.YellowPagesList;
-            BroadcastControlViewModel = new BroadcastControlViewModel(this);
+            var channelParameter = new ChannelParameter();
+            var yellowPages = yellowPagesList.Select(x => YellowPagesParserFactory.GetInstance(x).GetInstance()); ;
             RelayListViewModel = new RelayListViewModel(peercast, yellowPages);
-            YellowPagesListViewModel = new YellowPagesListViewModel(yellowPages, taskQueue);
+            YellowPagesListViewModel = new YellowPagesListViewModel(yellowPages, settings, taskQueue);
             ExternalSourceViewModel = new ExternalSourceViewModel();
             SettingsViewModel = new SettingsViewModel();
-        }
+            BroadcastControlViewModel = new BroadcastControlViewModel(this, new PeercastService(peercast));
 
-        public Settings Settings
-        {
-            set
-            {
-                YellowPagesListViewModel.Settings = value;
-                ExternalSourceViewModel.Settings = value;
-                SettingsViewModel.Settings = value;
-            }
+            ExternalSourceViewModel.Settings = settings;
+            SettingsViewModel.Settings = settings;
         }
 
         public BroadcastControlViewModel BroadcastControlViewModel { get; private set; }

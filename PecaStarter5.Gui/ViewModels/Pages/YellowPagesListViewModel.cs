@@ -1,39 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Windows;
 using Progressive.Commons.ViewModels;
-using Progressive.PecaStarter5.Models;
 using Progressive.PecaStarter5.Models;
 
 namespace Progressive.PecaStarter5.ViewModels.Pages
 {
     public class YellowPagesListViewModel : ViewModelBase
     {
-        public YellowPagesListViewModel(IEnumerable<IYellowPages> yellowPagesList, TaskQueue taskQueue)
-        {
-            YellowPagesViewModels = yellowPagesList.Select(x => new YellowPagesViewModel(x, taskQueue)).ToArray();
-        }
-
         private Settings settings;
-        public Settings Settings
+
+        public YellowPagesListViewModel(IEnumerable<IYellowPages> yellowPagesList, Settings settings,
+            TaskQueue taskQueue)
         {
-            set
+            this.YellowPagesViewModels = yellowPagesList.Select(x => new YellowPagesViewModel(x, taskQueue)).ToArray();
+            this.settings = settings;
+
+            SelectedYellowPages = YellowPagesViewModels.SingleOrDefault(x => x.Name == settings.SelectedYellowPages);
+            foreach (var yp in YellowPagesViewModels)
             {
-                settings = value;
-                var selectedYellowPages = value.SelectedYellowPages;
-                if (!string.IsNullOrEmpty(selectedYellowPages))
-                    SelectedYellowPages = YellowPagesViewModels.SingleOrDefault(x => x.Name == selectedYellowPages);
-                foreach (var yp in YellowPagesViewModels)
+                yp.PropertyChanged += (sender, e) => OnPropertyChanged("Prefix");
+
+                var ypSetting = settings.YellowPagesList.FirstOrDefault(x => x.Name == yp.Name);
+                if (ypSetting == null)
                 {
-                    var ypSetting = value.YellowPagesList.FirstOrDefault(x => x.Name == yp.Name);
-                    if (ypSetting == null)
-                    {
-                        ypSetting = new Settings.YellowPages() { Name = yp.Name };
-                        value.YellowPagesList.Add(ypSetting);
-                    }
-                    yp.Settings = ypSetting;
+                    ypSetting = new Settings.YellowPages() { Name = yp.Name };
+                    settings.YellowPagesList.Add(ypSetting);
                 }
+                yp.Settings = ypSetting;
             }
         }
 
@@ -54,7 +47,13 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
             {
                 SetProperty("SelectedYellowPages", ref selectedYellowPages, value);
                 settings.SelectedYellowPages = value.Name;
+                OnPropertyChanged("Prefix");
             }
+        }
+
+        public string Prefix
+        {
+            get { return SelectedYellowPages.Prefix; }
         }
     }
 }

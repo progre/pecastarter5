@@ -10,6 +10,8 @@ using Progressive.Peercast4Net.Utils;
 using Progressive.Peercast4Net.Commons.Dao;
 using Progressive.Peercast4Net.Dao;
 using Progressive.Peercast4Net.Settings;
+using System.Configuration;
+using System.Net.Configuration;
 
 namespace Progressive.Peercast4Net
 {

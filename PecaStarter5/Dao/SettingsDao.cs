@@ -6,7 +6,7 @@ using Progressive.PecaStarter5.Models;
 using System.Xml.Serialization;
 using System.IO;
 
-namespace Progressive.PecaStarter5.Models.Daos
+namespace Progressive.PecaStarter5.Dao
 {
     class SettingsDao
     {

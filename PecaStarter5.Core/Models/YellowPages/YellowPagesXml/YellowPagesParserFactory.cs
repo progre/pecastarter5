@@ -6,7 +6,7 @@ using System.Xml.Linq;
 
 namespace Progressive.PecaStarter5.Models.YellowPagesXml
 {
-    class YellowPagesParserFactory
+    public class YellowPagesParserFactory
     {
         public static YellowPagesParser GetInstance(string path)
         {

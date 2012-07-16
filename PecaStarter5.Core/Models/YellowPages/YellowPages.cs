@@ -32,7 +32,13 @@ namespace Progressive.PecaStarter5.Models
 
         public async Task<int> GetNoticeHashAsync()
         {
-            return (await new WebClient().DownloadStringTaskAsync(NoticeUrl)).GetHashCode();
+            return await Task.Factory.StartNew(() =>
+            {
+                using (var client = new WebClient())
+                {
+                    return client.DownloadString(NoticeUrl).GetHashCode();
+                }
+            });
         }
 
         #endregion

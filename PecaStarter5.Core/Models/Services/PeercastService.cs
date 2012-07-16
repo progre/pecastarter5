@@ -11,6 +11,11 @@ namespace Progressive.PecaStarter5.Models.Services
     {
         private Peercast peercast;
 
+        public PeercastService(Peercast peercast)
+        {
+            this.peercast = peercast;
+        }
+
         public async Task BroadcastAsync(IYellowPages yellowPages, int? acceptedHash, BroadcastParameter parameter,
             IProgress<string> progress)
         {

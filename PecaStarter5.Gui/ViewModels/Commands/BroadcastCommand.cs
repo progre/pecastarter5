@@ -9,10 +9,11 @@ namespace Progressive.PecaStarter.ViewModel.Command
 {
     public class BroadcastCommand : ICommand
     {
-        public BroadcastCommand()
-        {
+        private PeercastService service;
 
-            // 実行後にUIを更新する必要がある
+        public BroadcastCommand(PeercastService service)
+        {
+            this.service = service;
         }
 
         #region ICommand メンバー
@@ -51,14 +52,14 @@ namespace Progressive.PecaStarter.ViewModel.Command
         public void Execute(object parameter)
         {
             var param = (Tuple<IYellowPages, int?, BroadcastParameter>)parameter;
-            new PeercastService().BroadcastAsync(param.Item1, param.Item2, param.Item3,
+            service.BroadcastAsync(param.Item1, param.Item2, param.Item3,
                 new Progress<string>(x => { }))
                 .ContinueWith(t =>
             {
                 if (t.IsFaulted)
                 {
                     // ダイアログ通知
-                    System.Windows.MessageBox.Show(t.Exception.InnerException.Message, "仮");
+                    System.Windows.MessageBox.Show(t.Exception.InnerException.Message + t.Exception.StackTrace, "仮");
                 }
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }

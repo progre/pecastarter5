@@ -12,9 +12,11 @@ namespace Progressive.PecaStarter5
     {
         protected override void OnStartup(StartupEventArgs e)
         {
+            var viewModel = new MainWindowViewModel(ExternalResource.YellowPagesList, ExternalResource.Settings);
+            viewModel.PropertyChanged += (sender, e1) => ExternalResource.Settings = viewModel.Settings;
             MainWindow = new MainWindow()
             {
-                DataContext = new MainWindowViewModel()
+                DataContext = new MainWindowViewModel(ExternalResource.YellowPagesList, ExternalResource.Settings)
             };
             MainWindow.Show();
 

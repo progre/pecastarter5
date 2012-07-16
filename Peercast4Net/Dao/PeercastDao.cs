@@ -84,7 +84,7 @@ namespace Progressive.Peercast4Net.Dao
                     PeercastUtils.PercentEncode(item.Key)).Append('=')
                     .Append(PeercastUtils.PercentEncode(item.Value));
             }
-            return client.AccessAsync(sb.ToString());
+            return client.AccessAsync("http://" + address + sb.ToString());
         }
 
         #region IDisposable メンバー

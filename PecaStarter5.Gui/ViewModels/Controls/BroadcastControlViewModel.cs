@@ -6,21 +6,31 @@ using System.Windows.Input;
 using Progressive.Peercast4Net;
 using Progressive.PecaStarter.ViewModel.Command;
 using Progressive.PecaStarter5.Models;
+using Progressive.PecaStarter5.Models.Services;
+using System.ComponentModel;
+using Progressive.Commons.ViewModels;
 
 namespace Progressive.PecaStarter5.ViewModels.Controls
 {
-    public class BroadcastControlViewModel
+    public class BroadcastControlViewModel : ViewModelBase
     {
         private MainPanelViewModel parent;
 
-        public BroadcastControlViewModel(MainPanelViewModel parent)
+        public BroadcastControlViewModel(MainPanelViewModel parent, PeercastService service)
         {
             this.parent = parent;
-            BroadcastCommand = new BroadcastCommand();
+            BroadcastCommand = new BroadcastCommand(service);
+            parent.YellowPagesListViewModel.PropertyChanged += (sender, e) =>
+                OnPropertyChanged("BroadcastParameter");
+            foreach (var vm in parent.YellowPagesListViewModel.YellowPagesViewModels)
+            {
+                vm.PropertyChanged += (sender, e) =>
+                    OnPropertyChanged("BroadcastParameter");
+            }
         }
 
         public ICommand BroadcastCommand { get; private set; }
-        public object BroadcastParameter
+        public Tuple<IYellowPages, int?, BroadcastParameter> BroadcastParameter
         {
             get
             {

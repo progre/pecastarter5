@@ -14,6 +14,15 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
 {
     public class RelayListViewModel : ViewModelBase
     {
+        public RelayListViewModel(Peercast peercast, IEnumerable<IYellowPages> yellowPagesList)
+        {
+            YellowPagesList = yellowPagesList;
+            isListEnabled = true;
+            Channels = Enumerable.Empty<IChannel>();
+            ReloadCommand = new ReloadCommand(this, peercast);
+            OpenCommand = new OpenCommand(this, peercast, yellowPagesList);
+        }
+
         private bool isListEnabled;
         public bool IsListEnabled
         {
@@ -66,15 +75,6 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
         public ICommand OpenCommand { get; private set; }
 
         public event EventHandler<SelectedEventArgs> ChannelSelected;
-
-        public RelayListViewModel(Peercast peercast, IEnumerable<IYellowPages> yellowPagesList)
-        {
-            YellowPagesList = yellowPagesList;
-            isListEnabled = true;
-            Channels = Enumerable.Empty<IChannel>();
-            ReloadCommand = new ReloadCommand(this, peercast);
-            OpenCommand = new OpenCommand(this, peercast, yellowPagesList);
-        }
 
         internal void OnChannelSelected()
         {
