@@ -27,6 +27,7 @@ namespace Progressive.PecaStarter5.ViewModels
         {
             set
             {
+                YellowPagesListViewModel.Settings = value;
                 ExternalSourceViewModel.Settings = value;
                 SettingsViewModel.Settings = value;
             }

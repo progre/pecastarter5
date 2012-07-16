@@ -1,19 +1,14 @@
 ﻿using System;
-using System.Collections;
+using System.ComponentModel;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Documents;
-using System.ComponentModel;
-using System.Reflection;
-using PecaStarter5.Gui.Views.Pages;
-using System.Collections.Generic;
 using Progressive.PecaStarter5.Commons.Models;
+using Progressive.PecaStarter5.Gui.Views.Pages;
+using System.Collections.Generic;
 
-namespace Progressive.PecaStarter.View.Page
+namespace Progressive.PecaStarter5.Views.Pages
 {
     /// <summary>
     /// Parameters.xaml の相互作用ロジック
@@ -73,16 +68,7 @@ namespace Progressive.PecaStarter.View.Page
         private void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             Clear();
-            var components = e.NewValue as INotifyPropertyChanged;
-            if (components == null)
-            {
-                if (e.NewValue.GetType().Name == "WpfBindingWrapper")
-                {
-                    return;
-                }
-                throw new ArgumentException();
-            }
-            DynamicDictionary<string> parameters = ((dynamic)components).Parameters;
+            DynamicStringDictionary parameters = ((dynamic)e.NewValue).Parameters;
             int i = 11;
             foreach (string key in parameters.Dictionary.Keys)
             {

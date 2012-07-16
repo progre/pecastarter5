@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Progressive.PecaStarter.View.Page.YellowPages"
+﻿<UserControl x:Class="Progressive.PecaStarter5.Views.Pages.YellowPages"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -9,7 +9,7 @@
         <ResourceDictionary Source="..\Styles\ResourceDictionary.xaml"/>
     </UserControl.Resources>
     <StackPanel>
-        <Grid>
+        <Grid DataContext="{Binding Parameters}">
             <StackPanel Name="CheckboxesStackPanel"/>
             <DockPanel>
                 <StackPanel Name="LabelsStackPanel"/>

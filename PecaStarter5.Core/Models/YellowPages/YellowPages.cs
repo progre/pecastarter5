@@ -19,7 +19,7 @@ namespace Progressive.PecaStarter5.Models
 
         public virtual string GetPrefix(Dictionary<string, string> parameters) { return ""; }
 
-        public Dictionary<string, string> Parse(string value)
+        public virtual Dictionary<string, string> Parse(string value)
         {
             return new Dictionary<string, string>();
         }

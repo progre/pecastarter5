@@ -14,6 +14,7 @@ namespace Progressive.PecaStarter5.Model
     {
         public Settings()
         {
+            YellowPagesList = new List<YellowPages>();
             NameHistory = new Collection<string>();
             GenreHistory = new Collection<string>();
             DescriptionHistory = new Collection<string>();
@@ -24,6 +25,7 @@ namespace Progressive.PecaStarter5.Model
         public double Width { get; set; }
         public double Height { get; set; }
 
+        public List<YellowPages> YellowPagesList { get; set; }
         public string StreamUrl { get; set; }
         public Collection<string> NameHistory { get; set; }
         public Collection<string> GenreHistory { get; set; }
@@ -75,6 +77,13 @@ namespace Progressive.PecaStarter5.Model
             if (GetType().GetProperty(propertyName) == null)
                 return;
             PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public class YellowPages
+        {
+            public string Name { get; set; }
+            public int AcceptedHash { get; set; }
+            public string Prefix { get; set; }
         }
     }
 }

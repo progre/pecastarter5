@@ -18,19 +18,24 @@ namespace Progressive.PecaStarter5.Models
             return sb.ToString();
         }
 
-        public Tuple<Dictionary<string, string>, string> Parse(string value)
+        public override Dictionary<string, string> Parse(string value)
         {
+            if (value == null)
+                return new Dictionary<string, string>();
+
             var dictionary = new Dictionary<string, string>();
             int index = 0;
             if (!Check(value, Header, ref index))
             {
-                return Tuple.Create(dictionary, value);
+                dictionary.Add("genre", value);
+                return dictionary;
             }
             foreach (var param in Components)
             {
                 dictionary[param] = GetParam(value, param, ref index);
             }
-            return Tuple.Create(dictionary, value.Substring(index));
+            dictionary.Add("genre", value.Substring(index));
+            return dictionary;
         }
 
         public string Header { get; set; }
@@ -52,6 +57,8 @@ namespace Progressive.PecaStarter5.Models
                     }
                     switch (value)
                     {
+                        case "0":
+                            return "";
                         case "1":
                             return "@";
                         case "2":
@@ -188,7 +195,7 @@ namespace Progressive.PecaStarter5.Models
         /// </summary>
         private bool EqualsOnIndex(string value, int index, string sign)
         {
-            return sign == value.Substring(index, sign.Length);
+            return value.Length > index && sign == value.Substring(index, sign.Length);
         }
     }
 }

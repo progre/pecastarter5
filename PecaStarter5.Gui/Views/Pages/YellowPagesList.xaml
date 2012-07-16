@@ -1,7 +1,7 @@
 ﻿<UserControl x:Class="Progressive.PecaStarter5.Views.Pages.YellowPagesList"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:l="clr-namespace:Progressive.PecaStarter.View.Page"
+    xmlns:l="clr-namespace:Progressive.PecaStarter5.Views.Pages"
     xmlns:c="clr-namespace:Progressive.Commons.Views.Converters">
     <UserControl.Resources>
         <ResourceDictionary>

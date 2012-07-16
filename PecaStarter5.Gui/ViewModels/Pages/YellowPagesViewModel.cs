@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Progressive.PecaStarter5.Models;
+﻿using System.Collections.Generic;
 using Progressive.Commons.ViewModels;
 using Progressive.PecaStarter5.Commons.Models;
+using Progressive.PecaStarter5.Models;
+using Progressive.PecaStarter5.Model;
 
 namespace Progressive.PecaStarter5.ViewModels.Pages
 {
@@ -13,7 +12,7 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
 
         public YellowPagesViewModel(IYellowPages model)
         {
-            this.Parameters = new DynamicDictionary<string>();
+            this.Parameters = new DynamicStringDictionary();
             this.model = model;
             foreach (var component in model.Components)
             {
@@ -30,9 +29,32 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
                         continue;
                 }
             }
+
+            Parameters.PropertyChanged += (sender, e) =>
+            {
+                settings.Prefix = Prefix;
+            };
         }
 
-        public int AcceptedHash { get; set; }
+        private Settings.YellowPages settings;
+        public Settings.YellowPages Settings
+        {
+            set
+            {
+                settings = value;
+                var dic = parameters.Dictionary;
+                foreach (var kv in model.Parse(value.Prefix))
+                {
+                    dic[kv.Key] = kv.Value;
+                }
+            }
+        }
+
+        public int AcceptedHash
+        {
+            get { return settings.AcceptedHash; }
+            set { settings.AcceptedHash = value; }
+        }
 
         public string Name { get { return model.Name; } }
 
@@ -45,15 +67,16 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
             set { SetProperty("IsAccepted", ref isAccepted, value); }
         }
 
-        public IEnumerable<string> Keys { get { return Parameters.Dictionary.Keys; } }
-        public DynamicDictionary<string> Parameters { get; set; }
+        private DynamicStringDictionary parameters;
+        public DynamicStringDictionary Parameters
+        {
+            get { return parameters; }
+            set { parameters = value; }
+        }
 
         public string Prefix
         {
-            get
-            {
-                return model.GetPrefix(Parameters.Dictionary);
-            }
+            get { return model.GetPrefix(Parameters.Dictionary); }
         }
     }
 }
