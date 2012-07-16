@@ -4,7 +4,7 @@ using System.Linq;
 using System.Windows;
 using Progressive.Commons.ViewModels;
 using Progressive.PecaStarter5.Models;
-using Progressive.PecaStarter5.Model;
+using Progressive.PecaStarter5.Models;
 
 namespace Progressive.PecaStarter5.ViewModels.Pages
 {
@@ -15,10 +15,15 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
             YellowPagesViewModels = yellowPagesList.Select(x => new YellowPagesViewModel(x)).ToArray();
         }
 
+        private Settings settings;
         public Settings Settings
         {
             set
             {
+                settings = value;
+                var selectedYellowPages = value.SelectedYellowPages;
+                if (!string.IsNullOrEmpty(selectedYellowPages))
+                    SelectedYellowPages = YellowPagesViewModels.Single(x => x.Name == selectedYellowPages);
                 foreach (var yp in YellowPagesViewModels)
                 {
                     var ypSetting = value.YellowPagesList.FirstOrDefault(x => x.Name == yp.Name);
@@ -45,7 +50,11 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
         public YellowPagesViewModel SelectedYellowPages
         {
             get { return selectedYellowPages; }
-            set { SetProperty("SelectedYellowPages", ref selectedYellowPages, value); }
+            set
+            {
+                SetProperty("SelectedYellowPages", ref selectedYellowPages, value);
+                settings.SelectedYellowPages = value.Name;
+            }
         }
     }
 }

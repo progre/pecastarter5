@@ -6,7 +6,7 @@ using System.Windows.Input;
 using Progressive.Commons.ViewModels;
 using Progressive.Commons.ViewModels.Controls;
 using Progressive.Commons.ViewModels.Commands;
-using Progressive.PecaStarter5.Model;
+using Progressive.PecaStarter5.Models;
 using System.Collections.Specialized;
 using System.Collections.ObjectModel;
 

@@ -1,5 +1,5 @@
 ﻿using Progressive.Commons.ViewModels;
-using Progressive.PecaStarter5.Model;
+using Progressive.PecaStarter5.Models;
 using System;
 using Progressive.PecaStarter5.ViewModels;
 using Progressive.PecaStarter5.Models;
@@ -8,8 +8,6 @@ namespace Progressive.PecaStarter5.ViewModel
 {
     public class MainWindowViewModel : ViewModelBase, IDisposable
     {
-        private string SettingsPath;
-
         public MainWindowViewModel()
         {
             MainPanelViewModel = new MainPanelViewModel();

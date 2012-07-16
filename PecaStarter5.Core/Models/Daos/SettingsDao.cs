@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Progressive.PecaStarter5.Model;
+using Progressive.PecaStarter5.Models;
 using System.Xml.Serialization;
 using System.IO;
 

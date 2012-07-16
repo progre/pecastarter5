@@ -8,7 +8,7 @@ using System.IO;
 using System.Collections.ObjectModel;
 using System.Xml.Serialization;
 
-namespace Progressive.PecaStarter5.Model
+namespace Progressive.PecaStarter5.Models
 {
     public class Settings : INotifyPropertyChanged
     {
@@ -25,6 +25,7 @@ namespace Progressive.PecaStarter5.Model
         public double Width { get; set; }
         public double Height { get; set; }
 
+        public string SelectedYellowPages { get; set; }
         public List<YellowPages> YellowPagesList { get; set; }
         public string StreamUrl { get; set; }
         public Collection<string> NameHistory { get; set; }

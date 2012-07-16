@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using Progressive.PecaStarter5.ViewModel;
 using Progressive.PecaStarter5.Views;
-using Progressive.PecaStarter5.Model;
+using Progressive.PecaStarter5.Models;
 
 namespace Progressive.PecaStarter5
 {

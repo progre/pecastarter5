@@ -2,7 +2,6 @@
 using Progressive.Commons.ViewModels;
 using Progressive.PecaStarter5.Commons.Models;
 using Progressive.PecaStarter5.Models;
-using Progressive.PecaStarter5.Model;
 
 namespace Progressive.PecaStarter5.ViewModels.Pages
 {

@@ -4,7 +4,7 @@ using Progressive.Commons.ViewModels;
 using Progressive.PecaStarter5.Models;
 using Progressive.PecaStarter5.ViewModels.Pages;
 using Progressive.Peercast4Net;
-using Progressive.PecaStarter5.Model;
+using Progressive.PecaStarter5.Models;
 using System.Windows.Input;
 using Progressive.PecaStarter5.ViewModels.Controls;
 
