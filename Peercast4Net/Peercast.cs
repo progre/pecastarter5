@@ -9,11 +9,18 @@ using Progressive.Peercast4Net.Commons;
 using Progressive.Peercast4Net.Utils;
 using Progressive.Peercast4Net.Commons.Dao;
 using Progressive.Peercast4Net.Dao;
+using Progressive.Peercast4Net.Settings;
 
 namespace Progressive.Peercast4Net
 {
     public class Peercast
     {
+        public const string NullId = "00000000000000000000000000000000";
+
+        public Peercast()
+        {
+        }
+
         private string address = "localhost:7144";
         public string Address
         {
@@ -28,23 +35,37 @@ namespace Progressive.Peercast4Net
             }
         }
 
-        public Peercast()
+        public async Task<string> GetYellowPagesAsync()
         {
+            IList<KeyValuePair<string, string>> nvc;
+            using (var dao = new PeercastDao(Address))
+            {
+                nvc = await GetSettingsAsync(dao);
+            }
+            return nvc.Single(x => x.Key == "yp").Value;
         }
 
-        public Task<string> GetYellowPagesAsync()
+        public async Task SetYellowPagesAsync(string yellowPagesAddress)
         {
-            throw new NotImplementedException();// TODO:
+            using (var dao = new PeercastDao(Address))
+            {
+                var nvc = await GetSettingsAsync(dao);
+                var ypParam = nvc.Single(x => x.Key == "yp");
+                if (yellowPagesAddress == ypParam.Value)
+                    return;
+
+                nvc.Remove(ypParam);
+                nvc.Add(new KeyValuePair<string, string>("yp", yellowPagesAddress));
+                await dao.ApplyAsync(nvc);
+            }
         }
 
-        public Task SetYellowPagesAsync(string yellowPagesAddress)
+        public async Task<Tuple<int, int>> GetListenersAsync(string name)
         {
-            throw new NotImplementedException();// TODO:
-        }
-
-        public Task<Tuple<int, int>> GetListenersAsync()
-        {
-            throw new NotImplementedException();// TODO:
+            using (var dao = new PeercastDao(Address))
+            {
+                return (await GetXmlStatusAsync(dao)).GetHits(name);
+            }
         }
 
         public async Task<IEnumerable<IChannel>> GetChannelsAsync()
@@ -71,13 +92,22 @@ namespace Progressive.Peercast4Net
                     await dao.StopAsync(id);
                     throw new PeercastException("Creating channel failed.");
                 }
-                // TODO: setmeta
+                await dao.SetMetaAsync(parameter.Name, parameter.Genre, parameter.Description,
+                    parameter.ContactUrl, parameter.Comment,
+                    parameter.TrackArtist, parameter.TrackTitle, parameter.TrackAlbum,
+                    parameter.TrackGenre, parameter.TrackContact);
             }
         }
 
-        public Task UpdateAsync(UpdateParameter parameter)
+        public async Task UpdateAsync(UpdateParameter parameter)
         {
-            throw new NotImplementedException();// TODO:
+            using (var dao = new PeercastDao(Address))
+            {
+                await dao.SetMetaAsync(parameter.Name, parameter.Genre, parameter.Description,
+                    parameter.ContactUrl, parameter.Comment,
+                    parameter.TrackArtist, parameter.TrackTitle, parameter.TrackAlbum,
+                    parameter.TrackGenre, parameter.TrackContact);
+            }
         }
 
         private Task StopAsync(string id)
@@ -88,14 +118,26 @@ namespace Progressive.Peercast4Net
             }
         }
 
-        private Task<bool> ExistsAsync(PeercastDao dao, string name)
+        private async Task<IList<KeyValuePair<string, string>>> GetSettingsAsync(PeercastDao dao)
         {
-            throw new NotImplementedException();// TODO:
+            var html = await dao.GetSettingsHtmlAsync();
+            return new SettingsHtmlParser().Parse(html);
         }
 
-        private Task<string> GetChannelIdAsync(PeercastDao dao, string name)
+        private async Task<bool> ExistsAsync(PeercastDao dao, string name)
         {
-            throw new NotImplementedException();// TODO:
+            return (await GetXmlStatusAsync(dao)).Exists(name);
+        }
+
+        private async Task<string> GetChannelIdAsync(PeercastDao dao, string name)
+        {
+            return (await GetXmlStatusAsync(dao)).GetChannelId(name);
+        }
+
+        private async Task<XmlStatus> GetXmlStatusAsync(PeercastDao dao)
+        {
+            var xml = await dao.GetViewXmlAsync();
+            return new XmlStatus(xml);
         }
     }
 }

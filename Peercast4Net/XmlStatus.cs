@@ -9,12 +9,14 @@ namespace Progressive.Peercast4Net
     {
         private XDocument xml;
 
+        public XmlStatus(string source)
+        {
+            xml = XDocument.Parse(source);
+        }
+
         public IEnumerable<IChannel> Channels
         {
-            get
-            {
-                return ChannelElements.Select(x => CreateChannel(x));
-            }
+            get { return ChannelElements.Select(x => CreateChannel(x)); }
         }
 
         private Channel CreateChannel(XElement channel)
@@ -43,22 +45,11 @@ namespace Progressive.Peercast4Net
 
         private IEnumerable<XElement> ChannelElements
         {
-            get
-            {
-                return xml.Element("peercast").Elements("channels_relayed").Elements("channel");
-            }
+            get { return xml.Element("peercast").Elements("channels_relayed").Elements("channel"); }
         }
         private IEnumerable<XElement> FoundChannelElements
         {
-            get
-            {
-                return xml.Element("peercast").Elements("channels_found").Elements("channel");
-            }
-        }
-
-        public XmlStatus(string source)
-        {
-            xml = XDocument.Parse(source);
+            get { return xml.Element("peercast").Elements("channels_found").Elements("channel"); }
         }
 
         public bool Exists(string name)
@@ -124,7 +115,7 @@ namespace Progressive.Peercast4Net
                     return channel.Attribute("id").Value;
                 }
             }
-            return PeercastServerDefine.NullId;
+            return Peercast.NullId;
         }
 
         public bool IsExistOnRelaysById(string id)
@@ -138,6 +129,7 @@ namespace Progressive.Peercast4Net
             }
             return false;
         }
+
         public Tuple<int, int> GetHits(string name)
         {
             foreach (XElement channel in xml.Element("peercast").Elements("channels_found").Elements("channel"))
