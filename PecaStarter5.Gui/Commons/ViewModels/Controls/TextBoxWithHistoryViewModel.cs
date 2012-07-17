@@ -1,30 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
 
 namespace Progressive.Commons.ViewModels.Controls
 {
     public class TextBoxWithHistoryViewModel : ViewModelBase
     {
-        private string value;
+        public TextBoxWithHistoryViewModel(ICommand command)
+        {
+            Command = command;
+        }
 
+        private string value = "";
         public string Value
         {
             get { return value; }
             set { SetProperty("Value", ref this.value, value); }
         }
 
-        public ObservableCollection<string> History { get; set; }
+        private ObservableCollection<string> history = new ObservableCollection<string>();
+        public ObservableCollection<string> History
+        {
+            get { return history; }
+            set
+            {
+                history = value;
+                Value = history.Count > 0 ? history[0] : "";
+            }
+        }
 
         public ICommand Command { get; private set; }
-
-        public TextBoxWithHistoryViewModel(ICommand command)
-        {
-            value = "";
-            History = new ObservableCollection<string>();
-            Command = command;
-        }
 
         public void UpdateHistory()
         {

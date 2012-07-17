@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using Progressive.Commons.ViewModels;
 using Progressive.PecaStarter5.Models;
 using Progressive.PecaStarter5.ViewModels;
-using System.Threading.Tasks;
-using System.Threading;
 
 namespace Progressive.PecaStarter5.ViewModel
 {
     public class MainWindowViewModel : ViewModelBase, IDisposable
     {
+        private bool disposed;
+
         public MainWindowViewModel(IEnumerable<string> yellowPagesList, Settings settings)
         {
             Settings = settings;
@@ -24,7 +24,7 @@ namespace Progressive.PecaStarter5.ViewModel
 
         ~MainWindowViewModel()
         {
-            Dispose();
+            Dispose(false);
         }
 
         public Settings Settings { get; private set; }
@@ -64,12 +64,27 @@ namespace Progressive.PecaStarter5.ViewModel
 
         public void Dispose()
         {
-            SynchronizationContext.Current.Post(x => MainPanelViewModel.ExternalSourceViewModel.UpdateHistory(), null);
-            OnPropertyChanged("Settings");
-
             GC.SuppressFinalize(this);
+            Dispose(true);
         }
 
         #endregion
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (this.disposed)
+            {
+                return;
+            }
+            this.disposed = true;
+
+            if (disposing)
+            {
+                // マネージ リソースの解放処理をこの位置に記述します。
+                MainPanelViewModel.ExternalSourceViewModel.UpdateHistory();
+            }
+            // アンマネージ リソースの解放処理をこの位置に記述します。
+            OnPropertyChanged("Settings");
+        }
     }
 }

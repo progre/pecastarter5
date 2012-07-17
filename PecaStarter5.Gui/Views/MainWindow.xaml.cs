@@ -59,6 +59,7 @@ namespace Progressive.PecaStarter5.Views
                 taskTrayIconManager.Dispose();
                 taskTrayIconManager = null;
             }
+            ((IDisposable)DataContext).Dispose();
             base.OnClosed(e);
         }
 
