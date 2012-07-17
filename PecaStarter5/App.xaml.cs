@@ -14,10 +14,7 @@ namespace Progressive.PecaStarter5
         {
             var viewModel = new MainWindowViewModel(ExternalResource.YellowPagesList, ExternalResource.Settings);
             viewModel.PropertyChanged += (sender, e1) => ExternalResource.Settings = viewModel.Settings;
-            MainWindow = new MainWindow()
-            {
-                DataContext = new MainWindowViewModel(ExternalResource.YellowPagesList, ExternalResource.Settings)
-            };
+            MainWindow = new MainWindow() { DataContext = viewModel };
             MainWindow.Show();
 
             this.DispatcherUnhandledException += (sender, dispatcherUnhandledExceptionEventArgs) =>

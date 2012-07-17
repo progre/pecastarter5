@@ -7,7 +7,7 @@
              mc:Ignorable="d">
     <StackPanel VerticalAlignment="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" Visibility="{Binding ButtonsVisibility}" Margin="5">
         <c:AskButton Content="配信開始" Message="チャンネルを作成します。よろしいですか？"
-            Command="{Binding BroadcastCommand}" CommandParameter="{Binding BroadcastParameter}"/>
+            Command="{Binding BroadcastCommand}"/>
         <Button Content="更新" Command="{Binding UpdateCommand}"/>
         <c:CountdownButton Text="切断" Message="チャンネルを切断します。よろしいですか？" Command="{Binding StopCommand}"/>
     </StackPanel>

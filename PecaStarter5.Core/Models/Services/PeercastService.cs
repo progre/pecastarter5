@@ -16,7 +16,7 @@ namespace Progressive.PecaStarter5.Models.Services
             this.peercast = peercast;
         }
 
-        public async Task BroadcastAsync(IYellowPages yellowPages, int? acceptedHash, BroadcastParameter parameter,
+        public async Task<string> BroadcastAsync(IYellowPages yellowPages, int? acceptedHash, BroadcastParameter parameter,
             IProgress<string> progress)
         {
             if (yellowPages.IsCheckNoticeUrl)
@@ -29,26 +29,25 @@ namespace Progressive.PecaStarter5.Models.Services
                 {
                     throw new ApplicationException("イエローページの規約が更新されています。規約を再確認してください。");
                 }
-                // YP更新
-                if (yellowPages.Host != await peercast.GetYellowPagesAsync())
-                {
-                    await peercast.SetYellowPagesAsync(yellowPages.Host);
-                }
-                // 開始
-                await peercast.BroadcastAsync(parameter);
-                try
-                {
-                    yellowPages.OnBroadcastAsync();
-                }
-                catch (Exception ex)
-                {
-                    //peercast.StopAsync();
-                    throw ex;
-                }
-                // ログ出力など
-                // logger.OnBroadcast();
-                progress.Report("チャンネルを作成しました");
             }
+            // YP更新
+            if (yellowPages.Host != await peercast.GetYellowPagesAsync())
+            {
+                await peercast.SetYellowPagesAsync(yellowPages.Host);
+            }
+            // 開始
+            string id = await peercast.BroadcastAsync(parameter);
+            try
+            {
+                yellowPages.OnBroadcastAsync();
+            }
+            catch (Exception ex)
+            {
+                //peercast.StopAsync();
+                throw ex;
+            }
+            // ログ出力など
+            // logger.OnBroadcast();
 
             //    // ログ出力
             //    if (viewModel.SettingsViewModel.Logging)
@@ -62,7 +61,23 @@ namespace Progressive.PecaStarter5.Models.Services
             //    {
             //        viewModel.BeginTimer();
             //    }
-            //    viewModel.Feedback = "チャンネルを作成しました";
+
+            progress.Report("チャンネルを作成しました");
+            return id;
+        }
+
+        public async Task UpdateAsync(UpdateParameter parameter, IProgress<string> progress)
+        {
+            progress.Report("通信中...");
+            await peercast.UpdateAsync(parameter);
+            progress.Report("チャンネル情報を更新しました");
+        }
+
+        public async Task StopAsync(string id, IProgress<string> progress)
+        {
+            progress.Report("通信中...");
+            await peercast.StopAsync(id);
+            progress.Report("チャンネルを切断しました");
         }
 
         private async Task<bool> IsUpdatedYellowPagesAsync(IYellowPages yellowPages, int acceptedHash)

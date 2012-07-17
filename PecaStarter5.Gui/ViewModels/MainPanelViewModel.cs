@@ -7,6 +7,7 @@ using Progressive.PecaStarter5.Models.YellowPagesXml;
 using Progressive.PecaStarter5.ViewModels.Controls;
 using Progressive.PecaStarter5.ViewModels.Pages;
 using Progressive.Peercast4Net;
+using Progressive.PecaStarter5.ViewModels.Dxos;
 
 namespace Progressive.PecaStarter5.ViewModels
 {
@@ -17,16 +18,14 @@ namespace Progressive.PecaStarter5.ViewModels
         public MainPanelViewModel(IEnumerable<string> yellowPagesList, Settings settings)
         {
             var peercast = new Peercast();
+            var service = new PeercastService(peercast);
             var channelParameter = new ChannelParameter();
             var yellowPages = yellowPagesList.Select(x => YellowPagesParserFactory.GetInstance(x).GetInstance()); ;
             RelayListViewModel = new RelayListViewModel(peercast, yellowPages);
             YellowPagesListViewModel = new YellowPagesListViewModel(yellowPages, settings, taskQueue);
-            ExternalSourceViewModel = new ExternalSourceViewModel();
-            SettingsViewModel = new SettingsViewModel();
-            BroadcastControlViewModel = new BroadcastControlViewModel(this, new PeercastService(peercast));
-
-            ExternalSourceViewModel.Settings = settings;
-            SettingsViewModel.Settings = settings;
+            ExternalSourceViewModel = new ExternalSourceViewModel() { Settings = settings };
+            SettingsViewModel = new SettingsViewModel() { Settings = settings };
+            BroadcastControlViewModel = new BroadcastControlViewModel(this, service);
         }
 
         public BroadcastControlViewModel BroadcastControlViewModel { get; private set; }
@@ -52,6 +51,16 @@ namespace Progressive.PecaStarter5.ViewModels
         {
             get { return alert; }
             set { SetProperty("Alert", ref alert, value); }
+        }
+
+        public BroadcastParameter BroadcastParameter
+        {
+            get { return ViewModelDxo.ToBroadcastParameter(this); }
+        }
+
+        public UpdateParameter UpdateParameter
+        {
+            get { return ViewModelDxo.ToUpdateParameter(this); }
         }
     }
 }

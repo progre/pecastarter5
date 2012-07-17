@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using Progressive.Commons.ViewModels;
 using Progressive.PecaStarter5.Models;
 using Progressive.PecaStarter5.ViewModels;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace Progressive.PecaStarter5.ViewModel
 {
@@ -62,6 +64,7 @@ namespace Progressive.PecaStarter5.ViewModel
 
         public void Dispose()
         {
+            SynchronizationContext.Current.Post(x => MainPanelViewModel.ExternalSourceViewModel.UpdateHistory(), null);
             OnPropertyChanged("Settings");
 
             GC.SuppressFinalize(this);

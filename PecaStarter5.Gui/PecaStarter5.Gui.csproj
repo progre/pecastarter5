@@ -58,8 +58,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commons\Models\DynamicDictionary.cs" />
+    <Compile Include="Commons\ViewModels\Commands\DelegateCommand.cs" />
     <Compile Include="Commons\ViewModels\Controls\TextBoxWithHistoryViewModel.cs" />
-    <Compile Include="ViewModels\Commands\BroadcastCommand.cs" />
     <Compile Include="ViewModels\Commands\OpenCommand.cs" />
     <Compile Include="ViewModels\Commands\ReloadCommand.cs" />
     <Compile Include="Commons\ViewModels\ViewModelBase.cs" />
@@ -81,6 +81,7 @@
     </Compile>
     <Compile Include="Commons\ViewModels\Commands\RemoveItemCommand.cs" />
     <Compile Include="ViewModels\Controls\BroadcastControlViewModel.cs" />
+    <Compile Include="ViewModels\Dxos\ViewModelDxo.cs" />
     <Compile Include="ViewModels\MainPanelViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\Pages\ExternalSourceViewModel.cs" />

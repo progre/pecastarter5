@@ -78,7 +78,7 @@ namespace Progressive.Peercast4Net
             }
         }
 
-        public async Task BroadcastAsync(BroadcastParameter parameter)
+        public async Task<string> BroadcastAsync(BroadcastParameter parameter)
         {
             using (var dao = new PeercastDao(Address))
             {
@@ -98,6 +98,7 @@ namespace Progressive.Peercast4Net
                     parameter.ContactUrl, parameter.Comment,
                     parameter.TrackArtist, parameter.TrackTitle, parameter.TrackAlbum,
                     parameter.TrackGenre, parameter.TrackContact);
+                return id;
             }
         }
 
@@ -112,7 +113,7 @@ namespace Progressive.Peercast4Net
             }
         }
 
-        private Task StopAsync(string id)
+        public Task StopAsync(string id)
         {
             using (var dao = new PeercastDao(Address))
             {

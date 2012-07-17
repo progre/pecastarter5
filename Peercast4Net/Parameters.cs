@@ -5,6 +5,23 @@ using System.Text;
 
 namespace Progressive.Peercast4Net
 {
+    public interface IChannelParameter : IBroadcastParameter, IUpdateParameter
+    {
+        string Id { get; }
+        string StreamUrl { get; }
+        string Name { get; }
+        string Genre { get; }
+        string Description { get; }
+        string Type { get; }
+        string ContactUrl { get; }
+        string Comment { get; }
+        string TrackArtist { get; }
+        string TrackTitle { get; }
+        string TrackAlbum { get; }
+        string TrackGenre { get; }
+        string TrackContact { get; }
+    }
+
     public interface IBroadcastParameter
     {
         string StreamUrl { get; }
