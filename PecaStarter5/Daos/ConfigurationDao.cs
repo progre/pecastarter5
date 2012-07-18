@@ -6,32 +6,32 @@ using Progressive.PecaStarter5.Models;
 using System.Xml.Serialization;
 using System.IO;
 
-namespace Progressive.PecaStarter5.Dao
+namespace Progressive.PecaStarter5.Daos
 {
-    class SettingsDao
+    class ConfigurationDao
     {
         public string FilePath { get; set; }
 
-        public Settings Get()
+        public Configuration Get()
         {
             try
             {
                 using (var fileStream = new FileStream(FilePath, FileMode.Open))
                 {
-                    return (Settings)new XmlSerializer(typeof(Settings)).Deserialize(fileStream);
+                    return (Configuration)new XmlSerializer(typeof(Configuration)).Deserialize(fileStream);
                 }
             }
             catch (FileNotFoundException)
             {
-                return new Settings();
+                return new Configuration();
             }
         }
 
-        public void Put(Settings entity)
+        public void Put(Configuration entity)
         {
             using (var fileStream = new FileStream(FilePath, FileMode.Create))
             {
-                new XmlSerializer(typeof(Settings)).Serialize(fileStream, entity);
+                new XmlSerializer(typeof(Configuration)).Serialize(fileStream, entity);
             }
         }
     }

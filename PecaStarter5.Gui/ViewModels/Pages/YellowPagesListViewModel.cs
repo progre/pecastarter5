@@ -7,9 +7,9 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
 {
     public class YellowPagesListViewModel : ViewModelBase
     {
-        private Settings settings;
+        private Configuration settings;
 
-        public YellowPagesListViewModel(IEnumerable<IYellowPages> yellowPagesList, Settings settings,
+        public YellowPagesListViewModel(IEnumerable<IYellowPages> yellowPagesList, Configuration settings,
             TaskQueue taskQueue)
         {
             this.YellowPagesViewModels = yellowPagesList.Select(x => new YellowPagesViewModel(x, taskQueue)).ToArray();
@@ -23,7 +23,7 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
                 var ypSetting = settings.YellowPagesList.FirstOrDefault(x => x.Name == yp.Name);
                 if (ypSetting == null)
                 {
-                    ypSetting = new Settings.YellowPages() { Name = yp.Name };
+                    ypSetting = new Configuration.YellowPages() { Name = yp.Name };
                     settings.YellowPagesList.Add(ypSetting);
                 }
                 yp.Settings = ypSetting;

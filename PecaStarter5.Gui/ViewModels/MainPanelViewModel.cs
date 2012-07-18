@@ -15,17 +15,17 @@ namespace Progressive.PecaStarter5.ViewModels
     {
         private TaskQueue taskQueue = new TaskQueue();
 
-        public MainPanelViewModel(IEnumerable<string> yellowPagesList, Settings settings)
+        public MainPanelViewModel(IEnumerable<string> yellowPagesList, Configuration configuration)
         {
             var peercast = new Peercast();
             var service = new PeercastService(peercast);
             var channelParameter = new ChannelParameter();
-            var yellowPages = yellowPagesList.Select(x => YellowPagesParserFactory.GetInstance(x).GetInstance()); ;
+            var yellowPages = yellowPagesList.Select(x => YellowPagesParserFactory.GetInstance(x).GetInstance());
             RelayListViewModel = new RelayListViewModel(peercast, yellowPages);
-            YellowPagesListViewModel = new YellowPagesListViewModel(yellowPages, settings, taskQueue);
-            ExternalSourceViewModel = new ExternalSourceViewModel() { Settings = settings };
-            SettingsViewModel = new SettingsViewModel() { Settings = settings };
-            BroadcastControlViewModel = new BroadcastControlViewModel(this, service);
+            YellowPagesListViewModel = new YellowPagesListViewModel(yellowPages, configuration, taskQueue);
+            ExternalSourceViewModel = new ExternalSourceViewModel() { Configuration = configuration };
+            SettingsViewModel = new SettingsViewModel(configuration, peercast);
+            BroadcastControlViewModel = new BroadcastControlViewModel(this, service, configuration);
         }
 
         public BroadcastControlViewModel BroadcastControlViewModel { get; private set; }

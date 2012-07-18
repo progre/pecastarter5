@@ -25,32 +25,32 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
             Comment = new TextBoxWithHistoryViewModel(removeItemCommand);
         }
 
-        private Settings settings;
-        public Settings Settings
+        private Configuration configuration;
+        public Configuration Configuration
         {
             set
             {
-                settings = value;
-                StreamUrl = settings.StreamUrl;
-                Name.History = new ObservableCollection<string>(settings.NameHistory);
-                settings.NameHistory = Name.History;
-                Genre.History = new ObservableCollection<string>(settings.GenreHistory);
-                settings.GenreHistory = Genre.History;
-                Description.History = new ObservableCollection<string>(settings.DescriptionHistory);
-                settings.DescriptionHistory = Description.History;
-                Comment.History = new ObservableCollection<string>(settings.CommentHistory);
-                settings.CommentHistory = Comment.History;
+                configuration = value;
+                StreamUrl = configuration.StreamUrl;
+                Name.History = new ObservableCollection<string>(configuration.NameHistory);
+                configuration.NameHistory = Name.History;
+                Genre.History = new ObservableCollection<string>(configuration.GenreHistory);
+                configuration.GenreHistory = Genre.History;
+                Description.History = new ObservableCollection<string>(configuration.DescriptionHistory);
+                configuration.DescriptionHistory = Description.History;
+                Comment.History = new ObservableCollection<string>(configuration.CommentHistory);
+                configuration.CommentHistory = Comment.History;
             }
         }
 
         public string StreamUrl
         {
-            get { return settings.StreamUrl; }
+            get { return configuration.StreamUrl; }
             set
             {
-                if (settings.StreamUrl == value)
+                if (configuration.StreamUrl == value)
                     return;
-                settings.StreamUrl = value;
+                configuration.StreamUrl = value;
                 OnPropertyChanged("StreamUrl");
             }
         }
@@ -68,12 +68,12 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
 
         public string ContactUrl
         {
-            get { return settings.ContactUrl; }
+            get { return configuration.ContactUrl; }
             set
             {
-                if (settings.ContactUrl == value)
+                if (configuration.ContactUrl == value)
                     return;
-                settings.ContactUrl = value;
+                configuration.ContactUrl = value;
                 OnPropertyChanged("ContactUrl");
             }
         }

@@ -1,91 +1,92 @@
 ﻿using System;
 using Progressive.Commons.ViewModels;
 using Progressive.PecaStarter5.Models;
+using Progressive.Peercast4Net;
 
 namespace Progressive.PecaStarter5.ViewModels.Pages
 {
     public class SettingsViewModel : ViewModelBase
     {
-        public SettingsViewModel()
-        {
-        }
+        private Configuration configuration;
+        private Peercast peercast;
 
-        private Settings settings;
-        public Settings Settings
+        public SettingsViewModel(Configuration configuration, Peercast peercast)
         {
-            set { settings = value; }
+            this.configuration = configuration;
+            this.peercast = peercast;
         }
 
         public int Port
         {
-            get { return settings.Port; }
+            get { return configuration.Port; }
             set
             {
                 if (value < 1 || 65535 < value)
                     throw new ArgumentException("1～65535の間で指定してください");
-                if (settings.Port == value)
+                if (configuration.Port == value)
                     return;
-                settings.Port = value;
+                configuration.Port = value;
+                peercast.Address = "localhost:" + value;
                 OnPropertyChanged("Port");
             }
         }
 
         public bool HasNotifyIcon
         {
-            get { return settings.HasNotifyIcon; }
+            get { return configuration.HasNotifyIcon; }
             set
             {
-                if (settings.HasNotifyIcon == value)
+                if (configuration.HasNotifyIcon == value)
                     return;
-                settings.HasNotifyIcon = value;
+                configuration.HasNotifyIcon = value;
                 OnPropertyChanged("HasNotifyIcon");
             }
         }
 
         public bool IsSavePosition
         {
-            get { return settings.IsSavePosition; }
+            get { return configuration.IsSavePosition; }
             set
             {
-                if (settings.IsSavePosition == value)
+                if (configuration.IsSavePosition == value)
                     return;
-                settings.IsSavePosition = value;
+                configuration.IsSavePosition = value;
                 OnPropertyChanged("IsSavePosition");
             }
         }
 
         public bool Logging
         {
-            get { return settings.Logging; }
+            get { return configuration.Logging; }
             set
             {
-                if (settings.Logging == value)
+                if (configuration.Logging == value)
                     return;
-                settings.Logging = value;
+                configuration.Logging = value;
                 OnPropertyChanged("Logging");
             }
         }
 
         public string LogPath
         {
-            get { return settings.LogPath; }
+            get { return configuration.LogPath; }
             set
             {
-                if (settings.LogPath == value)
+                if (configuration.LogPath == value)
                     return;
-                settings.LogPath = value;
+                configuration.LogPath = value;
                 OnPropertyChanged("LogPath");
             }
         }
 
         public int Delay
         {
-            get { return settings.Delay; }
+            get { return configuration.Delay; }
             set
             {
                 if (value < 0)
                     throw new ArgumentException();
-                settings.Delay = value;
+                configuration.Delay = value;
                 OnPropertyChanged("Delay");
             }
         }

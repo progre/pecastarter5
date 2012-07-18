@@ -39,8 +39,8 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
 
         public IYellowPages Model { get; private set; }
 
-        private Settings.YellowPages settings;
-        public Settings.YellowPages Settings
+        private Configuration.YellowPages settings;
+        public Configuration.YellowPages Settings
         {
             set
             {

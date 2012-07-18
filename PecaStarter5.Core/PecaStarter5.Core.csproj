@@ -43,12 +43,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\PecaStarterSettings.cs" />
     <Compile Include="Models\Services\PeercastService.cs" />
     <Compile Include="Models\TaskQueue.cs" />
     <Compile Include="Models\YellowPages\IYellowPages.cs" />
     <Compile Include="Models\Logger.cs" />
     <Compile Include="Models\YellowPages\PeercastYellowPages.cs" />
-    <Compile Include="Models\Settings.cs" />
+    <Compile Include="Models\Configuration.cs" />
     <Compile Include="Models\YellowPages\WebApiYellowPages.cs" />
     <Compile Include="Models\YellowPages\YellowPages.cs" />
     <Compile Include="Models\YellowPages\YellowPagesXml\PeercastYellowPagesPaser.cs" />
@@ -67,9 +68,7 @@
       <Name>Peercast4Net</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\Daos\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

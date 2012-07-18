@@ -3,13 +3,16 @@ using System.Windows.Input;
 using Progressive.Commons.ViewModels;
 using Progressive.Commons.ViewModels.Commands;
 using Progressive.PecaStarter5.Models.Services;
+using Progressive.PecaStarter5.Models;
 
 namespace Progressive.PecaStarter5.ViewModels.Controls
 {
     public class BroadcastControlViewModel : ViewModelBase
     {
-        public BroadcastControlViewModel(MainPanelViewModel parent, PeercastService service)
+        public BroadcastControlViewModel(MainPanelViewModel parent, PeercastService service, Configuration configuration)
         {
+            Configuration = configuration;
+
             BroadcastCommand = new DelegateCommand(() =>
             {
                 var yp = parent.YellowPagesListViewModel.SelectedYellowPages;
@@ -64,5 +67,6 @@ namespace Progressive.PecaStarter5.ViewModels.Controls
         public ICommand BroadcastCommand { get; private set; }
         public ICommand UpdateCommand { get; private set; }
         public ICommand StopCommand { get; private set; }
+        public Configuration Configuration { get; private set; }
     }
 }

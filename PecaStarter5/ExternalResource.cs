@@ -2,7 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using Progressive.PecaStarter5.Dao;
+using Progressive.PecaStarter5.Daos;
 using Progressive.PecaStarter5.Models;
 using Progressive.PecaStarter5.Models.YellowPagesXml;
 
@@ -10,13 +10,13 @@ namespace Progressive.PecaStarter5
 {
     static class ExternalResource
     {
-        public static Settings Settings
+        public static Configuration Configuration
         {
-            get { return new SettingsDao() { FilePath = SettingsFilePath }.Get(); }
-            set { new SettingsDao() { FilePath = SettingsFilePath }.Put(value); }
+            get { return new ConfigurationDao() { FilePath = ConfigurationFilePath }.Get(); }
+            set { new ConfigurationDao() { FilePath = ConfigurationFilePath }.Put(value); }
         }
 
-        private static string SettingsFilePath
+        private static string ConfigurationFilePath
         {
             get { return ApplicationPath + Path.GetFileNameWithoutExtension(Assembly.GetEntryAssembly().Location) + ".xml"; }
         }

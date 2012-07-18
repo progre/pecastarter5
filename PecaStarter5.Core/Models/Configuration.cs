@@ -10,9 +10,9 @@ using System.Xml.Serialization;
 
 namespace Progressive.PecaStarter5.Models
 {
-    public class Settings : INotifyPropertyChanged
+    public class Configuration : INotifyPropertyChanged
     {
-        public Settings()
+        public Configuration()
         {
             YellowPagesList = new List<YellowPages>();
             NameHistory = new Collection<string>();

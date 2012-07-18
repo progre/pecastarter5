@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Progressive.Commons.ViewModels;
 using Progressive.PecaStarter5.Models;
 using Progressive.PecaStarter5.ViewModels;
+using Progressive.Peercast4Net;
 
 namespace Progressive.PecaStarter5.ViewModel
 {
@@ -10,16 +11,16 @@ namespace Progressive.PecaStarter5.ViewModel
     {
         private bool disposed;
 
-        public MainWindowViewModel(IEnumerable<string> yellowPagesList, Settings settings)
+        public MainWindowViewModel(IEnumerable<string> yellowPagesList, Configuration configuration)
         {
-            Settings = settings;
-            settings.PropertyChanged += (sender, e) =>
+            Configuration = configuration;
+            configuration.PropertyChanged += (sender, e) =>
             {
                 if (e.PropertyName == "HasNotifyIcon")
                     OnPropertyChanged("HasNotifyIcon");
             };
 
-            MainPanelViewModel = new MainPanelViewModel(yellowPagesList, settings);
+            MainPanelViewModel = new MainPanelViewModel(yellowPagesList, configuration);
         }
 
         ~MainWindowViewModel()
@@ -27,35 +28,40 @@ namespace Progressive.PecaStarter5.ViewModel
             Dispose(false);
         }
 
-        public Settings Settings { get; private set; }
+        private Configuration configuration;
+        public Configuration Configuration
+        {
+            get { return configuration; }
+            private set { configuration = value; }
+        }
 
         public double Left
         {
-            get { return Settings.IsSavePosition ? Settings.Left : double.NaN; }
-            set { Settings.Left = value; }
+            get { return Configuration.IsSavePosition ? Configuration.Left : double.NaN; }
+            set { Configuration.Left = value; }
         }
 
         public double Top
         {
-            get { return Settings.IsSavePosition ? Settings.Top : double.NaN; }
-            set { Settings.Top = value; }
+            get { return Configuration.IsSavePosition ? Configuration.Top : double.NaN; }
+            set { Configuration.Top = value; }
         }
 
         public double Height
         {
-            get { return Settings.IsSavePosition ? Settings.Height : 320; }
-            set { Settings.Height = value; }
+            get { return Configuration.IsSavePosition ? Configuration.Height : 320; }
+            set { Configuration.Height = value; }
         }
 
         public double Width
         {
-            get { return Settings.IsSavePosition ? Settings.Width : 512; }
-            set { Settings.Width = value; }
+            get { return Configuration.IsSavePosition ? Configuration.Width : 512; }
+            set { Configuration.Width = value; }
         }
 
         public bool HasNotifyIcon
         {
-            get { return Settings.HasNotifyIcon; }
+            get { return Configuration.HasNotifyIcon; }
         }
 
         public MainPanelViewModel MainPanelViewModel { get; private set; }

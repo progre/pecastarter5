@@ -78,7 +78,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Dao\SettingsDao.cs" />
+    <Compile Include="Daos\ConfigurationDao.cs" />
     <Compile Include="ExternalResource.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
