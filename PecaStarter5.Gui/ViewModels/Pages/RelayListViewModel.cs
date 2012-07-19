@@ -18,7 +18,7 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
         {
             YellowPagesList = yellowPagesList;
             isListEnabled = true;
-            Channels = Enumerable.Empty<IChannel>();
+            Channels = new List<IChannel>();
             ReloadCommand = new ReloadCommand(this, peercast);
             OpenCommand = new OpenCommand(this, peercast, yellowPagesList);
         }
@@ -34,8 +34,8 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
             }
         }
 
-        private IEnumerable<IChannel> channels;
-        public IEnumerable<IChannel> Channels
+        private IList<IChannel> channels;
+        public IList<IChannel> Channels
         {
             get { return channels; }
             set
@@ -51,8 +51,9 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
             get { return selectedChannel; }
             set
             {
-                selectedChannel = value;
-                OnPropertyChanged("SelectedChannel");
+                if (!SetProperty("SelectedChannel", ref selectedChannel, value))
+                    return;
+                OpenCommand.OnCanExecuteChanged();
             }
         }
 
@@ -66,24 +67,31 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
             get { return selectedYellowPages; }
             set
             {
-                selectedYellowPages = value;
-                OnPropertyChanged("SelectedYellowPages");
+                if (!SetProperty("SelectedYellowPages", ref selectedYellowPages, value))
+                    return;
+                OpenCommand.OnCanExecuteChanged();
             }
         }
 
         public ICommand ReloadCommand { get; private set; }
-        public ICommand OpenCommand { get; private set; }
+        public OpenCommand OpenCommand { get; private set; }
 
         public event EventHandler<SelectedEventArgs> ChannelSelected;
 
         internal void OnChannelSelected()
         {
             if (ChannelSelected != null)
-                ChannelSelected(this, new SelectedEventArgs());
+                ChannelSelected(this, new SelectedEventArgs(SelectedChannel));
         }
     }
 
     public class SelectedEventArgs : EventArgs
     {
+        public IChannel SelectedChannel { get; private set; }
+
+        public SelectedEventArgs(IChannel selectedChannel)
+        {
+            SelectedChannel = selectedChannel;
+        }
     }
 }

@@ -5,6 +5,7 @@ using System.Text;
 
 namespace Progressive.Peercast4Net
 {
+    [Obsolete]
     public interface IChannelParameter : IBroadcastParameter, IUpdateParameter
     {
         string Id { get; }
@@ -22,6 +23,7 @@ namespace Progressive.Peercast4Net
         string TrackContact { get; }
     }
 
+    [Obsolete]
     public interface IBroadcastParameter
     {
         string StreamUrl { get; }
@@ -38,6 +40,7 @@ namespace Progressive.Peercast4Net
         string TrackContact { get; }
     }
 
+    [Obsolete]
     public interface IUpdateParameter
     {
         string Id { get; }

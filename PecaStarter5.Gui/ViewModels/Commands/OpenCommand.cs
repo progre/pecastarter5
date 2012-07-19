@@ -40,26 +40,13 @@ namespace Progressive.PecaStarter5.ViewModels.Commands
         public void Execute(object parameter)
         {
             parent.OnChannelSelected();
-            // YPタブを指定のYPに
-            //viewModel.YellowPagesesViewModel.SelectedYellowPages = viewModel.RelayListViewModel.SelectedYellowPages;
-            // ソースタブに値を反映
-            //var esvm = viewModel.ExternalSourceViewModel;
-            //esvm.Name.Value = ch.Name;
-            //esvm.Genre.Value = viewModel.YellowPagesesViewModel.SelectedYellowPages.Parse(ch.Genre);
-            //esvm.Description.Value = ch.Description;
-            //esvm.ContactUrl.Value = ch.ContactUrl;
-            //esvm.Comment.Value = ch.Comment;
-            //esvm.Name.Value = ch.Name;
-            // ソースタブに移動
-            //viewModel.SelectedIndex = 3;
-            // ログタイマー
-            //var ypvm = viewModel.YellowPagesesViewModel.SelectedYellowPages;
-            //var yp = yellowPageses.Single(a => a.Name == ypvm.Name);
-            //if (yp is WebApiYellowPages || viewModel.SettingsViewModel.Logging)
-            //{
-            //    viewModel.BeginTimer();
-            //}
         }
         #endregion
+
+        public void OnCanExecuteChanged()
+        {
+            if (CanExecuteChanged != null)
+                CanExecuteChanged(this, new EventArgs());
+        }
     }
 }

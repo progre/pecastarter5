@@ -27,7 +27,7 @@ namespace Progressive.PecaStarter.View.Control
                 State.SetContent(value);
             }
         }
-        public int Delay { get { return ((dynamic)DataContext).Delay; } }
+        public int Delay { get { return ((dynamic)DataContext).Configuration.Delay; } }
 
         private string CountdownMessage
         {

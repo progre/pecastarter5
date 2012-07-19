@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows.Input;
 using Progressive.PecaStarter5.ViewModels.Pages;
 using Progressive.Peercast4Net;
@@ -29,7 +30,7 @@ namespace Progressive.PecaStarter5.ViewModels.Commands
         {
             peercast.GetChannelsAsync().ContinueWith((x) =>
             {
-                parent.Channels = x.Result;
+                parent.Channels = x.Result.ToList();
             });
         }
 

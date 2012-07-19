@@ -9,10 +9,9 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
     {
         private Configuration settings;
 
-        public YellowPagesListViewModel(IEnumerable<IYellowPages> yellowPagesList, Configuration settings,
-            TaskQueue taskQueue)
+        public YellowPagesListViewModel(IEnumerable<IYellowPages> yellowPagesList, Configuration settings)
         {
-            this.YellowPagesViewModels = yellowPagesList.Select(x => new YellowPagesViewModel(x, taskQueue)).ToArray();
+            this.YellowPagesViewModels = yellowPagesList.Select(x => new YellowPagesViewModel(x)).ToArray();
             this.settings = settings;
 
             SelectedYellowPages = YellowPagesViewModels.SingleOrDefault(x => x.Name == settings.SelectedYellowPages);
@@ -48,6 +47,15 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
                 SetProperty("SelectedYellowPages", ref selectedYellowPages, value);
                 settings.SelectedYellowPages = value.Name;
                 OnPropertyChanged("Prefix");
+            }
+        }
+
+        public IYellowPages SelectedYellowPagesModel
+        {
+            get { return selectedYellowPages.Model; }
+            set
+            {
+                SelectedYellowPages = YellowPagesViewModels.First(x => x.Model.Equals(value));
             }
         }
 

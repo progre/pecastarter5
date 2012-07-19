@@ -8,11 +8,8 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
 {
     public class YellowPagesViewModel : ViewModelBase
     {
-        private TaskQueue taskQueue;
-
-        public YellowPagesViewModel(IYellowPages model, TaskQueue taskQueue)
+        public YellowPagesViewModel(IYellowPages model)
         {
-            this.taskQueue = taskQueue;
             this.Parameters = new DynamicStringDictionary();
             this.Model = model;
             foreach (var component in model.Components)
@@ -74,9 +71,8 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
                     return;
                 if (value)
                 {
-                    taskQueue.Enqueue(() =>
-                        Model.GetNoticeHashAsync().ContinueWith(t =>
-                            AcceptedHash = t.Result));
+                    Model.GetNoticeHashAsync()
+                        .ContinueWith(t => AcceptedHash = t.Result);
                 }
                 else
                 {
@@ -96,6 +92,22 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
         public string Prefix
         {
             get { return Model.GetPrefix(Parameters.Dictionary); }
+        }
+
+        public string Parse(string rowGenreString)
+        {
+            var rs = Model.Parse(rowGenreString);
+            string genre = "";
+            foreach (var kv in rs)
+            {
+                if (kv.Key == "genre")
+                {
+                    genre = kv.Value;
+                    continue;
+                }
+                Parameters.Dictionary[kv.Key] = kv.Value;
+            }
+            return genre;
         }
     }
 }

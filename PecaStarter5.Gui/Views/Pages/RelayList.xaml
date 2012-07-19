@@ -34,7 +34,8 @@
                                 Command="{Binding ReloadCommand}"/>
                 </Grid>
             </DockPanel>
-            <ListBox Name="List" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding Channels}">
+            <ListBox Name="List" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                     ItemsSource="{Binding Channels}" SelectedItem="{Binding SelectedChannel}">
                 <ListBox.Resources>
                     <Style TargetType="ListBoxItem">
                         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>

@@ -9,7 +9,6 @@
         <c:AskButton Content="配信開始" Message="チャンネルを作成します。よろしいですか？"
             Command="{Binding BroadcastCommand}"/>
         <Button Content="更新" Command="{Binding UpdateCommand}"/>
-        <c:CountdownButton Text="切断" Message="チャンネルを切断します。よろしいですか？" Command="{Binding StopCommand}"
-            DataContext="{Binding Configuration}"/>
+        <c:CountdownButton Text="切断" Message="チャンネルを切断します。よろしいですか？" Command="{Binding StopCommand}"/>
     </StackPanel>
 </UserControl>
