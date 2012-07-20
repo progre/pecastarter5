@@ -25,6 +25,13 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
             Comment = new TextBoxWithHistoryViewModel(removeItemCommand);
         }
 
+        private bool isBroadcasting;
+        public bool IsBroadcasting
+        {
+            get { return isBroadcasting; }
+            set { SetProperty("IsBroadcasting", ref isBroadcasting, value); }
+        }
+
         private Configuration configuration;
         public Configuration Configuration
         {

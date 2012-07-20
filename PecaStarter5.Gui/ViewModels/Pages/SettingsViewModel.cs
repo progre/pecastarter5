@@ -14,6 +14,7 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
         {
             this.configuration = configuration;
             this.peercast = peercast;
+            peercast.Address = "localhost:" + configuration.Port;
         }
 
         public int Port

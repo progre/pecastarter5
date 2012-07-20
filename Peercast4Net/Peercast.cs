@@ -1,17 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
-using System.Net;
-using Progressive.Peercast4Net.Commons;
-using Progressive.Peercast4Net.Utils;
-using Progressive.Peercast4Net.Commons.Dao;
 using Progressive.Peercast4Net.Dao;
 using Progressive.Peercast4Net.Settings;
-using System.Configuration;
-using System.Net.Configuration;
 
 namespace Progressive.Peercast4Net
 {
@@ -84,15 +78,15 @@ namespace Progressive.Peercast4Net
             {
                 if (await ExistsAsync(dao, parameter.Name))
                 {
-                    throw new PeercastException("Channel was duplicated.");
+                    throw new PeercastException("同名のチャンネルが既にあります。");
                 }
                 await dao.FetchAsync(parameter.StreamUrl, parameter.Name, parameter.Genre, parameter.Description,
                     parameter.ContactUrl, parameter.Type);
-                var id = await GetChannelIdAsync(dao, parameter.Name);
-                if (id == "")
+                var id = await Repeat(() => GetChannelIdAsync(dao, parameter.Name));
+                if (string.IsNullOrEmpty(id))
                 {
                     await dao.StopAsync(id);
-                    throw new PeercastException("Creating channel failed.");
+                    throw new PeercastException("チャンネルの作成に失敗しました。");
                 }
                 await dao.SetMetaAsync(parameter.Name, parameter.Genre, parameter.Description,
                     parameter.ContactUrl, parameter.Comment,
@@ -141,6 +135,18 @@ namespace Progressive.Peercast4Net
         {
             var xml = await dao.GetViewXmlAsync();
             return new XmlStatus(xml);
+        }
+
+        private async Task<string> Repeat(Func<Task<string>> func)
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                var result = await func();
+                if (!string.IsNullOrEmpty(result) && result != NullId)
+                    return result;
+                Thread.Sleep(i * 1000);
+            }
+            return null;
         }
     }
 }

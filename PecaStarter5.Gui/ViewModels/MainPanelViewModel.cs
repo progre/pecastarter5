@@ -30,9 +30,10 @@ namespace Progressive.PecaStarter5.ViewModels
 
             RelayListViewModel.ChannelSelected += (sender, e) =>
             {
+                var ch = e.SelectedChannel;
+                BroadcastControlViewModel.Id = ch.Id;
                 // YPタブを指定のYPに
                 YellowPagesListViewModel.SelectedYellowPagesModel = RelayListViewModel.SelectedYellowPages;
-                var ch = e.SelectedChannel;
                 // ソースタブに値を反映
                 var esvm = ExternalSourceViewModel;
                 esvm.Name.Value = ch.Name;
@@ -71,11 +72,18 @@ namespace Progressive.PecaStarter5.ViewModels
             }
         }
 
-        private string alert;
+        private string alert = "";
         public string Alert
         {
             get { return alert; }
             set { SetProperty("Alert", ref alert, value); }
+        }
+
+        private string feedback = "";
+        public string Feedback
+        {
+            get { return feedback; }
+            set { SetProperty("Feedback", ref feedback, value); }
         }
 
         public BroadcastParameter BroadcastParameter

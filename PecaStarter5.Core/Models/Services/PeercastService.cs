@@ -31,11 +31,10 @@ namespace Progressive.PecaStarter5.Models.Services
                 }
             }
             // YP更新
-            if (yellowPages.Host != await peercast.GetYellowPagesAsync())
-            {
-                await peercast.SetYellowPagesAsync(yellowPages.Host);
-            }
+            progress.Report("YPの設定を変更中...");
+            await peercast.SetYellowPagesAsync(yellowPages.Host);
             // 開始
+            progress.Report("チャンネルを作成中...");
             string id = await peercast.BroadcastAsync(parameter);
             try
             {
@@ -43,7 +42,6 @@ namespace Progressive.PecaStarter5.Models.Services
             }
             catch (Exception ex)
             {
-                //peercast.StopAsync();
                 throw ex;
             }
             // ログ出力など

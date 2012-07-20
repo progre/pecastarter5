@@ -96,6 +96,7 @@
     <Compile Include="Commons\Views\Converters\VisibilityConverters.cs" />
     <Compile Include="Commons\Views\GlassWindow.cs" />
     <Compile Include="Views\Converters\BroadcastVisibilityConverter.cs" />
+    <Compile Include="Commons\Views\Converters\NotConverter.cs" />
     <Compile Include="Views\MainPanel.xaml.cs">
       <DependentUpon>MainPanel.xaml</DependentUpon>
     </Compile>
