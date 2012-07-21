@@ -13,9 +13,9 @@ namespace Progressive.PecaStarter5.Models
         bool IsCheckNoticeUrl { get; }
         string NoticeUrl { get; }
         IEnumerable<string> Components { get; }
+        bool IsExternal { get; }
         string GetPrefix(Dictionary<string, string> parameters);
         Dictionary<string, string> Parse(string value);
-        Task OnBroadcastAsync();
         Task<int> GetNoticeHashAsync();
     }
 }

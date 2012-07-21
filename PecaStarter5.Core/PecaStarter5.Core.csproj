@@ -43,7 +43,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\ExternalYellowPages\IExternalYellowPages.cs" />
     <Compile Include="Models\Plugins\IPlugin.cs" />
+    <Compile Include="Models\Plugins\Parameters.cs" />
     <Compile Include="Models\Services\PeercastService.cs" />
     <Compile Include="Models\YellowPages\IYellowPages.cs" />
     <Compile Include="Models\Logger.cs" />

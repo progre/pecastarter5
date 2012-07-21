@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
+using Progressive.PecaStarter5.Models.ExternalYellowPages;
+using System.Threading.Tasks;
+using Progressive.Peercast4Net;
 
 namespace Progressive.PecaStarter5.Models.YellowPagesXml
 {
@@ -173,6 +176,9 @@ namespace Progressive.PecaStarter5.Models.YellowPagesXml
                 IsCheckNoticeUrl = IsCheckNoticeUrl,
                 StopUrl = StopUrl,
                 UpdateUrl = UpdateUrl,
+                BroadcastParameters = DefaultBroadcastParameters,
+                UpdateParameters = DefaultUpdateParameters,
+                StopParameters = DefaultStopParameters,
             };
         }
     }

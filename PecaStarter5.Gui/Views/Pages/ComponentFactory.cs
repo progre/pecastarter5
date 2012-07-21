@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Collections.Generic;
 
 namespace Progressive.PecaStarter5.Gui.Views.Pages
 {
@@ -77,26 +78,26 @@ namespace Progressive.PecaStarter5.Gui.Views.Pages
             var viewModel = (INotifyPropertyChanged)dataContext;
             labelCollection.Add(new Label() { Content = content });
             var control = new PasswordBox() { DataContext = dataContext, TabIndex = index };
-            dynamic indexAccessible = dataContext;
-            control.Password = indexAccessible.Parameters[key];
+            var parameters = (IDictionary<string, string>)((dynamic)dataContext).Dictionary;
+            control.Password = parameters[key];
             PropertyChangedEventHandler onSourceChanged = (sender, e) =>
             {
                 if (e.PropertyName != key)
                 {
                     return;
                 }
-                if (control.Password == indexAccessible[key])
+                if (control.Password == parameters[key])
                 {
                     return;
                 }
-                control.Password = indexAccessible[key];
+                control.Password = parameters[key];
             };
             viewModel.PropertyChanged += onSourceChanged;
             control.PasswordChanged += (sender, e) =>
             {
-                if (indexAccessible[key] != control.Password)
+                if (parameters[key] != control.Password)
                 {
-                    indexAccessible[key] = control.Password;
+                    parameters[key] = control.Password;
                 }
             };
             control.Unloaded += (sender, e) => viewModel.PropertyChanged -= onSourceChanged;

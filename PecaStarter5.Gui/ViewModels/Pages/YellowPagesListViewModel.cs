@@ -31,11 +31,11 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
 
         public IEnumerable<YellowPagesViewModel> YellowPagesViewModels { get; set; }
 
-        private bool isSelectorEnabled;
-        public bool IsSelectorEnabled
+        private bool isBroadcasting;
+        public bool IsBroadcasting
         {
-            get { return isSelectorEnabled; }
-            set { SetProperty("IsSelectorEnabled", ref isSelectorEnabled, value); }
+            get { return isBroadcasting; }
+            set { SetProperty("IsBroadcasting", ref isBroadcasting, value); }
         }
 
         private YellowPagesViewModel selectedYellowPages;

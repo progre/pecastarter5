@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Threading.Tasks;
+using Progressive.Peercast4Net;
 
 namespace Progressive.PecaStarter5.Models.Plugins
 {
@@ -13,7 +11,11 @@ namespace Progressive.PecaStarter5.Models.Plugins
     /// 配信オープン時？（ログ再開メッセージ）
     /// いずれもエラーが発生しても配信には影響しないものとする
     /// </summary>
-    interface IPlugin
+    public interface IPlugin
     {
+        Task OnBroadcastedAsync(BroadcastedParameter parameter);
+        Task OnUpdatedAsync(UpdateParameter parameter);
+        Task OnStopedAsync(string id);
+        Task OnTickedAsync(string name, int relays, int listeners);
     }
 }

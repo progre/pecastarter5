@@ -7,18 +7,19 @@
         <ResourceDictionary>
             <ResourceDictionary.Source>..\Styles\ResourceDictionary.xaml</ResourceDictionary.Source>
             <c:ReferenceVisibilityConverter x:Key="ReferenceVisibilityConverter"/>
+            <c:NotConverter x:Key="NotConverter"/>
         </ResourceDictionary>
     </UserControl.Resources>
     <StackPanel>
         <StackPanel.Resources>
         </StackPanel.Resources>
-        <DockPanel>
+        <DockPanel IsEnabled="{Binding IsBroadcasting, Converter={StaticResource NotConverter}}">
             <Label Content="イエローページ:"/>
             <ComboBox TabIndex="10" DisplayMemberPath="Name"
                       ItemsSource="{Binding YellowPagesViewModels}" SelectedValue="{Binding SelectedYellowPages}"/>
         </DockPanel>
         <UserControl Height="Auto"
-                     Visibility="{Binding SelectedYellowPages, Converter={StaticResource ReferenceVisibilityConverter}}">
+            Visibility="{Binding SelectedYellowPages, Converter={StaticResource ReferenceVisibilityConverter}}">
             <l:YellowPages DataContext="{Binding SelectedYellowPages}"/>
         </UserControl>
     </StackPanel>

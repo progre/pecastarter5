@@ -18,16 +18,13 @@ namespace Progressive.PecaStarter5.Models
 
         public IEnumerable<string> Components { get; set; }
 
+        public virtual bool IsExternal { get { return false; } }
+
         public virtual string GetPrefix(Dictionary<string, string> parameters) { return ""; }
 
         public virtual Dictionary<string, string> Parse(string value)
         {
             return new Dictionary<string, string>();
-        }
-
-        public virtual Task OnBroadcastAsync()
-        {
-            return Task.Factory.StartNew(() => { });
         }
 
         public async Task<int> GetNoticeHashAsync()

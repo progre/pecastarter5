@@ -6,6 +6,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Progressive.Peercast4Net.Commons;
 using Progressive.Peercast4Net.Utils;
+using Progressive.Peercast4Net.Commons.Utils;
 
 namespace Progressive.Peercast4Net.Dao
 {
@@ -43,7 +44,7 @@ namespace Progressive.Peercast4Net.Dao
         {
             return client.AccessAsync(
                 "http://" + address + string.Format(SetMetaCommand,
-                PeercastUtils.PercentEncode(name), PeercastUtils.PercentEncode(genre),
+                HttpUtils.ToRfc3986(name, Encoding.UTF8), PeercastUtils.PercentEncode(genre),
                 PeercastUtils.PercentEncode(description), PeercastUtils.PercentEncode(url),
                 PeercastUtils.PercentEncode(comment),
                 PeercastUtils.PercentEncode(trackArtist), PeercastUtils.PercentEncode(trackTitle),

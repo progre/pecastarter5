@@ -8,22 +8,31 @@ using Progressive.PecaStarter5.ViewModels.Controls;
 using Progressive.PecaStarter5.ViewModels.Pages;
 using Progressive.Peercast4Net;
 using Progressive.PecaStarter5.ViewModels.Dxos;
+using Progressive.PecaStarter5.Models.ExternalYellowPages;
+using Progressive.PecaStarter5.Models.Plugins;
 
 namespace Progressive.PecaStarter5.ViewModels
 {
     public class MainPanelViewModel : ViewModelBase
     {
-        public MainPanelViewModel(IEnumerable<string> yellowPagesList, Configuration configuration)
+        public MainPanelViewModel(IEnumerable<string> yellowPagesXmls, Configuration configuration)
         {
             var peercast = new Peercast();
-            var service = new PeercastService(peercast);
-            var yellowPagesModels = new List<IYellowPages>();
-            foreach (var xml in yellowPagesList)
+            var yellowPagesList = new List<IYellowPages>();
+            var externalYellowPages = new List<IExternalYellowPages>();
+            foreach (var xml in yellowPagesXmls)
             {
-                yellowPagesModels.Add(YellowPagesParserFactory.GetInstance(xml).GetInstance());
+                var yp = YellowPagesParserFactory.GetInstance(xml).GetInstance();
+                yellowPagesList.Add(yp);
+                if (yp.IsExternal)
+                {
+                    externalYellowPages.Add((IExternalYellowPages)yp);
+                }
             }
-            RelayListViewModel = new RelayListViewModel(peercast, yellowPagesModels);
-            YellowPagesListViewModel = new YellowPagesListViewModel(yellowPagesModels, configuration);
+            var service = new PeercastService(peercast, externalYellowPages, Enumerable.Empty<IPlugin>());
+
+            RelayListViewModel = new RelayListViewModel(peercast, yellowPagesList);
+            YellowPagesListViewModel = new YellowPagesListViewModel(yellowPagesList, configuration);
             ExternalSourceViewModel = new ExternalSourceViewModel() { Configuration = configuration };
             SettingsViewModel = new SettingsViewModel(configuration, peercast);
             BroadcastControlViewModel = new BroadcastControlViewModel(this, service, configuration);
