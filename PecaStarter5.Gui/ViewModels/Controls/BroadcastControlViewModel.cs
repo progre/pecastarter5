@@ -1,108 +1,97 @@
 ﻿using System;
-using System.Windows.Input;
+using System.Threading.Tasks;
 using Progressive.Commons.ViewModels;
 using Progressive.Commons.ViewModels.Commands;
-using Progressive.PecaStarter5.Models.Services;
 using Progressive.PecaStarter5.Models;
-using System.Threading.Tasks;
+using Progressive.PecaStarter5.Models.Services;
 using Progressive.PecaStarter5.ViewModels.Dxos;
+using Progressive.PecaStarter5.Models.Channels;
 
 namespace Progressive.PecaStarter5.ViewModels.Controls
 {
     public class BroadcastControlViewModel : ViewModelBase
     {
-        private MainPanelViewModel parent;
         public BroadcastControlViewModel(MainPanelViewModel parent, PeercastService service, Configuration configuration)
         {
-            this.parent = parent;
             Configuration = configuration;
 
             BroadcastCommand = new DelegateCommand(() =>
             {
+                var parameter = ViewModelDxo.ToBroadcastParameter(parent.ExternalSourceViewModel);
                 var yp = parent.YellowPagesListViewModel.SelectedYellowPages;
                 service.BroadcastAsync(yp.Model, yp.AcceptedHash, yp.Parameters.Dictionary,
-                    ViewModelDxo.ToBroadcastParameter(parent),
+                    parameter,
                     new Progress<string>(x => parent.Feedback = x))
                     .ContinueWith(t =>
                     {
                         if (t.IsFaulted)
                         {
-                            // ダイアログ通知
-                            parent.Feedback = "中止";
-                            parent.Alert = t.Exception.InnerException.Message + t.Exception.StackTrace;
+                            OnException(parent, t.Exception);
                             return;
                         }
-                        Id = t.Result;
+                        BroadcastingChannel = new BroadcastingChannel(parameter.Name, t.Result);
                     }, TaskScheduler.FromCurrentSynchronizationContext());
-            }, () => !IsBroadcasting);
+            }, () => BroadcastingChannel == null);
 
             UpdateCommand = new DelegateCommand(() =>
             {
                 var yp = parent.YellowPagesListViewModel.SelectedYellowPages;
                 service.UpdateAsync(
                     yp.Model, yp.Parameters.Dictionary,
-                    ViewModelDxo.ToUpdateParameter(parent),
+                    ViewModelDxo.ToUpdateParameter(BroadcastingChannel.Id, parent.ExternalSourceViewModel),
                     new Progress<string>(x => parent.Feedback = x))
                     .ContinueWith(t =>
                     {
                         if (t.IsFaulted)
                         {
-                            // ダイアログ通知
-                            parent.Feedback = "中止";
-                            parent.Alert = t.Exception.InnerException.Message + t.Exception.StackTrace;
+                            OnException(parent, t.Exception);
                             return;
                         }
                     }, TaskScheduler.FromCurrentSynchronizationContext());
-            }, () => IsBroadcasting);
+            }, () => BroadcastingChannel != null);
 
             StopCommand = new DelegateCommand(() =>
             {
                 var yp = parent.YellowPagesListViewModel.SelectedYellowPages;
                 service.StopAsync(yp.Model, yp.Parameters.Dictionary,
-                    parent.ExternalSourceViewModel.Name.Value, Id,
+                    BroadcastingChannel.Name, BroadcastingChannel.Id,
                     new Progress<string>(x => parent.Feedback = x))
                     .ContinueWith(t =>
                     {
                         if (t.IsFaulted)
                         {
-                            // ダイアログ通知
-                            parent.Feedback = "中止";
-                            parent.Alert = t.Exception.InnerException.Message + t.Exception.StackTrace;
+                            OnException(parent, t.Exception);
                             return;
                         }
-                        Id = "";
+                        BroadcastingChannel = null;
                     }, TaskScheduler.FromCurrentSynchronizationContext());
-            }, () => IsBroadcasting);
+            }, () => BroadcastingChannel != null);
         }
 
-        private string id = "";
-        public string Id
+        private BroadcastingChannel broadcastingChannel;
+        public BroadcastingChannel BroadcastingChannel
         {
-            get { return id; }
-            set
+            get { return broadcastingChannel; }
+            set // Selectorから入るので外から設定可
             {
-                if (!SetProperty("Id", ref id, value))
+                if (!SetProperty("BroadcastingChannel", ref broadcastingChannel, value))
                     return;
-                if (string.IsNullOrEmpty(id))
-                {
-                    parent.ExternalSourceViewModel.IsBroadcasting = false;
-                }
-                else
-                {
-                    parent.ExternalSourceViewModel.IsBroadcasting = true;
-                }
-                OnPropertyChanged("IsBroadcasting");
                 BroadcastCommand.OnCanExecuteChanged();
                 UpdateCommand.OnCanExecuteChanged();
                 StopCommand.OnCanExecuteChanged();
             }
         }
 
-        public bool IsBroadcasting { get { return !string.IsNullOrEmpty(Id); } }
-
         public DelegateCommand BroadcastCommand { get; private set; }
         public DelegateCommand UpdateCommand { get; private set; }
         public DelegateCommand StopCommand { get; private set; }
-        public Configuration Configuration { get; private set; }
+        public Configuration Configuration { get; private set; } // カウントダウンボタンが使用
+
+        private void OnException(MainPanelViewModel parent, Exception ex)
+        {
+            // ダイアログ通知
+            parent.Feedback = "中止";
+            parent.Alert = ex.InnerException.Message + ex.StackTrace;
+        }
     }
 }

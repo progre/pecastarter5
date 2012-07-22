@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Net;
+using System.Text;
 using System.Threading.Tasks;
 using Progressive.Peercast4Net.Commons;
-using Progressive.Peercast4Net.Utils;
 using Progressive.Peercast4Net.Commons.Utils;
+using Progressive.Peercast4Net.Utils;
 
-namespace Progressive.Peercast4Net.Dao
+namespace Progressive.Peercast4Net.Daos
 {
     class PeercastDao : IDisposable
     {

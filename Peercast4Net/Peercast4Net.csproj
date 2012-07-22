@@ -48,15 +48,14 @@
     <Compile Include="Commons\ShiftJisEncodings.cs" />
     <Compile Include="Commons\Utils\HttpUtils.cs" />
     <Compile Include="Commons\WebClientExtension.cs" />
-    <Compile Include="Commons\Dao\HttpDao.cs" />
     <Compile Include="CreteLib\HtmlDocument.cs" />
     <Compile Include="CreteLib\HtmlNode.cs" />
     <Compile Include="CreteLib\HtmlNodeList.cs" />
     <Compile Include="CreteLib\HtmlParser.cs" />
     <Compile Include="CreteLib\HtmlTextNode.cs" />
     <Compile Include="CreteLib\NodeType.cs" />
-    <Compile Include="Dao\PeercastDao.cs" />
-    <Compile Include="Dao\TestingPeercastDao.cs" />
+    <Compile Include="Daos\PeercastDao.cs" />
+    <Compile Include="Daos\TestingPeercastDao.cs" />
     <Compile Include="IChannel.cs" />
     <Compile Include="Parameters.cs" />
     <Compile Include="Peercast.cs" />

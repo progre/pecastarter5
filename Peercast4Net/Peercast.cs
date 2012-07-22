@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-using Progressive.Peercast4Net.Dao;
+using Progressive.Peercast4Net.Daos;
 using Progressive.Peercast4Net.Settings;
 
 namespace Progressive.Peercast4Net

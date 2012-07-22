@@ -3,23 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Progressive.Peercast4Net;
+using Progressive.PecaStarter5.ViewModels.Pages;
 
 namespace Progressive.PecaStarter5.ViewModels.Dxos
 {
     static class ViewModelDxo
     {
-        public static BroadcastParameter ToBroadcastParameter(MainPanelViewModel viewModel)
+        public static BroadcastParameter ToBroadcastParameter(ExternalSourceViewModel viewModel)
         {
-            var es = viewModel.ExternalSourceViewModel;
             return new BroadcastParameter()
             {
-                StreamUrl = es.StreamUrl,
-                Name = es.Name.Value,
-                Genre = es.Genre.Value,
-                Description = es.Description.Value,
+                StreamUrl = viewModel.StreamUrl,
+                Name = viewModel.Name.Value,
+                Genre = viewModel.Genre.Value,
+                Description = viewModel.Description.Value,
                 Type = "WMV",
-                ContactUrl = es.ContactUrl,
-                Comment = es.Comment.Value,
+                ContactUrl = viewModel.ContactUrl,
+                Comment = viewModel.Comment.Value,
                 TrackArtist = "",
                 TrackTitle = "",
                 TrackAlbum = "",
@@ -28,17 +28,16 @@ namespace Progressive.PecaStarter5.ViewModels.Dxos
             };
         }
 
-        public static UpdateParameter ToUpdateParameter(MainPanelViewModel viewModel)
+        public static UpdateParameter ToUpdateParameter(string id, ExternalSourceViewModel viewModel)
         {
-            var es = viewModel.ExternalSourceViewModel;
             return new UpdateParameter()
             {
-                Id = "",
-                Name = es.Name.Value,
-                Genre = es.Genre.Value,
-                Description = es.Description.Value,
-                ContactUrl = es.ContactUrl,
-                Comment = es.Comment.Value,
+                Id = id,
+                Name = viewModel.Name.Value,
+                Genre = viewModel.Genre.Value,
+                Description = viewModel.Description.Value,
+                ContactUrl = viewModel.ContactUrl,
+                Comment = viewModel.Comment.Value,
                 TrackArtist = "",
                 TrackTitle = "",
                 TrackAlbum = "",

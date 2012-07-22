@@ -43,6 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\Channels\BroadcastingChannel.cs" />
+    <Compile Include="Models\Channels\Channel.cs" />
     <Compile Include="Models\ExternalYellowPages\IExternalYellowPages.cs" />
     <Compile Include="Models\Plugins\IPlugin.cs" />
     <Compile Include="Models\Plugins\Parameters.cs" />
