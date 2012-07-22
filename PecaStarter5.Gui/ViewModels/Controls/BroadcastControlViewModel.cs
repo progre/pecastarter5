@@ -5,6 +5,7 @@ using Progressive.Commons.ViewModels.Commands;
 using Progressive.PecaStarter5.Models.Services;
 using Progressive.PecaStarter5.Models;
 using System.Threading.Tasks;
+using Progressive.PecaStarter5.ViewModels.Dxos;
 
 namespace Progressive.PecaStarter5.ViewModels.Controls
 {
@@ -19,7 +20,8 @@ namespace Progressive.PecaStarter5.ViewModels.Controls
             BroadcastCommand = new DelegateCommand(() =>
             {
                 var yp = parent.YellowPagesListViewModel.SelectedYellowPages;
-                service.BroadcastAsync(yp.Model, yp.AcceptedHash, parent.BroadcastParameter,
+                service.BroadcastAsync(yp.Model, yp.AcceptedHash, yp.Parameters.Dictionary,
+                    ViewModelDxo.ToBroadcastParameter(parent),
                     new Progress<string>(x => parent.Feedback = x))
                     .ContinueWith(t =>
                     {
@@ -36,7 +38,10 @@ namespace Progressive.PecaStarter5.ViewModels.Controls
 
             UpdateCommand = new DelegateCommand(() =>
             {
-                service.UpdateAsync(parent.UpdateParameter,
+                var yp = parent.YellowPagesListViewModel.SelectedYellowPages;
+                service.UpdateAsync(
+                    yp.Model, yp.Parameters.Dictionary,
+                    ViewModelDxo.ToUpdateParameter(parent),
                     new Progress<string>(x => parent.Feedback = x))
                     .ContinueWith(t =>
                     {
@@ -52,7 +57,9 @@ namespace Progressive.PecaStarter5.ViewModels.Controls
 
             StopCommand = new DelegateCommand(() =>
             {
-                service.StopAsync(Id,
+                var yp = parent.YellowPagesListViewModel.SelectedYellowPages;
+                service.StopAsync(yp.Model, yp.Parameters.Dictionary,
+                    parent.ExternalSourceViewModel.Name.Value, Id,
                     new Progress<string>(x => parent.Feedback = x))
                     .ContinueWith(t =>
                     {

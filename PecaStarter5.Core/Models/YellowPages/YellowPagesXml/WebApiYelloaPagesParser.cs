@@ -35,14 +35,10 @@ namespace Progressive.PecaStarter5.Models.YellowPagesXml
             {
                 return new string[]{
                         "name",
-                        "bitrate",
                         "tags",
                         "description",
                         "comment",
                         "contact_url",
-                        "protocol",
-                        "stream_url",
-                        "type",
                         "password",
                         "result_format",
                 };

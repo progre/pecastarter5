@@ -18,6 +18,7 @@ namespace Progressive.PecaStarter5.Daos
             {
                 using (var fileStream = new FileStream(FilePath, FileMode.Open))
                 {
+                    // TODO: DataContractSerializerに置き換え
                     return (Configuration)new XmlSerializer(typeof(Configuration)).Deserialize(fileStream);
                 }
             }

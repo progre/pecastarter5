@@ -73,7 +73,7 @@ namespace Progressive.Peercast4Net
         public string TrackContact { get; set; }
     }
 
-    public class BroadcastParameter : IBroadcastParameter
+    public class BroadcastParameter : IBroadcastParameter, ICloneable
     {
         public string StreamUrl { get; set; }
         public string Name { get; set; }
@@ -87,9 +87,18 @@ namespace Progressive.Peercast4Net
         public string TrackAlbum { get; set; }
         public string TrackGenre { get; set; }
         public string TrackContact { get; set; }
+
+        #region ICloneable メンバー
+
+        public object Clone()
+        {
+            return MemberwiseClone();
+        }
+
+        #endregion
     }
 
-    public class UpdateParameter : IUpdateParameter
+    public class UpdateParameter : IUpdateParameter, ICloneable
     {
         public string Id { get; set; }
         public string Name { get; set; }
@@ -102,5 +111,14 @@ namespace Progressive.Peercast4Net
         public string TrackAlbum { get; set; }
         public string TrackGenre { get; set; }
         public string TrackContact { get; set; }
+
+        #region ICloneable メンバー
+
+        public object Clone()
+        {
+            return MemberwiseClone();
+        }
+
+        #endregion
     }
 }

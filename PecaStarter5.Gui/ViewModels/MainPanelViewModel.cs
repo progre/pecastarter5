@@ -94,15 +94,5 @@ namespace Progressive.PecaStarter5.ViewModels
             get { return feedback; }
             set { SetProperty("Feedback", ref feedback, value); }
         }
-
-        public BroadcastParameter BroadcastParameter
-        {
-            get { return ViewModelDxo.ToBroadcastParameter(this); }
-        }
-
-        public UpdateParameter UpdateParameter
-        {
-            get { return ViewModelDxo.ToUpdateParameter(this); }
-        }
     }
 }

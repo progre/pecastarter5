@@ -10,13 +10,12 @@ namespace Progressive.PecaStarter5.ViewModels.Dxos
     {
         public static BroadcastParameter ToBroadcastParameter(MainPanelViewModel viewModel)
         {
-            var yp = viewModel.YellowPagesListViewModel.SelectedYellowPages;
             var es = viewModel.ExternalSourceViewModel;
             return new BroadcastParameter()
             {
                 StreamUrl = es.StreamUrl,
                 Name = es.Name.Value,
-                Genre = yp.Prefix + es.Genre.Value,
+                Genre = es.Genre.Value,
                 Description = es.Description.Value,
                 Type = "WMV",
                 ContactUrl = es.ContactUrl,
@@ -31,13 +30,12 @@ namespace Progressive.PecaStarter5.ViewModels.Dxos
 
         public static UpdateParameter ToUpdateParameter(MainPanelViewModel viewModel)
         {
-            var yp = viewModel.YellowPagesListViewModel.SelectedYellowPages;
             var es = viewModel.ExternalSourceViewModel;
             return new UpdateParameter()
             {
                 Id = "",
                 Name = es.Name.Value,
-                Genre = yp.Prefix + es.Genre.Value,
+                Genre = es.Genre.Value,
                 Description = es.Description.Value,
                 ContactUrl = es.ContactUrl,
                 Comment = es.Comment.Value,

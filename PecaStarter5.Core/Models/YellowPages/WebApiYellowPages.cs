@@ -82,6 +82,8 @@ namespace Progressive.PecaStarter5.Models
                     return parameter.BroadcastParameter.Type;
                 case "password":
                     return parameter.YellowPagesParameters.Single(x => x.Key == "password").Value;
+                case "listeners_invisibility":
+                    return parameter.YellowPagesParameters.Single(x => x.Key == "listeners_invisibility").Value;
                 case "result_format":
                     return "json";
                 default:
@@ -89,14 +91,64 @@ namespace Progressive.PecaStarter5.Models
             }
         }
 
-        public Task OnUpdatedAsync(UpdateParameter parameter)
+        public Task OnUpdatedAsync(UpdatedParameter parameter)
         {
-            throw new System.NotImplementedException();
+            var nvc = new NameValueCollection();
+            foreach (var param in UpdateParameters)
+            {
+                nvc.Add(param, GetParameterValue(param, parameter));
+            }
+            return Post(UpdateUrl, nvc);
         }
 
-        public Task OnStopedAsync(string id)
+        private string GetParameterValue(string parameterKey, UpdatedParameter parameter)
         {
-            throw new System.NotImplementedException();
+            switch (parameterKey)
+            {
+                case "name":
+                    return parameter.UpdateParameter.Name;
+                case "tags":
+                    return parameter.UpdateParameter.Genre;
+                case "description":
+                    return parameter.UpdateParameter.Description;
+                case "comment":
+                    return parameter.UpdateParameter.Comment;
+                case "contact_url":
+                    return parameter.UpdateParameter.ContactUrl;
+                case "password":
+                    return parameter.YellowPagesParameters.Single(x => x.Key == "password").Value;
+                case "listeners_invisibility":
+                    return parameter.YellowPagesParameters.Single(x => x.Key == "listeners_invisibility").Value;
+                case "result_format":
+                    return "json";
+                default:
+                    throw new ArgumentException();
+            }
+        }
+
+        public Task OnStopedAsync(StopedParameter parameter)
+        {
+            var nvc = new NameValueCollection();
+            foreach (var param in StopParameters)
+            {
+                nvc.Add(param, GetParameterValue(param, parameter));
+            }
+            return Post(StopUrl, nvc);
+        }
+
+        private string GetParameterValue(string parameterKey, StopedParameter parameter)
+        {
+            switch (parameterKey)
+            {
+                case "name":
+                    return parameter.Name;
+                case "password":
+                    return parameter.YellowPagesParameters.Single(x => x.Key == "password").Value;
+                case "result_format":
+                    return "json";
+                default:
+                    throw new ArgumentException();
+            }
         }
 
         public Task OnTickedAsync(string name, int relays, int listeners)

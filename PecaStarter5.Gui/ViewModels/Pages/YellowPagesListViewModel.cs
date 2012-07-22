@@ -45,7 +45,7 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
             set
             {
                 SetProperty("SelectedYellowPages", ref selectedYellowPages, value);
-                settings.SelectedYellowPages = value.Name;
+                settings.SelectedYellowPages = value != null ? value.Name : null;
                 OnPropertyChanged("Prefix");
             }
         }

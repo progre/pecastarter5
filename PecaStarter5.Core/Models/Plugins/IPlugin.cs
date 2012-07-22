@@ -14,8 +14,8 @@ namespace Progressive.PecaStarter5.Models.Plugins
     public interface IPlugin
     {
         Task OnBroadcastedAsync(BroadcastedParameter parameter);
-        Task OnUpdatedAsync(UpdateParameter parameter);
-        Task OnStopedAsync(string id);
+        Task OnUpdatedAsync(UpdatedParameter parameter);
+        Task OnStopedAsync(StopedParameter parameter);
         Task OnTickedAsync(string name, int relays, int listeners);
     }
 }
