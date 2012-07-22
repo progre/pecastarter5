@@ -112,11 +112,17 @@ namespace Progressive.PecaStarter5.ViewModels
 
                 if (((BroadcastControlViewModel)sender).BroadcastingChannel == null)
                 {
-                    ExternalSourceViewModel.IsBroadcasting = false;
+                    YellowPagesListViewModel.IsLocked = false;
+                    if (YellowPagesListViewModel.SelectedYellowPages != null)
+                        YellowPagesListViewModel.SelectedYellowPages.IsLocked = false;
+                    ExternalSourceViewModel.IsLocked = false;
                 }
                 else
                 {
-                    ExternalSourceViewModel.IsBroadcasting = true;
+                    YellowPagesListViewModel.IsLocked = true;
+                    if (YellowPagesListViewModel.SelectedYellowPages != null)
+                        YellowPagesListViewModel.SelectedYellowPages.IsLocked = true;
+                    ExternalSourceViewModel.IsLocked = true;
                 }
             };
         }

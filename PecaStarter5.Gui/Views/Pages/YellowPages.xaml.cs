@@ -7,6 +7,7 @@ using System.Windows.Documents;
 using Progressive.PecaStarter5.Commons.Models;
 using Progressive.PecaStarter5.Gui.Views.Pages;
 using System.Collections.Generic;
+using Microsoft.CSharp.RuntimeBinder;
 
 namespace Progressive.PecaStarter5.Views.Pages
 {
@@ -68,7 +69,15 @@ namespace Progressive.PecaStarter5.Views.Pages
         private void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             Clear();
-            DynamicStringDictionary parameters = ((dynamic)e.NewValue).Parameters;
+            DynamicStringDictionary parameters;
+            try
+            {
+                parameters = ((dynamic)e.NewValue).Parameters;
+            }
+            catch (RuntimeBinderException)
+            {
+                return;
+            }
             int i = 11;
             foreach (string key in parameters.Dictionary.Keys)
             {

@@ -28,10 +28,10 @@
         </Grid.RowDefinitions>
         <Label Grid.Column="0" Grid.Row="0" Content="ストリームURL:"/>
         <TextBox Grid.Column="1" Grid.Row="0"
-            IsEnabled="{Binding IsBroadcasting, Converter={StaticResource NotConverter}}" Text="{Binding StreamUrl}"/>
+                IsEnabled="{Binding IsLocked, Converter={StaticResource NotConverter}}" Text="{Binding StreamUrl}"/>
         <Label Grid.Column="0" Grid.Row="1" Content="チャンネル名:"/>
         <UserControl Grid.Column="1" Grid.Row="1"
-            IsEnabled="{Binding IsBroadcasting, Converter={StaticResource NotConverter}}">
+                IsEnabled="{Binding IsLocked, Converter={StaticResource NotConverter}}">
             <c:TextBoxWithHistory DataContext="{Binding Name, Mode=OneWay}"/>
         </UserControl>
         <Label Grid.Column="0" Grid.Row="2" Content="ジャンル:"/>

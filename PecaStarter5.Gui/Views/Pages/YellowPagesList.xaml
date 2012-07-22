@@ -13,7 +13,7 @@
     <StackPanel>
         <StackPanel.Resources>
         </StackPanel.Resources>
-        <DockPanel IsEnabled="{Binding IsBroadcasting, Converter={StaticResource NotConverter}}">
+        <DockPanel IsEnabled="{Binding IsLocked, Converter={StaticResource NotConverter}}">
             <Label Content="イエローページ:"/>
             <ComboBox TabIndex="10" DisplayMemberPath="Name"
                       ItemsSource="{Binding YellowPagesViewModels}" SelectedValue="{Binding SelectedYellowPages}"/>

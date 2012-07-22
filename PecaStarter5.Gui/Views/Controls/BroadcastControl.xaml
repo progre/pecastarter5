@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:c="clr-namespace:Progressive.PecaStarter.View.Control"
              mc:Ignorable="d">
-    <StackPanel VerticalAlignment="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" Visibility="{Binding ButtonsVisibility}" Margin="5">
+    <StackPanel VerticalAlignment="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">
         <c:AskButton Content="配信開始" Message="チャンネルを作成します。よろしいですか？"
             Command="{Binding BroadcastCommand}"/>
         <Button Content="更新" Command="{Binding UpdateCommand}"/>

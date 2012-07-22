@@ -25,11 +25,11 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
             Comment = new TextBoxWithHistoryViewModel(removeItemCommand);
         }
 
-        private bool isBroadcasting;
-        public bool IsBroadcasting
+        private bool isLocked;
+        public bool IsLocked
         {
-            get { return isBroadcasting; }
-            set { SetProperty("IsBroadcasting", ref isBroadcasting, value); }
+            get { return isLocked; }
+            set { SetProperty("IsLocked", ref isLocked, value); }
         }
 
         private Configuration configuration;

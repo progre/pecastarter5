@@ -34,6 +34,13 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
             };
         }
 
+        private bool isLocked;
+        public bool IsLocked
+        {
+            get { return isLocked; }
+            set { SetProperty("IsLocked", ref isLocked, value); }
+        }
+
         public IYellowPages Model { get; private set; }
 
         private Configuration.YellowPages settings;

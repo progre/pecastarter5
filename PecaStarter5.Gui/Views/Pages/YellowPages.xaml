@@ -3,10 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:c="clr-namespace:Progressive.Commons.Views.Converters"
              mc:Ignorable="d" DataContextChanged="OnDataContextChanged"
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
-        <ResourceDictionary Source="..\Styles\ResourceDictionary.xaml"/>
+        <ResourceDictionary>
+            <ResourceDictionary.Source>..\Styles\ResourceDictionary.xaml</ResourceDictionary.Source>
+            <c:NotConverter x:Key="NotConverter"/>
+        </ResourceDictionary>
     </UserControl.Resources>
     <StackPanel>
         <Grid DataContext="{Binding Parameters}">
@@ -17,7 +21,8 @@
             </DockPanel>
         </Grid>
         <UserControl>
-            <CheckBox TabIndex="100" IsChecked="{Binding IsAccepted}" IsEnabled="{Binding IsStaticParameterEnabled}">
+            <CheckBox TabIndex="100"
+                    IsChecked="{Binding IsAccepted}" IsEnabled="{Binding IsLocked, Converter={StaticResource NotConverter}}">
                 <TextBlock><Hyperlink Click="Hyperlink_Click" DataContext="{Binding NoticeUrl}">規約</Hyperlink> を確認し、同意した</TextBlock>
             </CheckBox>
         </UserControl>
