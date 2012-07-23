@@ -64,12 +64,15 @@ namespace Progressive.Peercast4Net
             }
         }
 
-        public async Task<IEnumerable<IChannel>> GetChannelsAsync()
+        public Task<IEnumerable<IChannel>> GetChannelsAsync()
         {
-            using (var dao = new PeercastDao(Address))
+            return Task.Factory.StartNew(() =>
             {
-                return new XmlStatus(await dao.GetViewXmlAsync()).Channels;
-            }
+                using (var dao = new PeercastDao(Address))
+                {
+                    return new XmlStatus(dao.GetViewXmlAsync().Result).Channels;
+                }
+            });
         }
 
         public async Task<string> BroadcastAsync(BroadcastParameter parameter)

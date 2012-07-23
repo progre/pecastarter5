@@ -1,28 +1,33 @@
-﻿using System.Collections.Generic;
-using System.Windows;
-using System;
-using System.Linq;
-using System.Windows.Input;
+﻿using System.Collections.ObjectModel;
 using Progressive.Commons.ViewModels;
-using Progressive.Commons.ViewModels.Controls;
 using Progressive.Commons.ViewModels.Commands;
+using Progressive.Commons.ViewModels.Controls;
 using Progressive.PecaStarter5.Models;
-using System.Collections.Specialized;
-using System.Collections.ObjectModel;
 
 namespace Progressive.PecaStarter5.ViewModels.Pages
 {
     public class ExternalSourceViewModel : ViewModelBase
     {
-        private readonly ICommand removeItemCommand;
+        private readonly Configuration configuration;
 
-        public ExternalSourceViewModel()
+        public ExternalSourceViewModel(Configuration configuration)
         {
-            removeItemCommand = new RemoveItemCommand();
+            var removeItemCommand = new RemoveItemCommand();
             Name = new TextBoxWithHistoryViewModel(removeItemCommand);
             Genre = new TextBoxWithHistoryViewModel(removeItemCommand);
             Description = new TextBoxWithHistoryViewModel(removeItemCommand);
             Comment = new TextBoxWithHistoryViewModel(removeItemCommand);
+
+            this.configuration = configuration;
+            StreamUrl = configuration.StreamUrl;
+            Name.History = new ObservableCollection<string>(configuration.NameHistory);
+            configuration.NameHistory = Name.History;
+            Genre.History = new ObservableCollection<string>(configuration.GenreHistory);
+            configuration.GenreHistory = Genre.History;
+            Description.History = new ObservableCollection<string>(configuration.DescriptionHistory);
+            configuration.DescriptionHistory = Description.History;
+            Comment.History = new ObservableCollection<string>(configuration.CommentHistory);
+            configuration.CommentHistory = Comment.History;
         }
 
         private bool isLocked;
@@ -30,24 +35,6 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
         {
             get { return isLocked; }
             set { SetProperty("IsLocked", ref isLocked, value); }
-        }
-
-        private Configuration configuration;
-        public Configuration Configuration
-        {
-            set
-            {
-                configuration = value;
-                StreamUrl = configuration.StreamUrl;
-                Name.History = new ObservableCollection<string>(configuration.NameHistory);
-                configuration.NameHistory = Name.History;
-                Genre.History = new ObservableCollection<string>(configuration.GenreHistory);
-                configuration.GenreHistory = Genre.History;
-                Description.History = new ObservableCollection<string>(configuration.DescriptionHistory);
-                configuration.DescriptionHistory = Description.History;
-                Comment.History = new ObservableCollection<string>(configuration.CommentHistory);
-                configuration.CommentHistory = Comment.History;
-            }
         }
 
         public string StreamUrl
@@ -93,20 +80,6 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
             Genre.UpdateHistory();
             Description.UpdateHistory();
             Comment.UpdateHistory();
-        }
-
-        private string UpdateHistory(IList<string> history, string value)
-        {
-            if (history.Contains(value))
-            {
-                history.Remove(value);
-            }
-            history.Insert(0, value);
-            while (history.Count > 20)
-            {
-                history.RemoveAt(history.Count - 1);
-            }
-            return history[0];
         }
     }
 }

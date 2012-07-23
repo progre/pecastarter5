@@ -10,7 +10,9 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="400">
     <UserControl.Resources>
-        <cv:BroadcastVisibilityConverter x:Key="BroadcastVisibilityConverter"/>
+        <ResourceDictionary>
+            <cv:BroadcastVisibilityConverter x:Key="BroadcastVisibilityConverter"/>
+        </ResourceDictionary>
     </UserControl.Resources>
     <DockPanel>
         <c:Alert Visibility="Collapsed" Content="{Binding Alert}"/>

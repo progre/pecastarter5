@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Progressive.PecaStarter5.ViewModels.Pages;
 using Progressive.Peercast4Net;
-using Progressive.PecaStarter5.ViewModels.Pages;
 
 namespace Progressive.PecaStarter5.ViewModels.Dxos
 {

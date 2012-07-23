@@ -3,15 +3,22 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:c="clr-namespace:Progressive.PecaStarter.View.Control"
     xmlns:v="clr-namespace:Progressive.PecaStarter.View.Converter"
+    xmlns:cv="clr-namespace:Progressive.Commons.Views.Converters"
     xmlns:e="clr-namespace:Xceed.Wpf.Toolkit;assembly=WPFToolkit.Extended"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     d:DesignHeight="300" d:DesignWidth="300" mc:Ignorable="d">
     <UserControl.Resources>
-        <v:AgeConverter x:Key="AgeConverter"/>
-        <Style TargetType="TextBlock">
-            <Setter Property="Block.TextAlignment" Value="Center"/>
-        </Style>
+        <ResourceDictionary>
+            <v:AgeConverter x:Key="AgeConverter"/>
+            <cv:BoolVisibilityConverter x:Key="BoolVisibilityConverter"/>
+            <Style TargetType="TextBlock">
+                <Setter Property="Block.TextAlignment" Value="Center"/>
+            </Style>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Styles/BusyAnimationStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
         <DockPanel IsEnabled="{Binding IsListEnabled}">
@@ -89,9 +96,7 @@
                 </ListBox.ItemTemplate>
             </ListBox>
         </DockPanel>
-        <Border Width="120" Height="60" CornerRadius="10" BorderThickness="1" BorderBrush="Gray" Background="White"
-                Visibility="{Binding LoadingVisibility}">
-            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="読み込み中…"/>
-        </Border>
+        <Control Style="{StaticResource BusyAnimationStyle}"
+                 Visibility="{Binding IsLoading, Converter={StaticResource BoolVisibilityConverter}}"/>
     </Grid>
 </UserControl>

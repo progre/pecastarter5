@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Input;
 using Progressive.Commons.ViewModels;
-using Progressive.PecaStarter5.ViewModels.Commands;
 using Progressive.PecaStarter5.Models;
+using Progressive.PecaStarter5.ViewModels.Commands;
 using Progressive.Peercast4Net;
 
 namespace Progressive.PecaStarter5.ViewModels.Pages
@@ -17,24 +14,22 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
         public RelayListViewModel(Peercast peercast, IEnumerable<IYellowPages> yellowPagesList)
         {
             YellowPagesList = yellowPagesList;
-            isListEnabled = true;
-            Channels = new List<IChannel>();
             ReloadCommand = new ReloadCommand(this, peercast);
             OpenCommand = new OpenCommand(this, peercast, yellowPagesList);
         }
 
-        private bool isListEnabled;
-        public bool IsListEnabled
+        private bool isLoading = false;
+        public bool IsLoading
         {
-            get { return isListEnabled; }
+            get { return isLoading; }
             set
             {
-                isListEnabled = value;
-                OnPropertyChanged("IsListEnabled");
+                isLoading = value;
+                OnPropertyChanged("IsLoading");
             }
         }
 
-        private IList<IChannel> channels;
+        private IList<IChannel> channels = new List<IChannel>();
         public IList<IChannel> Channels
         {
             get { return channels; }
@@ -42,6 +37,7 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
             {
                 channels = value;
                 OnPropertyChanged("Channels");
+                SelectedChannel = null;
             }
         }
 
@@ -56,8 +52,6 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
                 OpenCommand.OnCanExecuteChanged();
             }
         }
-
-        public Visibility LoadingVisibility { get { return IsListEnabled ? Visibility.Collapsed : Visibility.Visible; } }
 
         public IEnumerable<IYellowPages> YellowPagesList { get; private set; }
 
@@ -81,17 +75,19 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
         internal void OnChannelSelected()
         {
             if (ChannelSelected != null)
-                ChannelSelected(this, new SelectedEventArgs(SelectedChannel));
+                ChannelSelected(this, new SelectedEventArgs(SelectedChannel, SelectedYellowPages));
         }
     }
 
     public class SelectedEventArgs : EventArgs
     {
-        public IChannel SelectedChannel { get; private set; }
+        public IChannel Channel { get; private set; }
+        public IYellowPages YellowPages { get; private set; }
 
-        public SelectedEventArgs(IChannel selectedChannel)
+        public SelectedEventArgs(IChannel channel, IYellowPages yellowPages)
         {
-            SelectedChannel = selectedChannel;
+            Channel = channel;
+            YellowPages = yellowPages;
         }
     }
 }

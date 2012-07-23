@@ -156,6 +156,12 @@ namespace Progressive.PecaStarter5.Models
             throw new System.NotImplementedException();
         }
 
+        public Task OnInterruptedAsync()
+        {
+            // nop
+            return Task.Factory.StartNew(() => { });
+        }
+
         #endregion
     }
 

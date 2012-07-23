@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 using Progressive.Commons.ViewModels;
 using Progressive.Commons.ViewModels.Commands;
 using Progressive.PecaStarter5.Models;
+using Progressive.PecaStarter5.Models.Channels;
 using Progressive.PecaStarter5.Models.Services;
 using Progressive.PecaStarter5.ViewModels.Dxos;
-using Progressive.PecaStarter5.Models.Channels;
 
 namespace Progressive.PecaStarter5.ViewModels.Controls
 {
@@ -17,6 +17,7 @@ namespace Progressive.PecaStarter5.ViewModels.Controls
 
             BroadcastCommand = new DelegateCommand(() =>
             {
+                parent.ExternalSourceViewModel.UpdateHistory();
                 var parameter = ViewModelDxo.ToBroadcastParameter(parent.ExternalSourceViewModel);
                 var yp = parent.YellowPagesListViewModel.SelectedYellowPages;
                 service.BroadcastAsync(yp.Model, yp.AcceptedHash, yp.Parameters.Dictionary,
@@ -35,6 +36,7 @@ namespace Progressive.PecaStarter5.ViewModels.Controls
 
             UpdateCommand = new DelegateCommand(() =>
             {
+                parent.ExternalSourceViewModel.UpdateHistory();
                 var yp = parent.YellowPagesListViewModel.SelectedYellowPages;
                 service.UpdateAsync(
                     yp.Model, yp.Parameters.Dictionary,

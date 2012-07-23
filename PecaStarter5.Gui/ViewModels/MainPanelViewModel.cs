@@ -10,6 +10,7 @@ using Progressive.PecaStarter5.Models.YellowPagesXml;
 using Progressive.PecaStarter5.ViewModels.Controls;
 using Progressive.PecaStarter5.ViewModels.Pages;
 using Progressive.Peercast4Net;
+using System;
 
 namespace Progressive.PecaStarter5.ViewModels
 {
@@ -19,23 +20,15 @@ namespace Progressive.PecaStarter5.ViewModels
         {
             // Models
             var peercast = new Peercast();
-            var yellowPagesList = new List<IYellowPages>();
-            var externalYellowPages = new List<IExternalYellowPages>();
-            foreach (var xml in yellowPagesXmls)
-            {
-                var yp = YellowPagesParserFactory.GetInstance(xml).GetInstance();
-                yellowPagesList.Add(yp);
-                if (yp.IsExternal)
-                {
-                    externalYellowPages.Add((IExternalYellowPages)yp);
-                }
-            }
-            var service = new PeercastService(peercast, externalYellowPages, Enumerable.Empty<IPlugin>());
+            var tuple = GetYellowPagesLists(yellowPagesXmls);
+            var yellowPagesList = tuple.Item1;
+            var externalYellowPagesList = tuple.Item2;
+            var service = new PeercastService(peercast, externalYellowPagesList, Enumerable.Empty<IPlugin>());
 
             // タブ情報の初期化
             RelayListViewModel = new RelayListViewModel(peercast, yellowPagesList);
             YellowPagesListViewModel = new YellowPagesListViewModel(yellowPagesList, configuration);
-            ExternalSourceViewModel = new ExternalSourceViewModel() { Configuration = configuration };
+            ExternalSourceViewModel = new ExternalSourceViewModel(configuration);
             SettingsViewModel = new SettingsViewModel(configuration, peercast);
             BroadcastControlViewModel = new BroadcastControlViewModel(this, service, configuration);
 
@@ -78,9 +71,9 @@ namespace Progressive.PecaStarter5.ViewModels
         {
             RelayListViewModel.ChannelSelected += (sender, e) =>
             {
-                var ch = e.SelectedChannel;
+                var ch = e.Channel;
                 // YPタブを指定のYPに
-                YellowPagesListViewModel.SelectedYellowPagesModel = ((RelayListViewModel)sender).SelectedYellowPages;
+                YellowPagesListViewModel.SelectedYellowPagesModel = e.YellowPages;
 
                 // ソースタブに値を反映
                 var esvm = ExternalSourceViewModel;
@@ -125,6 +118,23 @@ namespace Progressive.PecaStarter5.ViewModels
                     ExternalSourceViewModel.IsLocked = true;
                 }
             };
+        }
+
+        private Tuple<List<IYellowPages>, List<IExternalYellowPages>> GetYellowPagesLists(
+            IEnumerable<string> yellowPagesXmls)
+        {
+            var yellowPagesList = new List<IYellowPages>();
+            var externalYellowPagesList = new List<IExternalYellowPages>();
+            foreach (var xml in yellowPagesXmls)
+            {
+                var yp = YellowPagesParserFactory.GetInstance(xml).GetInstance();
+                yellowPagesList.Add(yp);
+                if (yp.IsExternal)
+                {
+                    externalYellowPagesList.Add((IExternalYellowPages)yp);
+                }
+            }
+            return Tuple.Create(yellowPagesList, externalYellowPagesList);
         }
     }
 }

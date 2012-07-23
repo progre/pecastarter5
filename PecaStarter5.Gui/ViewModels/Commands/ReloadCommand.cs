@@ -3,6 +3,7 @@ using System.Linq;
 using System.Windows.Input;
 using Progressive.PecaStarter5.ViewModels.Pages;
 using Progressive.Peercast4Net;
+using System.Threading.Tasks;
 
 namespace Progressive.PecaStarter5.ViewModels.Commands
 {
@@ -21,19 +22,29 @@ namespace Progressive.PecaStarter5.ViewModels.Commands
 
         public bool CanExecute(object parameter)
         {
-            return true;
+            return !parent.IsLoading;
         }
 
         public event EventHandler CanExecuteChanged;
 
         public void Execute(object parameter)
         {
+            parent.IsLoading = true;
+            OnCanExecuteChanged();
             peercast.GetChannelsAsync().ContinueWith((x) =>
             {
                 parent.Channels = x.Result.ToList();
-            });
+                parent.IsLoading = false;
+                OnCanExecuteChanged();
+            }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         #endregion
+
+        private void OnCanExecuteChanged()
+        {
+            if (CanExecuteChanged != null)
+                CanExecuteChanged(this, new EventArgs());
+        }
     }
 }

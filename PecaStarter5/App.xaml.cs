@@ -13,12 +13,13 @@ namespace Progressive.PecaStarter5
         protected override void OnStartup(StartupEventArgs e)
         {
             var viewModel = new MainWindowViewModel(ExternalResource.YellowPagesList, ExternalResource.Configuration);
-            viewModel.PropertyChanged += (sender, e1) => ExternalResource.Configuration = viewModel.Configuration;
             MainWindow = new MainWindow() { DataContext = viewModel };
+            MainWindow.Deactivated += (sender, e1) => ExternalResource.Configuration = viewModel.Configuration;
             MainWindow.Show();
 
             this.DispatcherUnhandledException += (sender, dispatcherUnhandledExceptionEventArgs) =>
             {
+                ExternalResource.Configuration = viewModel.Configuration;
                 if (MessageBox.Show(
                     "未解決のエラーが発生しました。（" + dispatcherUnhandledExceptionEventArgs.Exception.Message + "）プログラムを終了します。",
                     "PecaStarter", MessageBoxButton.OKCancel, MessageBoxImage.Error)

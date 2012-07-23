@@ -60,6 +60,10 @@
     <Compile Include="Commons\Models\DynamicDictionary.cs" />
     <Compile Include="Commons\ViewModels\Commands\DelegateCommand.cs" />
     <Compile Include="Commons\ViewModels\Controls\TextBoxWithHistoryViewModel.cs" />
+    <Page Include="Views\Styles\BusyAnimationStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Compile Include="ViewModels\Commands\OpenCommand.cs" />
     <Compile Include="ViewModels\Commands\ReloadCommand.cs" />
     <Compile Include="Commons\ViewModels\ViewModelBase.cs" />

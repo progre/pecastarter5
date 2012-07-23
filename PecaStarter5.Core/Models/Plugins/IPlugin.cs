@@ -17,5 +17,6 @@ namespace Progressive.PecaStarter5.Models.Plugins
         Task OnUpdatedAsync(UpdatedParameter parameter);
         Task OnStopedAsync(StopedParameter parameter);
         Task OnTickedAsync(string name, int relays, int listeners);
+        Task OnInterruptedAsync();
     }
 }
