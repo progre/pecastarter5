@@ -17,10 +17,7 @@ namespace Progressive.PecaStarter5.ViewModels.Controls
         public virtual string Value
         {
             get { return value; }
-            set
-            {
-                SetProperty("Value", ref this.value, value);
-            }
+            set { SetProperty("Value", ref this.value, value); }
         }
 
         private ObservableCollection<string> history = new ObservableCollection<string>();

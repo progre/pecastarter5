@@ -6,6 +6,7 @@ using Progressive.PecaStarter5.Models;
 using Progressive.PecaStarter5.Models.Channels;
 using Progressive.PecaStarter5.Models.Services;
 using Progressive.PecaStarter5.ViewModels.Dxos;
+using System.Net;
 
 namespace Progressive.PecaStarter5.ViewModels.Controls
 {
@@ -17,6 +18,7 @@ namespace Progressive.PecaStarter5.ViewModels.Controls
 
             BroadcastCommand = new DelegateCommand(() =>
             {
+                IsProcessing = true;
                 parent.ExternalSourceViewModel.UpdateHistory();
                 var parameter = ViewModelDxo.ToBroadcastParameter(parent.ExternalSourceViewModel);
                 var yp = parent.YellowPagesListViewModel.SelectedYellowPages;
@@ -28,21 +30,26 @@ namespace Progressive.PecaStarter5.ViewModels.Controls
                         if (t.IsFaulted)
                         {
                             OnException(parent, t.Exception);
+                            IsProcessing = false;
                             return;
                         }
                         BroadcastingChannel = new BroadcastingChannel(parameter.Name, t.Result);
+                        IsProcessing = false;
                     }, TaskScheduler.FromCurrentSynchronizationContext());
             }, () =>
-                {
-                    if (BroadcastingChannel != null)
-                        return false;
-                    if (!string.IsNullOrEmpty(parent.ExternalSourceViewModel.Error))
-                        return false;
-                    return true;
-                });
+            {
+                if (IsProcessing)
+                    return false;
+                if (BroadcastingChannel != null)
+                    return false;
+                if (!string.IsNullOrEmpty(parent.ExternalSourceViewModel.Error))
+                    return false;
+                return true;
+            });
 
             UpdateCommand = new DelegateCommand(() =>
             {
+                IsProcessing = true;
                 parent.ExternalSourceViewModel.UpdateHistory();
                 var yp = parent.YellowPagesListViewModel.SelectedYellowPages;
                 service.UpdateAsync(
@@ -54,13 +61,21 @@ namespace Progressive.PecaStarter5.ViewModels.Controls
                         if (t.IsFaulted)
                         {
                             OnException(parent, t.Exception);
-                            return;
                         }
+                        IsProcessing = false;
                     }, TaskScheduler.FromCurrentSynchronizationContext());
-            }, () => BroadcastingChannel != null);
+            }, () =>
+            {
+                if (IsProcessing)
+                    return false;
+                if (BroadcastingChannel == null)
+                    return false;
+                return true;
+            });
 
             StopCommand = new DelegateCommand(() =>
             {
+                IsProcessing = true;
                 var yp = parent.YellowPagesListViewModel.SelectedYellowPages;
                 service.StopAsync(yp.Model, yp.Parameters.Dictionary,
                     BroadcastingChannel.Name, BroadcastingChannel.Id,
@@ -70,14 +85,36 @@ namespace Progressive.PecaStarter5.ViewModels.Controls
                         if (t.IsFaulted)
                         {
                             OnException(parent, t.Exception);
+                            IsProcessing = false;
                             return;
                         }
                         BroadcastingChannel = null;
+                        IsProcessing = false;
                     }, TaskScheduler.FromCurrentSynchronizationContext());
-            }, () => BroadcastingChannel != null);
+            }, () => 
+            {
+                if (IsProcessing)
+                    return false;
+                if (BroadcastingChannel == null)
+                    return false;
+                return true;
+            });
 
             parent.ExternalSourceViewModel.PropertyChanged += OnParameterPropertyChanged;
             parent.YellowPagesListViewModel.PropertyChanged += OnParameterPropertyChanged;
+        }
+
+        private bool isProcessing;
+        public bool IsProcessing
+        {
+            get { return isProcessing; }
+            set
+            {
+                SetProperty("IsProcessing", ref isProcessing, value);
+                BroadcastCommand.OnCanExecuteChanged();
+                UpdateCommand.OnCanExecuteChanged();
+                StopCommand.OnCanExecuteChanged();
+            }
         }
 
         private BroadcastingChannel broadcastingChannel;
@@ -103,7 +140,7 @@ namespace Progressive.PecaStarter5.ViewModels.Controls
         {
             // ダイアログ通知
             parent.Feedback = "中止";
-            parent.Alert = ex.InnerException.Message + ex.StackTrace;
+            parent.NotifyAlert(ex.InnerException.Message + ex.StackTrace);
         }
 
         private void OnParameterPropertyChanged(object sender, EventArgs e)

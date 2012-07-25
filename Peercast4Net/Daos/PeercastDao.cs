@@ -30,8 +30,7 @@ namespace Progressive.Peercast4Net.Daos
 
         public virtual Task FetchAsync(string url, string name, string genre, string description, string contactUrl, string type)
         {
-            return client.AccessAsync(
-                "http://" + address + string.Format(FetchCommand,
+            return AccessAsync(string.Format(FetchCommand,
                 PeercastUtils.PercentEncode(url), PeercastUtils.PercentEncode(name),
                 PeercastUtils.PercentEncode(genre), PeercastUtils.PercentEncode(description),
                 PeercastUtils.PercentEncode(contactUrl), PeercastUtils.PercentEncode(type)));
@@ -41,8 +40,7 @@ namespace Progressive.Peercast4Net.Daos
             string name, string genre, string description, string url, string comment,
             string trackArtist, string trackTitle, string trackAlbum, string trackGenre, string trackContact)
         {
-            return client.AccessAsync(
-                "http://" + address + string.Format(SetMetaCommand,
+            return AccessAsync(string.Format(SetMetaCommand,
                 HttpUtils.ToRfc3986(name, Encoding.UTF8), PeercastUtils.PercentEncode(genre),
                 PeercastUtils.PercentEncode(description), PeercastUtils.PercentEncode(url),
                 PeercastUtils.PercentEncode(comment),
@@ -53,26 +51,22 @@ namespace Progressive.Peercast4Net.Daos
 
         public virtual Task StopAsync(string id)
         {
-            return client.AccessAsync(
-                "http://" + address + string.Format(StopCommand, id));
+            return AccessAsync(string.Format(StopCommand, id));
         }
 
         public virtual Task KeepAsync(string id)
         {
-            return client.AccessAsync(
-                "http://" + address + string.Format(KeepCommand, id));
+            return AccessAsync(string.Format(KeepCommand, id));
         }
 
         public virtual Task<string> GetViewXmlAsync()
         {
-            return client.DownloadAsync(
-                "http://" + address + ViewXmlUrl);
+            return DownloadAsync(ViewXmlUrl);
         }
 
         public virtual Task<string> GetSettingsHtmlAsync()
         {
-            return client.DownloadAsync(
-                "http://" + address + SettingsHtmlUrl);
+            return DownloadAsync(SettingsHtmlUrl);
         }
 
         public virtual Task ApplyAsync(IEnumerable<KeyValuePair<string, string>> parameters)
@@ -84,7 +78,7 @@ namespace Progressive.Peercast4Net.Daos
                     PeercastUtils.PercentEncode(item.Key)).Append('=')
                     .Append(PeercastUtils.PercentEncode(item.Value));
             }
-            return client.AccessAsync("http://" + address + sb.ToString());
+            return AccessAsync(sb.ToString());
         }
 
         #region IDisposable メンバー
@@ -95,5 +89,31 @@ namespace Progressive.Peercast4Net.Daos
         }
 
         #endregion
+
+        private async Task AccessAsync(string url)
+        {
+            try
+            {
+                await client.AccessAsync("http://" + address + url);
+            }
+            catch (WebException)
+            {
+                throw new PeercastException("Peercastへの接続に失敗しました。" + Environment.NewLine
+                    + "Peercastが起動しているか、ポート番号が正しいか確認してください。");
+            }
+        }
+
+        private async Task<string> DownloadAsync(string url)
+        {
+            try
+            {
+                return await client.DownloadAsync("http://" + address + url);
+            }
+            catch (WebException)
+            {
+                throw new PeercastException("Peercastへの接続に失敗しました。" + Environment.NewLine
+                    + "Peercastが起動しているか、ポート番号が正しいか確認してください。");
+            }
+        }
     }
 }

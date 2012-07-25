@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Progressive.Peercast4Net;
 using Progressive.PecaStarter5.Models.Plugins;
 using Progressive.PecaStarter5.Models.ExternalYellowPages;
+using System.Net;
 
 namespace Progressive.PecaStarter5.Models.Services
 {
@@ -45,7 +46,7 @@ namespace Progressive.PecaStarter5.Models.Services
             progress.Report("チャンネルを作成中...");
             var param = (BroadcastParameter)parameter.Clone();
             param.Genre = yellowPages.GetPrefix(yellowPagesParameter) + param.Genre;
-            string id = await peercast.BroadcastAsync(param);
+            var id = await peercast.BroadcastAsync(param);
 
             var broadcastedParameter = new BroadcastedParameter
             {

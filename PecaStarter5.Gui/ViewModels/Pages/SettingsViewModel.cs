@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using Progressive.Commons.ViewModels;
 using Progressive.PecaStarter5.Models;
 using Progressive.Peercast4Net;
@@ -17,13 +18,13 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
             peercast.Address = "localhost:" + configuration.Port;
         }
 
+        [Required(ErrorMessage = "1～65535の値を入力してください")]
+        [Range(1, 65535, ErrorMessage = "1～65535の値を入力してください")]
         public int Port
         {
             get { return configuration.Port; }
             set
             {
-                if (value < 1 || 65535 < value)
-                    throw new ArgumentException("1～65535の間で指定してください");
                 if (configuration.Port == value)
                     return;
                 configuration.Port = value;
@@ -80,13 +81,12 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
             }
         }
 
+        [Range(0, int.MaxValue, ErrorMessage = "0以上の値を入力してください")]
         public int Delay
         {
             get { return configuration.Delay; }
             set
             {
-                if (value < 0)
-                    throw new ArgumentException();
                 configuration.Delay = value;
                 OnPropertyChanged("Delay");
             }

@@ -53,12 +53,7 @@ namespace Progressive.PecaStarter5.ViewModels
             }
         }
 
-        private string alert = "";
-        public string Alert
-        {
-            get { return alert; }
-            set { SetProperty("Alert", ref alert, value); }
-        }
+        public string Alert { get; set; }
 
         private string feedback = "";
         public string Feedback
@@ -135,6 +130,12 @@ namespace Progressive.PecaStarter5.ViewModels
                 }
             }
             return Tuple.Create(yellowPagesList, externalYellowPagesList);
+        }
+
+        public void NotifyAlert(string value)
+        {
+            Alert = value;
+            OnPropertyChanged("Alert");
         }
     }
 }
