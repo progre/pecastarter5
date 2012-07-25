@@ -28,6 +28,8 @@ namespace Progressive.PecaStarter5.ViewModel
             Dispose(false);
         }
 
+        public string Title { get { return "Peca Starter 5 (Nightly)"; } }
+
         private Configuration configuration;
         public Configuration Configuration
         {

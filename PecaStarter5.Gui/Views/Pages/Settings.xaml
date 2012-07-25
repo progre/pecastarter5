@@ -26,11 +26,11 @@
         <Label Grid.Column="0" Grid.Row="3" Content="切断遅延:"/>
         <TextBox Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" Width="48" Text="{Binding Delay}"/>
         <CheckBox Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="4" Content="配信ログを取る"
-                  IsEnabled="{Binding IsLoggingEnabled}" IsChecked="{Binding Logging}"/>
-        <Label Grid.Column="0" Grid.Row="5" Content="ログの保存場所:" IsEnabled="{Binding IsLogPathEnabled}"/>
-        <DockPanel Grid.Column="1" Grid.Row="5" IsEnabled="{Binding IsLogPathEnabled}">
-            <Button Content="..." DockPanel.Dock="Right" Width="auto" Click="Button_Click" DataContext="{Binding Path=LogPath, Mode=TwoWay}"/>
-            <TextBox Text="{Binding LogPath}"/>
+                  IsEnabled="False" IsChecked="{Binding Logging}"/>
+        <Label Grid.Column="0" Grid.Row="5" Content="ログの保存場所:" IsEnabled="False"/>
+        <DockPanel Grid.Column="1" Grid.Row="5" IsEnabled="False">
+            <Button Content="..." DockPanel.Dock="Right" Width="auto" Click="Button_Click" DataContext=""/>
+            <TextBox Text=""/>
         </DockPanel>
     </Grid>
 </UserControl>

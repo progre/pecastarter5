@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Progressive.Peercast4Net.Utils
 {
-    static class PeercastUtils
+    public static class PeercastUtils
     {
         public static string PercentEncode(string text)
         {

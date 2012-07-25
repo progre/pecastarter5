@@ -28,7 +28,8 @@
         </Grid.RowDefinitions>
         <Label Grid.Column="0" Grid.Row="0" Content="ストリームURL:"/>
         <TextBox Grid.Column="1" Grid.Row="0"
-                IsEnabled="{Binding IsLocked, Converter={StaticResource NotConverter}}" Text="{Binding StreamUrl}"/>
+                IsEnabled="{Binding IsLocked, Converter={StaticResource NotConverter}}"
+                 Text="{Binding StreamUrl, ValidatesOnDataErrors=True}"/>
         <Label Grid.Column="0" Grid.Row="1" Content="チャンネル名:"/>
         <UserControl Grid.Column="1" Grid.Row="1"
                 IsEnabled="{Binding IsLocked, Converter={StaticResource NotConverter}}">
@@ -43,7 +44,7 @@
         <Label Grid.Column="0" Grid.Row="3" Content="詳細:"/>
         <c:TextBoxWithHistory Grid.Column="1" Grid.Row="3" DataContext="{Binding Description}"/>
         <Label Grid.Column="0" Grid.Row="4" Content="コンタクトURL:"/>
-        <TextBox Grid.Column="1" Grid.Row="4" Text="{Binding ContactUrl}"/>
+        <TextBox Grid.Column="1" Grid.Row="4" Text="{Binding ContactUrl, ValidatesOnDataErrors=True}"/>
         <Label Grid.Column="0" Grid.Row="5" Content="コメント:"/>
         <c:TextBoxWithHistory Grid.Column="1" Grid.Row="5" DataContext="{Binding Comment}"/>
     </Grid>

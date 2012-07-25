@@ -1,8 +1,9 @@
 ﻿using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using Progressive.Commons.ViewModels;
 using Progressive.Commons.ViewModels.Commands;
-using Progressive.Commons.ViewModels.Controls;
 using Progressive.PecaStarter5.Models;
+using Progressive.PecaStarter5.ViewModels.Controls;
 
 namespace Progressive.PecaStarter5.ViewModels.Pages
 {
@@ -13,7 +14,7 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
         public ExternalSourceViewModel(Configuration configuration)
         {
             var removeItemCommand = new RemoveItemCommand();
-            Name = new TextBoxWithHistoryViewModel(removeItemCommand);
+            Name = new ChannelNameTextBoxWithHistoryViewModel(removeItemCommand);
             Genre = new TextBoxWithHistoryViewModel(removeItemCommand);
             Description = new TextBoxWithHistoryViewModel(removeItemCommand);
             Comment = new TextBoxWithHistoryViewModel(removeItemCommand);
@@ -37,6 +38,9 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
             set { SetProperty("IsLocked", ref isLocked, value); }
         }
 
+        [Required(ErrorMessage = "ストリームURLは必須です")]
+        [RegularExpression("^(http|mms)://.+$", ErrorMessage = "http://で始めてください")]
+        [CustomValidation(typeof(ParameterValidator), "ValidateParameter", ErrorMessage = "文字数の制限を超えています")]
         public string StreamUrl
         {
             get { return configuration.StreamUrl; }
@@ -46,6 +50,7 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
                     return;
                 configuration.StreamUrl = value;
                 OnPropertyChanged("StreamUrl");
+
             }
         }
 
@@ -60,6 +65,7 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
         public TextBoxWithHistoryViewModel Genre { get; private set; }
         public TextBoxWithHistoryViewModel Description { get; private set; }
 
+        [CustomValidation(typeof(ParameterValidator), "ValidateParameter", ErrorMessage = "文字数の制限を超えています")]
         public string ContactUrl
         {
             get { return configuration.ContactUrl; }

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Windows.Input;
-using Progressive.Commons.ViewModels.Controls;
+using Progressive.PecaStarter5.ViewModels.Controls;
 
 namespace Progressive.Commons.ViewModels.Commands
 {

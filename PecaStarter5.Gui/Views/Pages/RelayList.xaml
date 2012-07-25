@@ -20,27 +20,27 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid>
-        <DockPanel IsEnabled="{Binding IsListEnabled}">
-            <StackPanel DockPanel.Dock="Bottom" HorizontalAlignment="Right" Orientation="Horizontal">
-                <ComboBox MinWidth="80" DisplayMemberPath="Name"
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Bottom" HorizontalAlignment="Right" Orientation="Horizontal">
+            <ComboBox MinWidth="80" DisplayMemberPath="Name"
                           ItemsSource="{Binding YellowPagesList}" SelectedValue="{Binding SelectedYellowPages}"/>
-                <TextBlock VerticalAlignment="Center" Text="でこのチャンネルを"/>
-                <c:AskButton Message="編集中のフォームはクリアされます。よろしいですか？" Content="開く"
+            <TextBlock VerticalAlignment="Center" Text="でこのチャンネルを"/>
+            <c:AskButton Message="編集中のフォームはクリアされます。よろしいですか？" Content="開く"
                     Command="{Binding OpenCommand}" CommandParameter="{Binding ElementName=List, Path=SelectedItem}"/>
+        </StackPanel>
+        <DockPanel DockPanel.Dock="Top" VerticalAlignment="Center">
+            <StackPanel DockPanel.Dock="Right" VerticalAlignment="Bottom" Orientation="Horizontal">
+                <TextBlock Width="65" Text="type"/>
+                <TextBlock Width="35" Text="relays"/>
+                <TextBlock Width="70" Text="status"/>
             </StackPanel>
-            <DockPanel DockPanel.Dock="Top" VerticalAlignment="Center">
-                <StackPanel DockPanel.Dock="Right" VerticalAlignment="Bottom" Orientation="Horizontal">
-                    <TextBlock Width="65" Text="type"/>
-                    <TextBlock Width="35" Text="relays"/>
-                    <TextBlock Width="70" Text="status"/>
-                </StackPanel>
-                <Grid>
-                    <TextBlock VerticalAlignment="Bottom" Text="チャンネル名"/>
-                    <Button HorizontalAlignment="Left" VerticalAlignment="Top" Width="Auto" Content="更新"
+            <Grid>
+                <TextBlock VerticalAlignment="Bottom" Text="チャンネル名"/>
+                <Button HorizontalAlignment="Left" VerticalAlignment="Top" Width="Auto" Content="更新"
                                 Command="{Binding ReloadCommand}"/>
-                </Grid>
-            </DockPanel>
+            </Grid>
+        </DockPanel>
+        <Grid>
             <ListBox Name="List" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                      ItemsSource="{Binding Channels}" SelectedItem="{Binding SelectedChannel}">
                 <ListBox.Resources>
@@ -95,8 +95,8 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-        </DockPanel>
-        <Control Style="{StaticResource BusyAnimationStyle}"
+            <Control Style="{StaticResource BusyAnimationStyle}"
                  Visibility="{Binding IsLoading, Converter={StaticResource BoolVisibilityConverter}}"/>
-    </Grid>
+        </Grid>
+    </DockPanel>
 </UserControl>

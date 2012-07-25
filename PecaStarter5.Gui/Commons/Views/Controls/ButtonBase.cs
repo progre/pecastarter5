@@ -21,6 +21,12 @@ namespace Progressive.PecaStarter.View.Control
 
         protected override void OnClick()
         {
+            if (Command != null && !Command.CanExecute(CommandParameter))
+            {
+                GetBindingExpression(Button.CommandProperty).ValidateWithoutUpdate();
+                return;
+            }
+
             foreach (ClickBehavior behavior in ClickBehaviors)
             {
                 if (!behavior())

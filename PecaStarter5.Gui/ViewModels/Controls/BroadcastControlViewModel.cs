@@ -32,7 +32,14 @@ namespace Progressive.PecaStarter5.ViewModels.Controls
                         }
                         BroadcastingChannel = new BroadcastingChannel(parameter.Name, t.Result);
                     }, TaskScheduler.FromCurrentSynchronizationContext());
-            }, () => BroadcastingChannel == null);
+            }, () =>
+                {
+                    if (BroadcastingChannel != null)
+                        return false;
+                    if (!string.IsNullOrEmpty(parent.ExternalSourceViewModel.Error))
+                        return false;
+                    return true;
+                });
 
             UpdateCommand = new DelegateCommand(() =>
             {
@@ -68,6 +75,9 @@ namespace Progressive.PecaStarter5.ViewModels.Controls
                         BroadcastingChannel = null;
                     }, TaskScheduler.FromCurrentSynchronizationContext());
             }, () => BroadcastingChannel != null);
+
+            parent.ExternalSourceViewModel.PropertyChanged += OnParameterPropertyChanged;
+            parent.YellowPagesListViewModel.PropertyChanged += OnParameterPropertyChanged;
         }
 
         private BroadcastingChannel broadcastingChannel;
@@ -94,6 +104,12 @@ namespace Progressive.PecaStarter5.ViewModels.Controls
             // ダイアログ通知
             parent.Feedback = "中止";
             parent.Alert = ex.InnerException.Message + ex.StackTrace;
+        }
+
+        private void OnParameterPropertyChanged(object sender, EventArgs e)
+        {
+            BroadcastCommand.OnCanExecuteChanged();
+            UpdateCommand.OnCanExecuteChanged();
         }
     }
 }

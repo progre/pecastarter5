@@ -1,7 +1,9 @@
 ﻿using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.Windows.Input;
+using Progressive.Commons.ViewModels;
 
-namespace Progressive.Commons.ViewModels.Controls
+namespace Progressive.PecaStarter5.ViewModels.Controls
 {
     public class TextBoxWithHistoryViewModel : ViewModelBase
     {
@@ -11,10 +13,14 @@ namespace Progressive.Commons.ViewModels.Controls
         }
 
         private string value = "";
-        public string Value
+        [CustomValidation(typeof(ParameterValidator), "ValidateParameter", ErrorMessage = "文字数の制限を超えています")]
+        public virtual string Value
         {
             get { return value; }
-            set { SetProperty("Value", ref this.value, value); }
+            set
+            {
+                SetProperty("Value", ref this.value, value);
+            }
         }
 
         private ObservableCollection<string> history = new ObservableCollection<string>();
