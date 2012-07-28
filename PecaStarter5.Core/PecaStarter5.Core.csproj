@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\BroadcastTimer.cs" />
     <Compile Include="Models\Channels\BroadcastingChannel.cs" />
     <Compile Include="Models\Channels\Channel.cs" />
     <Compile Include="Models\Daos\ConfigurationDao.cs" />

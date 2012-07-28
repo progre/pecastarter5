@@ -24,7 +24,7 @@ namespace Progressive.PecaStarter5.ViewModels
         {
             // Models
             this.pecaStarter = model;
-            pecaStarter.ExceptionThrown += (sender, e) => OnException((Exception)e.ExceptionObject);
+            pecaStarter.AsyncExceptionThrown += (sender, e) => OnException((Exception)e.ExceptionObject);
             var tuple = model.GetYellowPagesLists();
             var yellowPagesList = tuple.Item1;
             var externalYellowPagesList = tuple.Item2;

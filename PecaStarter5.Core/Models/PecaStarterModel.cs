@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using Progressive.PecaStarter5.Models.Plugins;
 using System.Threading.Tasks;
-using Progressive.Peercast4Net;
 using Progressive.PecaStarter5.Models.Daos;
 using Progressive.PecaStarter5.Models.ExternalYellowPages;
+using Progressive.PecaStarter5.Models.Plugins;
 using Progressive.PecaStarter5.Models.YellowPagesXml;
+using Progressive.Peercast4Net;
 
 namespace Progressive.PecaStarter5.Models
 {
@@ -16,20 +15,21 @@ namespace Progressive.PecaStarter5.Models
     public class PecaStarterModel
     {
         private IExternalResource m_externalResource;
-        public Timer timer; // スレッドタイマが最も軽量
+        private BroadcastTimer m_timer;
 
-        public event UnhandledExceptionEventHandler ExceptionThrown;
+        /// <summary>非同期にエラーが発生した場合に通知されるイベント</summary>
+        public event UnhandledExceptionEventHandler AsyncExceptionThrown;
 
         public PecaStarterModel(string title, IExternalResource externalResource)
         {
             m_externalResource = externalResource;
+            m_timer = new BroadcastTimer();
+            m_timer.Ticked += s => OnTickedAsync((string)s);
             Title = title;
             Peercast = new Peercast();
             LoggerPlugin = new LoggerPlugin();
             Plugins = new IPlugin[] { LoggerPlugin };
-            var dao = new ConfigurationDao(externalResource);
-
-            Configuration = dao.Get();
+            Configuration = new ConfigurationDao(externalResource).Get();
         }
 
         public string Title { get; private set; }
@@ -61,38 +61,31 @@ namespace Progressive.PecaStarter5.Models
 
         public void Broadcast(BroadcastParameter parameter)
         {
-            BeginTimer(parameter.Name);
+            m_timer.BeginTimer(parameter.Name);
         }
 
         public void Interrupt(InterruptedParameter parameter)
         {
+            m_timer.EndTimer();
+
             foreach (var plugin in Plugins)
             {
                 plugin.OnInterruptedAsync(parameter).ContinueWith(t =>
                 {
                     if (t.IsFaulted)
-                        OnExceptionThrown(t.Exception);
+                        OnAsyncExceptionThrown(t.Exception);
                 });
             }
 
-            BeginTimer(parameter.Name);
+            m_timer.BeginTimer(parameter.Name);
         }
 
-        private void BeginTimer(string name)
+        public void Stop()
         {
-            const int period = 10 * 60 * 1000;
-            timer = new Timer(s => OnTIckedAsync((string)s).Wait(), name, period, period);
+            m_timer.EndTimer();
         }
 
-        public void EndTimer()
-        {
-            if (timer == null)
-                return;
-            timer.Dispose();
-            timer = null;
-        }
-
-        private async Task OnTIckedAsync(string name)
+        private async Task OnTickedAsync(string name)
         {
             try
             {
@@ -101,14 +94,14 @@ namespace Progressive.PecaStarter5.Models
             }
             catch (Exception ex)
             {
-                OnExceptionThrown(ex);
+                OnAsyncExceptionThrown(ex);
             }
         }
 
-        private void OnExceptionThrown(Exception ex)
+        private void OnAsyncExceptionThrown(Exception ex)
         {
-            if (ExceptionThrown != null)
-                ExceptionThrown(this, new UnhandledExceptionEventArgs(ex, false));
+            if (AsyncExceptionThrown != null)
+                AsyncExceptionThrown(this, new UnhandledExceptionEventArgs(ex, false));
         }
     }
 }
