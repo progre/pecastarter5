@@ -36,7 +36,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -45,7 +45,7 @@
     <PlatformTarget>x86</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -54,14 +54,10 @@
     <ApplicationIcon>Resources\icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AsyncCtpLibrary, Version=1.0.4107.18181, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\lib\AsyncCtpLibrary.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -107,14 +103,12 @@
     <ProjectReference Include="..\PecaStarter5.Core\PecaStarter5.Core.csproj">
       <Project>{AD7CE32A-D2F6-4B6F-9C53-28B2F471C8F9}</Project>
       <Name>PecaStarter5.Core</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\PecaStarter5.Gui\PecaStarter5.Gui.csproj">
       <Project>{F1A27F3F-502A-446D-81AE-B582FF83E568}</Project>
       <Name>PecaStarter5.Gui</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Peercast4Net\Peercast4Net.csproj">
-      <Project>{F6BD0F22-BD5F-4E1B-A80A-BF47E28D1558}</Project>
-      <Name>Peercast4Net</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
