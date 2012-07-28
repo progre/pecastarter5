@@ -112,7 +112,7 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
                     genre = kv.Value;
                     continue;
                 }
-                Parameters.Dictionary[kv.Key] = kv.Value;
+                Parameters[kv.Key] = kv.Value;
             }
             return genre;
         }

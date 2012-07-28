@@ -2,6 +2,7 @@
 using Progressive.PecaStarter5.ViewModel;
 using Progressive.PecaStarter5.Views;
 using Progressive.PecaStarter5.Models;
+using System.Reflection;
 
 namespace Progressive.PecaStarter5
 {
@@ -12,7 +13,8 @@ namespace Progressive.PecaStarter5
     {
         protected override void OnStartup(StartupEventArgs e)
         {
-            var viewModel = new MainWindowViewModel(ExternalResource.YellowPagesList, ExternalResource.Configuration);
+            var title = "Peca Starter " + Assembly.GetExecutingAssembly().GetName().Version.ToString() + " DP";
+            var viewModel = new MainWindowViewModel(title, ExternalResource.YellowPagesList, ExternalResource.Configuration);
             MainWindow = new MainWindow() { DataContext = viewModel };
             MainWindow.Deactivated += (sender, e1) => ExternalResource.Configuration = viewModel.Configuration;
             MainWindow.Show();

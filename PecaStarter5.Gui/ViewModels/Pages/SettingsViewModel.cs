@@ -84,7 +84,7 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
                 if (configuration.LogPath == value)
                     return;
                 configuration.LogPath = value;
-                loggerPlugin.BasePath = value;
+                loggerPlugin.BasePath = configuration.LogPath;
                 OnPropertyChanged("LogPath");
             }
         }

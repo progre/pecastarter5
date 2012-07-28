@@ -14,6 +14,7 @@ namespace Progressive.PecaStarter5.Models
     {
         public Configuration()
         {
+            Port = 7144;
             YellowPagesList = new List<YellowPages>();
             NameHistory = new Collection<string>();
             GenreHistory = new Collection<string>();

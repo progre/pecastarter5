@@ -11,8 +11,9 @@ namespace Progressive.PecaStarter5.ViewModel
     {
         private bool disposed;
 
-        public MainWindowViewModel(IEnumerable<string> yellowPagesList, Configuration configuration)
+        public MainWindowViewModel(string title, IEnumerable<string> yellowPagesList, Configuration configuration)
         {
+            Title = title;
             Configuration = configuration;
             configuration.PropertyChanged += (sender, e) =>
             {
@@ -28,7 +29,7 @@ namespace Progressive.PecaStarter5.ViewModel
             Dispose(false);
         }
 
-        public string Title { get { return "Peca Starter 5 (Nightly)"; } }
+        public string Title { get; set; }
 
         private Configuration configuration;
         public Configuration Configuration

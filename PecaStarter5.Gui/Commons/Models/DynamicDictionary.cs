@@ -25,6 +25,16 @@ namespace Progressive.PecaStarter5.Commons.Models
         // The inner dictionary.
         public Dictionary<string, string> Dictionary { get; set; }
 
+        public string this[string key]
+        {
+            get { return Dictionary[key]; }
+            set
+            {
+                Dictionary[key] = value;
+                OnPropertyChanged(key);
+            }
+        }
+
         // If you try to get a value of a property 
         // not defined in the class, this method is called.
         public override bool TryGetMember(
