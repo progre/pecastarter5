@@ -20,7 +20,7 @@ namespace Progressive.PecaStarter5.ViewModels
     {
         private Models.PecaStarterModel pecaStarter;
 
-        public MainPanelViewModel(PecaStarterModel model, Configuration configuration)
+        public MainPanelViewModel(PecaStarterModel model)
         {
             // Models
             this.pecaStarter = model;
@@ -32,10 +32,10 @@ namespace Progressive.PecaStarter5.ViewModels
 
             // タブ情報の初期化
             RelayListViewModel = new RelayListViewModel(pecaStarter.Peercast, yellowPagesList);
-            YellowPagesListViewModel = new YellowPagesListViewModel(yellowPagesList, configuration);
-            ExternalSourceViewModel = new ExternalSourceViewModel(configuration);
-            SettingsViewModel = new SettingsViewModel(configuration, pecaStarter.Peercast, pecaStarter.LoggerPlugin);
-            BroadcastControlViewModel = new BroadcastControlViewModel(this, pecaStarter, service, configuration);
+            YellowPagesListViewModel = new YellowPagesListViewModel(yellowPagesList, model.Configuration);
+            ExternalSourceViewModel = new ExternalSourceViewModel(model.Configuration);
+            SettingsViewModel = new SettingsViewModel(model.Configuration, pecaStarter.Peercast, pecaStarter.LoggerPlugin);
+            BroadcastControlViewModel = new BroadcastControlViewModel(this, pecaStarter, service, model.Configuration);
 
             InitializeEvents();
         }
