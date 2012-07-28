@@ -1,27 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Progressive.Peercast4Net;
-using Progressive.PecaStarter5.Models.Plugins;
 using Progressive.PecaStarter5.Models.ExternalYellowPages;
-using System.Net;
+using Progressive.PecaStarter5.Models.Plugins;
+using Progressive.Peercast4Net;
 
 namespace Progressive.PecaStarter5.Models.Services
 {
     public class PeercastService
     {
-        private Peercast peercast;
-        private IEnumerable<IExternalYellowPages> externalYellowPagesList;
-        private IEnumerable<IPlugin> plugins;
+        private Peercast m_peercast;
+        private IEnumerable<IExternalYellowPages> m_externalYellowPagesList;
+        private IEnumerable<IPlugin> m_plugins;
 
         public PeercastService(Peercast peercast, IEnumerable<IExternalYellowPages> externalYellowPagesList,
             IEnumerable<IPlugin> plugins)
         {
-            this.peercast = peercast;
-            this.externalYellowPagesList = externalYellowPagesList;
-            this.plugins = plugins;
+            this.m_peercast = peercast;
+            this.m_externalYellowPagesList = externalYellowPagesList;
+            this.m_plugins = plugins;
         }
 
         public async Task<string> BroadcastAsync(IYellowPages yellowPages, int? acceptedHash,
@@ -40,13 +38,13 @@ namespace Progressive.PecaStarter5.Models.Services
 
             // YP更新
             progress.Report("YPの設定を変更中...");
-            await peercast.SetYellowPagesAsync(yellowPages.Host);
+            await m_peercast.SetYellowPagesAsync(yellowPages.Host);
 
             // 開始
             progress.Report("チャンネルを作成中...");
             var param = (BroadcastParameter)parameter.Clone();
             param.Genre = yellowPages.GetPrefix(yellowPagesParameter) + param.Genre;
-            var id = await peercast.BroadcastAsync(param);
+            var id = await m_peercast.BroadcastAsync(param);
 
             var broadcastedParameter = new BroadcastedParameter
             {
@@ -62,7 +60,7 @@ namespace Progressive.PecaStarter5.Models.Services
                 Exception exception = null;
                 try
                 {
-                    await Find(externalYellowPagesList, yellowPages.Name).OnBroadcastedAsync(broadcastedParameter);
+                    await Find(m_externalYellowPagesList, yellowPages.Name).OnBroadcastedAsync(broadcastedParameter);
                 }
                 catch (Exception ex)
                 {
@@ -71,7 +69,7 @@ namespace Progressive.PecaStarter5.Models.Services
                 }
                 if (exception != null)
                 {
-                    await peercast.StopAsync(id);
+                    await m_peercast.StopAsync(id);
                     throw exception;
                 }
             }
@@ -79,7 +77,7 @@ namespace Progressive.PecaStarter5.Models.Services
             // プラグイン処理
             await Task.Factory.StartNew(() =>
             {
-                Task.WaitAll(plugins.Select(x => x.OnBroadcastedAsync(broadcastedParameter)).ToArray());
+                Task.WaitAll(m_plugins.Select(x => x.OnBroadcastedAsync(broadcastedParameter)).ToArray());
             });
 
             // TODO: タイマー起動する
@@ -95,7 +93,7 @@ namespace Progressive.PecaStarter5.Models.Services
             progress.Report("通信中...");
             var param = (UpdateParameter)parameter.Clone();
             param.Genre = yellowPages.GetPrefix(yellowPagesParameter);
-            await peercast.UpdateAsync(param);
+            await m_peercast.UpdateAsync(param);
 
             var updatedParameter = new UpdatedParameter
             {
@@ -106,13 +104,13 @@ namespace Progressive.PecaStarter5.Models.Services
             // 外部YPに通知
             if (yellowPages.IsExternal)
             {
-                await Find(externalYellowPagesList, yellowPages.Name).OnUpdatedAsync(updatedParameter);
+                await Find(m_externalYellowPagesList, yellowPages.Name).OnUpdatedAsync(updatedParameter);
             }
 
             // プラグイン処理
             await Task.Factory.StartNew(() =>
             {
-                Task.WaitAll(plugins.Select(x => x.OnUpdatedAsync(updatedParameter)).ToArray());
+                Task.WaitAll(m_plugins.Select(x => x.OnUpdatedAsync(updatedParameter)).ToArray());
             });
 
             progress.Report("チャンネル情報を更新しました");
@@ -123,7 +121,7 @@ namespace Progressive.PecaStarter5.Models.Services
         {
             // 停止
             progress.Report("通信中...");
-            await peercast.StopAsync(id);
+            await m_peercast.StopAsync(id);
 
             var stopedParameter = new StopedParameter
             {
@@ -135,13 +133,13 @@ namespace Progressive.PecaStarter5.Models.Services
             // 外部YPに通知
             if (yellowPages.IsExternal)
             {
-                await Find(externalYellowPagesList, yellowPages.Name).OnStopedAsync(stopedParameter);
+                await Find(m_externalYellowPagesList, yellowPages.Name).OnStopedAsync(stopedParameter);
             }
 
             // プラグイン処理
             await Task.Factory.StartNew(() =>
             {
-                Task.WaitAll(plugins.Select(x => x.OnStopedAsync(stopedParameter)).ToArray());
+                Task.WaitAll(m_plugins.Select(x => x.OnStopedAsync(stopedParameter)).ToArray());
             });
             progress.Report("チャンネルを切断しました");
         }
@@ -151,13 +149,13 @@ namespace Progressive.PecaStarter5.Models.Services
             // 外部YPに通知
             if (yellowPages.IsExternal)
             {
-                await Find(externalYellowPagesList, yellowPages.Name).OnTickedAsync("", -1, -1);
+                await Find(m_externalYellowPagesList, yellowPages.Name).OnTickedAsync("", -1, -1);
             }
 
             // プラグイン処理
             await Task.Factory.StartNew(() =>
             {
-                Task.WaitAll(plugins.Select(x => x.OnTickedAsync("", -1, -1)).ToArray());
+                Task.WaitAll(m_plugins.Select(x => x.OnTickedAsync("", -1, -1)).ToArray());
             });
         }
 
@@ -172,7 +170,7 @@ namespace Progressive.PecaStarter5.Models.Services
 
         private IExternalYellowPages Find(IEnumerable<IExternalYellowPages> list, string name)
         {
-            return externalYellowPagesList.Single(x => x.Name == name);
+            return m_externalYellowPagesList.Single(x => x.Name == name);
         }
     }
 }

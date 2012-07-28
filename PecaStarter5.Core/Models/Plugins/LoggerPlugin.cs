@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace Progressive.PecaStarter5.Models.Plugins
 {
     public class LoggerPlugin : IPlugin
     {
-        private Logger logger;
+        private Logger m_logger;
 
         public LoggerPlugin()
         {
@@ -26,9 +22,9 @@ namespace Progressive.PecaStarter5.Models.Plugins
             {
                 if (!IsEnabled)
                     return;
-                logger = Logger.StartNew(BasePath, parameter.BroadcastParameter.Name);
+                m_logger = Logger.StartNew(BasePath, parameter.BroadcastParameter.Name);
                 var param = parameter.BroadcastParameter;
-                logger.Insert("", "", param.Genre, param.Description, param.Comment);
+                m_logger.Insert("", "", param.Genre, param.Description, param.Comment);
             });
         }
 
@@ -38,10 +34,10 @@ namespace Progressive.PecaStarter5.Models.Plugins
             {
                 if (!IsEnabled)
                     return;
-                if (logger == null)
+                if (m_logger == null)
                     return;
                 var param = parameter.UpdateParameter;
-                logger.Insert("", "", param.Genre, param.Description, param.Comment);
+                m_logger.Insert("", "", param.Genre, param.Description, param.Comment);
             });
         }
 
@@ -51,9 +47,9 @@ namespace Progressive.PecaStarter5.Models.Plugins
             {
                 if (!IsEnabled)
                     return;
-                if (logger == null)
+                if (m_logger == null)
                     return;
-                logger.Insert("", "", "", "", "（配信終了）");
+                m_logger.Insert("", "", "", "", "（配信終了）");
             });
         }
 
@@ -63,9 +59,9 @@ namespace Progressive.PecaStarter5.Models.Plugins
             {
                 if (!IsEnabled)
                     return;
-                if (logger == null)
+                if (m_logger == null)
                     return;
-                logger.Insert(relays.ToString(), listeners.ToString(), "", "", "");
+                m_logger.Insert(relays.ToString(), listeners.ToString(), "", "", "");
             });
         }
 
@@ -75,8 +71,8 @@ namespace Progressive.PecaStarter5.Models.Plugins
             {
                 if (!IsEnabled)
                     return;
-                logger = Logger.StartNew(BasePath, parameter.Name);
-                logger.Insert("", "", parameter.Genre, parameter.Description, parameter.Comment);
+                m_logger = Logger.StartNew(BasePath, parameter.Name);
+                m_logger.Insert("", "", parameter.Genre, parameter.Description, parameter.Comment);
             });
         }
 
