@@ -13,13 +13,13 @@ namespace Progressive.PecaStarter5.ViewModel
         public MainWindowViewModel(PecaStarterModel model)
         {
             m_model = model;
+            MainPanelViewModel = new MainPanelViewModel(model);
+
             Configuration.PropertyChanged += (sender, e) =>
             {
                 if (e.PropertyName == "HasNotifyIcon")
                     OnPropertyChanged("HasNotifyIcon");
             };
-
-            MainPanelViewModel = new MainPanelViewModel(model);
         }
 
         ~MainWindowViewModel()
@@ -83,10 +83,8 @@ namespace Progressive.PecaStarter5.ViewModel
             if (disposing)
             {
                 // マネージ リソースの解放処理をこの位置に記述します。
-                MainPanelViewModel.ExternalSourceViewModel.UpdateHistory();
             }
             // アンマネージ リソースの解放処理をこの位置に記述します。
-            OnPropertyChanged("Settings");
         }
     }
 }
