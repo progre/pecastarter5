@@ -12,9 +12,9 @@ namespace Progressive.PecaStarter5.ViewModels.Controls
 {
     public class BroadcastControlViewModel : ViewModelBase
     {
-        private Models.PecaStarter pecaStarter;
+        private Models.PecaStarterModel pecaStarter;
 
-        public BroadcastControlViewModel(MainPanelViewModel parent, Models.PecaStarter pecaStarter, PeercastService service, Configuration configuration)
+        public BroadcastControlViewModel(MainPanelViewModel parent, Models.PecaStarterModel pecaStarter, PeercastService service, Configuration configuration)
         {
             this.pecaStarter = pecaStarter;
             Configuration = configuration;

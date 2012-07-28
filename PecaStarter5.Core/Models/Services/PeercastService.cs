@@ -82,18 +82,7 @@ namespace Progressive.PecaStarter5.Models.Services
                 Task.WaitAll(plugins.Select(x => x.OnBroadcastedAsync(broadcastedParameter)).ToArray());
             });
 
-            //    // ログ出力
-            //    if (viewModel.SettingsViewModel.Logging)
-            //    {
-            //        var esvm = viewModel.ExternalSourceViewModel;
-            //        logger.Name = esvm.Name.Value;
-            //        logger.StartAt = DateTime.Now;
-            //        logger.insert("0", "0", esvm.Genre.Value, esvm.Description.Value, esvm.Comment.Value);
-            //    }
-            //    if (yp is WebApiYellowPages || viewModel.SettingsViewModel.Logging)
-            //    {
-            //        viewModel.BeginTimer();
-            //    }
+            // TODO: タイマー起動する
 
             progress.Report("チャンネルを作成しました");
             return id;

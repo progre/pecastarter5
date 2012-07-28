@@ -1,8 +1,9 @@
-﻿using System.Windows;
+﻿using System.IO;
+using System.Reflection;
+using System.Windows;
+using Progressive.PecaStarter5.Models;
 using Progressive.PecaStarter5.ViewModel;
 using Progressive.PecaStarter5.Views;
-using Progressive.PecaStarter5.Models;
-using System.Reflection;
 
 namespace Progressive.PecaStarter5
 {
@@ -11,17 +12,35 @@ namespace Progressive.PecaStarter5
     /// </summary>
     public partial class App : Application
     {
+        private string Title
+        {
+            get { return "Peca Starter " + Assembly.GetExecutingAssembly().GetName().Version.ToString() + " DP"; }
+        }
+
+        private string ApplicationName
+        {
+            get { return Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().Location); }
+        }
+
+        private string ApplicationPath
+        {
+            get
+            {
+                return Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + Path.DirectorySeparatorChar;
+            }
+        }
+
         protected override void OnStartup(StartupEventArgs e)
         {
-            var title = "Peca Starter " + Assembly.GetExecutingAssembly().GetName().Version.ToString() + " DP";
-            var viewModel = new MainWindowViewModel(title, ExternalResource.YellowPagesList, ExternalResource.Configuration);
+            var model = new PecaStarterModel(Title, new ExternalResource(ApplicationName, ApplicationPath));
+            var viewModel = new MainWindowViewModel(model);
             MainWindow = new MainWindow() { DataContext = viewModel };
-            MainWindow.Deactivated += (sender, e1) => ExternalResource.Configuration = viewModel.Configuration;
+            MainWindow.Deactivated += (sender, e1) => model.Save();
             MainWindow.Show();
 
-            this.DispatcherUnhandledException += (sender, dispatcherUnhandledExceptionEventArgs) =>
+            DispatcherUnhandledException += (sender, dispatcherUnhandledExceptionEventArgs) =>
             {
-                ExternalResource.Configuration = viewModel.Configuration;
+                model.Save();
                 if (MessageBox.Show(
                     "未解決のエラーが発生しました。（" + dispatcherUnhandledExceptionEventArgs.Exception.Message + "）プログラムを終了します。",
                     "PecaStarter", MessageBoxButton.OKCancel, MessageBoxImage.Error)

@@ -12,19 +12,20 @@ using Progressive.PecaStarter5.Models.YellowPagesXml;
 using Progressive.PecaStarter5.ViewModels.Controls;
 using Progressive.PecaStarter5.ViewModels.Pages;
 using Progressive.Peercast4Net;
+using System.IO;
 
 namespace Progressive.PecaStarter5.ViewModels
 {
     public class MainPanelViewModel : ViewModelBase
     {
-        private Models.PecaStarter pecaStarter;
+        private Models.PecaStarterModel pecaStarter;
 
-        public MainPanelViewModel(IEnumerable<string> yellowPagesXmls, Configuration configuration)
+        public MainPanelViewModel(PecaStarterModel model, Configuration configuration)
         {
             // Models
-            this.pecaStarter = new Models.PecaStarter();
+            this.pecaStarter = model;
             pecaStarter.ExceptionThrown += (sender, e) => OnException((Exception)e.ExceptionObject);
-            var tuple = GetYellowPagesLists(yellowPagesXmls);
+            var tuple = model.GetYellowPagesLists();
             var yellowPagesList = tuple.Item1;
             var externalYellowPagesList = tuple.Item2;
             var service = new PeercastService(pecaStarter.Peercast, externalYellowPagesList, pecaStarter.Plugins);
@@ -142,23 +143,6 @@ namespace Progressive.PecaStarter5.ViewModels
             {
                 NotifyAlert(ex.Message + ex.StackTrace);
             }
-        }
-
-        private Tuple<List<IYellowPages>, List<IExternalYellowPages>> GetYellowPagesLists(
-            IEnumerable<string> yellowPagesXmls)
-        {
-            var yellowPagesList = new List<IYellowPages>();
-            var externalYellowPagesList = new List<IExternalYellowPages>();
-            foreach (var xml in yellowPagesXmls)
-            {
-                var yp = YellowPagesParserFactory.GetInstance(xml).GetInstance();
-                yellowPagesList.Add(yp);
-                if (yp.IsExternal)
-                {
-                    externalYellowPagesList.Add((IExternalYellowPages)yp);
-                }
-            }
-            return Tuple.Create(yellowPagesList, externalYellowPagesList);
         }
 
         public void NotifyAlert(string value)

@@ -11,17 +11,17 @@ namespace Progressive.PecaStarter5.ViewModel
     {
         private bool disposed;
 
-        public MainWindowViewModel(string title, IEnumerable<string> yellowPagesList, Configuration configuration)
+        public MainWindowViewModel(PecaStarterModel model)
         {
-            Title = title;
-            Configuration = configuration;
+            Title = model.Title;
+            Configuration = model.Configuration;
             configuration.PropertyChanged += (sender, e) =>
             {
                 if (e.PropertyName == "HasNotifyIcon")
                     OnPropertyChanged("HasNotifyIcon");
             };
 
-            MainPanelViewModel = new MainPanelViewModel(yellowPagesList, configuration);
+            MainPanelViewModel = new MainPanelViewModel(model, configuration);
         }
 
         ~MainWindowViewModel()

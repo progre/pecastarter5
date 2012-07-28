@@ -6,26 +6,58 @@ using System.Threading;
 using Progressive.PecaStarter5.Models.Plugins;
 using System.Threading.Tasks;
 using Progressive.Peercast4Net;
+using Progressive.PecaStarter5.Models.Daos;
+using Progressive.PecaStarter5.Models.ExternalYellowPages;
+using Progressive.PecaStarter5.Models.YellowPagesXml;
 
 namespace Progressive.PecaStarter5.Models
 {
     // TODO: VMにあるロジック・エンティティを可能な限りここに移動
-    public class PecaStarter
+    public class PecaStarterModel
     {
+        private IExternalResource m_externalResource;
         public Timer timer; // スレッドタイマが最も軽量
 
         public event UnhandledExceptionEventHandler ExceptionThrown;
 
-        public PecaStarter()
+        public PecaStarterModel(string title, IExternalResource externalResource)
         {
+            m_externalResource = externalResource;
+            Title = title;
             Peercast = new Peercast();
             LoggerPlugin = new LoggerPlugin();
             Plugins = new IPlugin[] { LoggerPlugin };
+            var dao = new ConfigurationDao(externalResource);
+
+            Configuration = dao.Get();
         }
 
+        public string Title { get; private set; }
         public Peercast Peercast { get; private set; }
         public IEnumerable<IPlugin> Plugins { get; private set; }
         public LoggerPlugin LoggerPlugin { get; private set; }
+        public Configuration Configuration { get; private set; }
+
+        public void Save()
+        {
+            new ConfigurationDao(m_externalResource).Put(Configuration);
+        }
+
+        public Tuple<List<IYellowPages>, List<IExternalYellowPages>> GetYellowPagesLists()
+        {
+            var yellowPagesList = new List<IYellowPages>();
+            var externalYellowPagesList = new List<IExternalYellowPages>();
+            foreach (var xml in m_externalResource.GetYellowPagesDefineInputStream())
+            {
+                var yp = YellowPagesParserFactory.GetInstance(xml).GetInstance();
+                yellowPagesList.Add(yp);
+                if (yp.IsExternal)
+                {
+                    externalYellowPagesList.Add((IExternalYellowPages)yp);
+                }
+            }
+            return Tuple.Create(yellowPagesList, externalYellowPagesList);
+        }
 
         public void Broadcast(BroadcastParameter parameter)
         {
