@@ -1,52 +1,46 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Reflection;
-using Progressive.PecaStarter5.Daos;
 using Progressive.PecaStarter5.Models;
-using Progressive.PecaStarter5.Models.YellowPagesXml;
 
 namespace Progressive.PecaStarter5
 {
-    static class ExternalResource
+    class ExternalResource : IExternalResource
     {
-        public static Configuration Configuration
+        private readonly string m_name;
+        private readonly string m_path;
+
+        public ExternalResource(string name, string path)
         {
-            get { return new ConfigurationDao() { FilePath = ConfigurationFilePath }.Get(); }
-            set { new ConfigurationDao() { FilePath = ConfigurationFilePath }.Put(value); }
+            m_name = name;
+            m_path = path;
         }
 
-        private static string ConfigurationFilePath
+        public Stream GetConfigurationInputStream()
         {
-            get { return ApplicationPath + Path.GetFileNameWithoutExtension(Assembly.GetEntryAssembly().Location) + ".xml"; }
+            return new FileStream(ConfigurationFilePath, FileMode.Open);
         }
 
-        public static IEnumerable<string> YellowPagesList
+        public Stream GetConfigurationOutputStream()
         {
-            get
+            return new FileStream(ConfigurationFilePath, FileMode.Create);
+        }
+
+        public IEnumerable<Stream> GetYellowPagesDefineInputStream()
+        {
+            foreach (var path in Directory.GetFiles(YellowPagesDirectoryPath, "*.xml"))
             {
-                try
-                {
-                    return Directory.EnumerateFiles(YellowPagesDirectoryPath, "*.xml");
-                }
-                catch (DirectoryNotFoundException)
-                {
-                    return Enumerable.Empty<string>();
-                }
+                yield return new FileStream(path, FileMode.Open);
             }
         }
 
-        private static string YellowPagesDirectoryPath
+        private string ConfigurationFilePath
         {
-            get { return ApplicationPath + "yellowpages" + Path.DirectorySeparatorChar; }
+            get { return m_path + m_name + ".xml"; }
         }
 
-        private static string ApplicationPath
+        private string YellowPagesDirectoryPath
         {
-            get
-            {
-                return Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + Path.DirectorySeparatorChar;
-            }
+            get { return m_path + "yellowpages" + Path.DirectorySeparatorChar; }
         }
     }
 }

@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.ComponentModel;
-using System.Runtime.Serialization;
-using System.IO;
 using System.Collections.ObjectModel;
-using System.Xml.Serialization;
+using System.ComponentModel;
+using System.IO;
 
 namespace Progressive.PecaStarter5.Models
 {

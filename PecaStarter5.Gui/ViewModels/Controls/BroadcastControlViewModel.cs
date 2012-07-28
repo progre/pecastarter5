@@ -6,18 +6,16 @@ using Progressive.PecaStarter5.Models;
 using Progressive.PecaStarter5.Models.Channels;
 using Progressive.PecaStarter5.Models.Services;
 using Progressive.PecaStarter5.ViewModels.Dxos;
-using System.Net;
 
 namespace Progressive.PecaStarter5.ViewModels.Controls
 {
     public class BroadcastControlViewModel : ViewModelBase
     {
-        private Models.PecaStarter pecaStarter;
+        private PecaStarterModel m_model;
 
-        public BroadcastControlViewModel(MainPanelViewModel parent, Models.PecaStarter pecaStarter, PeercastService service, Configuration configuration)
+        public BroadcastControlViewModel(MainPanelViewModel parent, PecaStarterModel model)
         {
-            this.pecaStarter = pecaStarter;
-            Configuration = configuration;
+            m_model = model;
 
             BroadcastCommand = new DelegateCommand(() =>
             {
@@ -25,7 +23,7 @@ namespace Progressive.PecaStarter5.ViewModels.Controls
                 parent.ExternalSourceViewModel.UpdateHistory();
                 var parameter = ViewModelDxo.ToBroadcastParameter(parent.ExternalSourceViewModel);
                 var yp = parent.YellowPagesListViewModel.SelectedYellowPages;
-                service.BroadcastAsync(yp.Model, yp.AcceptedHash, yp.Parameters.Dictionary,
+                model.Service.BroadcastAsync(yp.Model, yp.AcceptedHash, yp.Parameters.Dictionary,
                     parameter,
                     new Progress<string>(x => parent.Feedback = x))
                     .ContinueWith(t =>
@@ -37,7 +35,7 @@ namespace Progressive.PecaStarter5.ViewModels.Controls
                             return;
                         }
                         BroadcastingChannel = new BroadcastingChannel(parameter.Name, t.Result);
-                        pecaStarter.Broadcast(parameter);
+                        model.Broadcast(parameter);
                         IsProcessing = false;
                     }, TaskScheduler.FromCurrentSynchronizationContext());
             }, () =>
@@ -56,7 +54,7 @@ namespace Progressive.PecaStarter5.ViewModels.Controls
                 IsProcessing = true;
                 parent.ExternalSourceViewModel.UpdateHistory();
                 var yp = parent.YellowPagesListViewModel.SelectedYellowPages;
-                service.UpdateAsync(
+                model.Service.UpdateAsync(
                     yp.Model, yp.Parameters.Dictionary,
                     ViewModelDxo.ToUpdateParameter(BroadcastingChannel.Id, parent.ExternalSourceViewModel),
                     new Progress<string>(x => parent.Feedback = x))
@@ -81,7 +79,7 @@ namespace Progressive.PecaStarter5.ViewModels.Controls
             {
                 IsProcessing = true;
                 var yp = parent.YellowPagesListViewModel.SelectedYellowPages;
-                service.StopAsync(yp.Model, yp.Parameters.Dictionary,
+                model.Service.StopAsync(yp.Model, yp.Parameters.Dictionary,
                     BroadcastingChannel.Name, BroadcastingChannel.Id,
                     new Progress<string>(x => parent.Feedback = x))
                     .ContinueWith(t =>
@@ -93,6 +91,7 @@ namespace Progressive.PecaStarter5.ViewModels.Controls
                             return;
                         }
                         BroadcastingChannel = null;
+                        model.Stop();
                         IsProcessing = false;
                     }, TaskScheduler.FromCurrentSynchronizationContext());
             }, () =>
@@ -138,7 +137,7 @@ namespace Progressive.PecaStarter5.ViewModels.Controls
         public DelegateCommand BroadcastCommand { get; private set; }
         public DelegateCommand UpdateCommand { get; private set; }
         public DelegateCommand StopCommand { get; private set; }
-        public Configuration Configuration { get; private set; } // カウントダウンボタンが使用
+        public Configuration Configuration { get { return m_model.Configuration; } } // カウントダウンボタンが使用
 
         private void OnParameterPropertyChanged(object sender, EventArgs e)
         {

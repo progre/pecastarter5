@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Progressive.PecaStarter5.Models.Channels
+﻿namespace Progressive.PecaStarter5.Models.Channels
 {
     public class BroadcastingChannel
     {

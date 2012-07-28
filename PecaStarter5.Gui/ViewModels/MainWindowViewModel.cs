@@ -1,27 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
 using Progressive.Commons.ViewModels;
 using Progressive.PecaStarter5.Models;
 using Progressive.PecaStarter5.ViewModels;
-using Progressive.Peercast4Net;
 
 namespace Progressive.PecaStarter5.ViewModel
 {
     public class MainWindowViewModel : ViewModelBase, IDisposable
     {
-        private bool disposed;
+        private bool m_disposed;
+        private PecaStarterModel m_model;
 
-        public MainWindowViewModel(string title, IEnumerable<string> yellowPagesList, Configuration configuration)
+        public MainWindowViewModel(PecaStarterModel model)
         {
-            Title = title;
-            Configuration = configuration;
-            configuration.PropertyChanged += (sender, e) =>
+            m_model = model;
+            MainPanelViewModel = new MainPanelViewModel(model);
+
+            Configuration.PropertyChanged += (sender, e) =>
             {
                 if (e.PropertyName == "HasNotifyIcon")
                     OnPropertyChanged("HasNotifyIcon");
             };
-
-            MainPanelViewModel = new MainPanelViewModel(yellowPagesList, configuration);
         }
 
         ~MainWindowViewModel()
@@ -29,14 +27,7 @@ namespace Progressive.PecaStarter5.ViewModel
             Dispose(false);
         }
 
-        public string Title { get; set; }
-
-        private Configuration configuration;
-        public Configuration Configuration
-        {
-            get { return configuration; }
-            private set { configuration = value; }
-        }
+        public string Title { get { return m_model.Title; } }
 
         public double Left
         {
@@ -69,6 +60,8 @@ namespace Progressive.PecaStarter5.ViewModel
 
         public MainPanelViewModel MainPanelViewModel { get; private set; }
 
+        private Configuration Configuration { get { return m_model.Configuration; } }
+
         #region IDisposable メンバー
 
         public void Dispose()
@@ -81,19 +74,17 @@ namespace Progressive.PecaStarter5.ViewModel
 
         protected virtual void Dispose(bool disposing)
         {
-            if (this.disposed)
+            if (this.m_disposed)
             {
                 return;
             }
-            this.disposed = true;
+            this.m_disposed = true;
 
             if (disposing)
             {
                 // マネージ リソースの解放処理をこの位置に記述します。
-                MainPanelViewModel.ExternalSourceViewModel.UpdateHistory();
             }
             // アンマネージ リソースの解放処理をこの位置に記述します。
-            OnPropertyChanged("Settings");
         }
     }
 }

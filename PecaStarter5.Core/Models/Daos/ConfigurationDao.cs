@@ -1,22 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Progressive.PecaStarter5.Models;
+﻿using System.IO;
 using System.Xml.Serialization;
-using System.IO;
 
-namespace Progressive.PecaStarter5.Daos
+namespace Progressive.PecaStarter5.Models.Daos
 {
     class ConfigurationDao
     {
-        public string FilePath { get; set; }
+        private IExternalResource m_externalResource;
+
+        public ConfigurationDao(IExternalResource externalResource)
+        {
+            m_externalResource = externalResource;
+        }
 
         public Configuration Get()
         {
             try
             {
-                using (var fileStream = new FileStream(FilePath, FileMode.Open))
+                using (var fileStream = m_externalResource.GetConfigurationInputStream())
                 {
                     // TODO: DataContractSerializerに置き換え
                     return (Configuration)new XmlSerializer(typeof(Configuration)).Deserialize(fileStream);
@@ -30,7 +30,7 @@ namespace Progressive.PecaStarter5.Daos
 
         public void Put(Configuration entity)
         {
-            using (var fileStream = new FileStream(FilePath, FileMode.Create))
+            using (var fileStream = m_externalResource.GetConfigurationOutputStream())
             {
                 new XmlSerializer(typeof(Configuration)).Serialize(fileStream, entity);
             }
