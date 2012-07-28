@@ -3,7 +3,6 @@ using Progressive.Commons.ViewModels;
 using Progressive.PecaStarter5.Models;
 using Progressive.PecaStarter5.Models.Channels;
 using Progressive.PecaStarter5.Models.Plugins;
-using Progressive.PecaStarter5.Models.Services;
 using Progressive.PecaStarter5.ViewModels.Controls;
 using Progressive.PecaStarter5.ViewModels.Pages;
 
@@ -17,17 +16,13 @@ namespace Progressive.PecaStarter5.ViewModels
         {
             // Models
             m_model = model;
-            var tuple = model.GetYellowPagesLists();
-            var yellowPagesList = tuple.Item1;
-            var externalYellowPagesList = tuple.Item2;
-            var service = new PeercastService(m_model.Peercast, externalYellowPagesList, m_model.Plugins);
 
             // タブ情報の初期化
-            RelayListViewModel = new RelayListViewModel(m_model.Peercast, yellowPagesList);
-            YellowPagesListViewModel = new YellowPagesListViewModel(yellowPagesList, model.Configuration);
+            RelayListViewModel = new RelayListViewModel(model.Peercast, model.YellowPagesList);
+            YellowPagesListViewModel = new YellowPagesListViewModel(model.YellowPagesList, model.Configuration);
             ExternalSourceViewModel = new ExternalSourceViewModel(model.Configuration);
-            SettingsViewModel = new SettingsViewModel(model.Configuration, m_model.Peercast, m_model.LoggerPlugin);
-            BroadcastControlViewModel = new BroadcastControlViewModel(this, m_model, service, model.Configuration);
+            SettingsViewModel = new SettingsViewModel(model.Configuration, model.Peercast, model.LoggerPlugin);
+            BroadcastControlViewModel = new BroadcastControlViewModel(this, model);
 
             InitializeEvents();
         }
@@ -57,6 +52,12 @@ namespace Progressive.PecaStarter5.ViewModels
         {
             get { return m_feedback; }
             set { SetProperty("Feedback", ref m_feedback, value); }
+        }
+
+        public void OnException(Exception ex)
+        {
+            Feedback = "中止";
+            NotifyExceptionAlert(ex);
         }
 
         private void InitializeEvents()
@@ -100,11 +101,7 @@ namespace Progressive.PecaStarter5.ViewModels
                 m_model.Interrupt(parameter);
             };
 
-            RelayListViewModel.ExceptionThrown += (sender, e) =>
-            {
-                Feedback = "中止";
-                NotifyExceptionAlert((Exception)e.ExceptionObject);
-            };
+            RelayListViewModel.ExceptionThrown += (sender, e) => OnException((Exception)e.ExceptionObject);
 
             BroadcastControlViewModel.PropertyChanged += (sender, e) =>
             {
