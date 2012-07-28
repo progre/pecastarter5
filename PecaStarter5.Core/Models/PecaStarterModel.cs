@@ -27,11 +27,11 @@ namespace Progressive.PecaStarter5.Models
             m_externalResource = externalResource;
             m_timer = new BroadcastTimer();
             m_timer.Ticked += s => OnTickedAsync((string)s);
+            LoggerPlugin = new LoggerPlugin();
             m_plugins = new IPlugin[] { LoggerPlugin };
 
             Title = title;
             Peercast = new Peercast();
-            LoggerPlugin = new LoggerPlugin();
             Configuration = new ConfigurationDao(externalResource).Get();
             var tuple = GetYellowPagesLists();
             YellowPagesList = tuple.Item1;
