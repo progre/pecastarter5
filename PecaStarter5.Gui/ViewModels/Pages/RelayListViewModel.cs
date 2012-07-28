@@ -11,6 +11,8 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
 {
     public class RelayListViewModel : ViewModelBase
     {
+        public event UnhandledExceptionEventHandler ExceptionThrown;
+
         public RelayListViewModel(Peercast peercast, IEnumerable<IYellowPages> yellowPagesList)
         {
             YellowPagesList = yellowPagesList;
@@ -76,6 +78,12 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
         {
             if (ChannelSelected != null)
                 ChannelSelected(this, new SelectedEventArgs(SelectedChannel, SelectedYellowPages));
+        }
+
+        internal void OnExceptionThrown(Exception ex)
+        {
+            if (ExceptionThrown != null)
+                ExceptionThrown(this, new UnhandledExceptionEventArgs(ex, false));
         }
     }
 

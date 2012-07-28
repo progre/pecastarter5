@@ -46,7 +46,9 @@
     <Compile Include="Models\Channels\BroadcastingChannel.cs" />
     <Compile Include="Models\Channels\Channel.cs" />
     <Compile Include="Models\ExternalYellowPages\IExternalYellowPages.cs" />
+    <Compile Include="Models\PecaStarter.cs" />
     <Compile Include="Models\Plugins\IPlugin.cs" />
+    <Compile Include="Models\Plugins\LoggerPlugin.cs" />
     <Compile Include="Models\Plugins\Parameters.cs" />
     <Compile Include="Models\Services\PeercastService.cs" />
     <Compile Include="Models\YellowPages\IYellowPages.cs" />

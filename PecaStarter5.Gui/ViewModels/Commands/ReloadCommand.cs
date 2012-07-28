@@ -31,9 +31,16 @@ namespace Progressive.PecaStarter5.ViewModels.Commands
         {
             parent.IsLoading = true;
             OnCanExecuteChanged();
-            peercast.GetChannelsAsync().ContinueWith((x) =>
+            peercast.GetChannelsAsync().ContinueWith(t =>
             {
-                parent.Channels = x.Result.ToList();
+                if (t.IsFaulted)
+                {
+                    parent.OnExceptionThrown(t.Exception);
+                    parent.IsLoading = false;
+                    OnCanExecuteChanged();
+                    return;
+                }
+                parent.Channels = t.Result.ToList();
                 parent.IsLoading = false;
                 OnCanExecuteChanged();
             }, TaskScheduler.FromCurrentSynchronizationContext());

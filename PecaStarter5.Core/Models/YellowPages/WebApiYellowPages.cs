@@ -156,7 +156,7 @@ namespace Progressive.PecaStarter5.Models
             throw new System.NotImplementedException();
         }
 
-        public Task OnInterruptedAsync()
+        public Task OnInterruptedAsync(InterruptedParameter parameter)
         {
             // nop
             return Task.Factory.StartNew(() => { });

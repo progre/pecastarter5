@@ -26,4 +26,12 @@ namespace Progressive.PecaStarter5.Models.Plugins
         public string Name { get; set; }
         public string Id { get; set; }
     }
+
+    public class InterruptedParameter
+    {
+        public string Name { get; set; }
+        public string Genre { get; set; }
+        public string Description { get; set; }
+        public string Comment { get; set; }
+    }
 }

@@ -12,8 +12,11 @@ namespace Progressive.PecaStarter5.ViewModels.Controls
 {
     public class BroadcastControlViewModel : ViewModelBase
     {
-        public BroadcastControlViewModel(MainPanelViewModel parent, PeercastService service, Configuration configuration)
+        private Models.PecaStarter pecaStarter;
+
+        public BroadcastControlViewModel(MainPanelViewModel parent, Models.PecaStarter pecaStarter, PeercastService service, Configuration configuration)
         {
+            this.pecaStarter = pecaStarter;
             Configuration = configuration;
 
             BroadcastCommand = new DelegateCommand(() =>
@@ -29,11 +32,12 @@ namespace Progressive.PecaStarter5.ViewModels.Controls
                     {
                         if (t.IsFaulted)
                         {
-                            OnException(parent, t.Exception);
+                            parent.OnException(t.Exception);
                             IsProcessing = false;
                             return;
                         }
                         BroadcastingChannel = new BroadcastingChannel(parameter.Name, t.Result);
+                        pecaStarter.Broadcast(parameter);
                         IsProcessing = false;
                     }, TaskScheduler.FromCurrentSynchronizationContext());
             }, () =>
@@ -60,7 +64,7 @@ namespace Progressive.PecaStarter5.ViewModels.Controls
                     {
                         if (t.IsFaulted)
                         {
-                            OnException(parent, t.Exception);
+                            parent.OnException(t.Exception);
                         }
                         IsProcessing = false;
                     }, TaskScheduler.FromCurrentSynchronizationContext());
@@ -84,14 +88,14 @@ namespace Progressive.PecaStarter5.ViewModels.Controls
                     {
                         if (t.IsFaulted)
                         {
-                            OnException(parent, t.Exception);
+                            parent.OnException(t.Exception);
                             IsProcessing = false;
                             return;
                         }
                         BroadcastingChannel = null;
                         IsProcessing = false;
                     }, TaskScheduler.FromCurrentSynchronizationContext());
-            }, () => 
+            }, () =>
             {
                 if (IsProcessing)
                     return false;
@@ -135,13 +139,6 @@ namespace Progressive.PecaStarter5.ViewModels.Controls
         public DelegateCommand UpdateCommand { get; private set; }
         public DelegateCommand StopCommand { get; private set; }
         public Configuration Configuration { get; private set; } // カウントダウンボタンが使用
-
-        private void OnException(MainPanelViewModel parent, Exception ex)
-        {
-            // ダイアログ通知
-            parent.Feedback = "中止";
-            parent.NotifyAlert(ex.InnerException.Message + ex.StackTrace);
-        }
 
         private void OnParameterPropertyChanged(object sender, EventArgs e)
         {
