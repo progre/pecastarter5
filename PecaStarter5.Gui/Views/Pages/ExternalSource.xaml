@@ -1,0 +1,51 @@
+﻿<UserControl x:Class="Progressive.PecaStarter5.Views.Pages.ExternalSource"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:c="clr-namespace:Progressive.PecaStarter.View.Control"
+    xmlns:cv="clr-namespace:Progressive.Commons.Views.Converters">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="..\Styles\ResourceDictionary.xaml"/>
+                <ResourceDictionary Source="..\Styles\ExternalSourceStyle.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <cv:EmptyStringVisibilityConverter x:Key="EmptyStringVisibilityConverter"/>
+            <cv:NotConverter x:Key="NotConverter"/>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Label Grid.Column="0" Grid.Row="0" Content="ストリームURL:"/>
+        <TextBox Grid.Column="1" Grid.Row="0"
+                IsEnabled="{Binding IsLocked, Converter={StaticResource NotConverter}}"
+                 Text="{Binding StreamUrl, ValidatesOnDataErrors=True}"/>
+        <Label Grid.Column="0" Grid.Row="1" Content="チャンネル名:"/>
+        <UserControl Grid.Column="1" Grid.Row="1"
+                IsEnabled="{Binding IsLocked, Converter={StaticResource NotConverter}}">
+            <c:TextBoxWithHistory DataContext="{Binding Name, Mode=OneWay}"/>
+        </UserControl>
+        <Label Grid.Column="0" Grid.Row="2" Content="ジャンル:"/>
+        <DockPanel Grid.Column="1" Grid.Row="2">
+            <Label ToolTip="プレフィックス"
+                   Content="{Binding Prefix}" Visibility="{Binding Prefix, Converter={StaticResource EmptyStringVisibilityConverter}}"/>
+            <c:TextBoxWithHistory DataContext="{Binding Genre}"/>
+        </DockPanel>
+        <Label Grid.Column="0" Grid.Row="3" Content="詳細:"/>
+        <c:TextBoxWithHistory Grid.Column="1" Grid.Row="3" DataContext="{Binding Description}"/>
+        <Label Grid.Column="0" Grid.Row="4" Content="コンタクトURL:"/>
+        <TextBox Grid.Column="1" Grid.Row="4" Text="{Binding ContactUrl, ValidatesOnDataErrors=True}"/>
+        <Label Grid.Column="0" Grid.Row="5" Content="コメント:"/>
+        <c:TextBoxWithHistory Grid.Column="1" Grid.Row="5" DataContext="{Binding Comment}"/>
+    </Grid>
+</UserControl>

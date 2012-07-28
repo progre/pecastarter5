@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<yellowpages>
+  <name>HKTV</name>
+  <notice>http://games.himitsukichi.com/hktv/readme.php</notice>
+  <peercast>
+    <host>games.himitsukichi.com</host>
+    <prefix header="hktv">
+      <listeners_visibility/>
+      <port_bandwidth_check/>
+      <time_invisibility/>
+      <no_log/>
+      <outside_display/>
+    </prefix>
+  </peercast>
+</yellowpages>

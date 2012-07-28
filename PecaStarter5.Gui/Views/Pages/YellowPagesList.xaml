@@ -1,0 +1,26 @@
+﻿<UserControl x:Class="Progressive.PecaStarter5.Views.Pages.YellowPagesList"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:l="clr-namespace:Progressive.PecaStarter5.Views.Pages"
+    xmlns:c="clr-namespace:Progressive.Commons.Views.Converters">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.Source>..\Styles\ResourceDictionary.xaml</ResourceDictionary.Source>
+            <c:ReferenceVisibilityConverter x:Key="ReferenceVisibilityConverter"/>
+            <c:NotConverter x:Key="NotConverter"/>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <StackPanel>
+        <StackPanel.Resources>
+        </StackPanel.Resources>
+        <DockPanel IsEnabled="{Binding IsLocked, Converter={StaticResource NotConverter}}">
+            <Label Content="イエローページ:"/>
+            <ComboBox TabIndex="10" DisplayMemberPath="Name"
+                      ItemsSource="{Binding YellowPagesViewModels}" SelectedValue="{Binding SelectedYellowPages}"/>
+        </DockPanel>
+        <UserControl Height="Auto"
+            Visibility="{Binding SelectedYellowPages, Converter={StaticResource ReferenceVisibilityConverter}}">
+            <l:YellowPages DataContext="{Binding SelectedYellowPages}"/>
+        </UserControl>
+    </StackPanel>
+</UserControl>

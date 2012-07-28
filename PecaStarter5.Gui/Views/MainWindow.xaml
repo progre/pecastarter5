@@ -1,0 +1,14 @@
+﻿<c:GlassWindow x:Class="Progressive.PecaStarter5.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:l="clr-namespace:Progressive.PecaStarter5.Views"
+        xmlns:c="clr-namespace:Progressive.Commons.Views"
+        MinWidth="320" MinHeight="240"
+        Title="{Binding Title, Mode=OneTime}"
+        Left="{Binding Left, Mode=TwoWay}" Top="{Binding Top, Mode=TwoWay}"
+        Height="{Binding Height, Mode=TwoWay}" Width="{Binding Width, Mode=TwoWay}">
+    <c:GlassWindow.Resources>
+        <ResourceDictionary Source="Styles\ResourceDictionary.xaml"/>
+    </c:GlassWindow.Resources>
+    <l:MainPanel DataContext="{Binding MainPanelViewModel}"/>
+</c:GlassWindow>
