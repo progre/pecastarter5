@@ -1,8 +1,8 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows;
 using Progressive.Commons.Views;
-using MControls = Xceed.Wpf.Toolkit;
-using System.ComponentModel;
+using Microsoft.CSharp.RuntimeBinder;
 
 namespace Progressive.PecaStarter5.Views
 {
@@ -15,7 +15,6 @@ namespace Progressive.PecaStarter5.Views
 
         public MainWindow()
         {
-            taskTrayIconManager = null;
             Loaded += OnLoaded;
             InitializeComponent();
         }
@@ -27,14 +26,14 @@ namespace Progressive.PecaStarter5.Views
                 var viewModel = (dynamic)DataContext;
                 if (viewModel.IsBusy)
                 {
-                    MControls.MessageBox.Show("処理が実行中なので終了できません。", "",
+                    Xceed.Wpf.Toolkit.MessageBox.Show("処理が実行中なので終了できません。", "",
                         MessageBoxButton.OK, MessageBoxImage.Error);
                     e.Cancel = true;
                     return;
                 }
                 if (viewModel.IsBroadcasting)
                 {
-                    var result = MControls.MessageBox.Show("配信中です。強制的に終了しますか？", "",
+                    var result = Xceed.Wpf.Toolkit.MessageBox.Show("配信中です。強制的に終了しますか？", "",
                         MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.None);
                     if (result != MessageBoxResult.Yes)
                     {
@@ -43,8 +42,9 @@ namespace Progressive.PecaStarter5.Views
                     }
                 }
             }
-            catch
+            catch (RuntimeBinderException)
             {
+                // バインド失敗時は無視
             }
             finally
             {
@@ -59,7 +59,9 @@ namespace Progressive.PecaStarter5.Views
                 taskTrayIconManager.Dispose();
                 taskTrayIconManager = null;
             }
-            ((IDisposable)DataContext).Dispose();
+            var disposeObj = DataContext as IDisposable;
+            if (disposeObj != null)
+                disposeObj.Dispose();
             base.OnClosed(e);
         }
 

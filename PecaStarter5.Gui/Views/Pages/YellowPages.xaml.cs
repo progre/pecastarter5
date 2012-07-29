@@ -1,13 +1,10 @@
-﻿using System;
-using System.ComponentModel;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
+using Microsoft.CSharp.RuntimeBinder;
 using Progressive.PecaStarter5.Commons.Models;
 using Progressive.PecaStarter5.Gui.Views.Pages;
-using System.Collections.Generic;
-using Microsoft.CSharp.RuntimeBinder;
 
 namespace Progressive.PecaStarter5.Views.Pages
 {

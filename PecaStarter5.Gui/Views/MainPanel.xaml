@@ -43,7 +43,6 @@
                     <TabItem.ContextMenu>
                         <ContextMenu>
                             <MenuItem Header="アプリケーションのフォルダを開く" Click="OnAssemblyPathItemClicked"/>
-                            <MenuItem Header="設定ファイルのフォルダを開く" Click="OnConfigurationPathItemClicked"/>
                         </ContextMenu>
                     </TabItem.ContextMenu>
                     <p:Settings DataContext="{Binding SettingsViewModel}"/>
