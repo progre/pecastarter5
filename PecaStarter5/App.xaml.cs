@@ -36,6 +36,7 @@ namespace Progressive.PecaStarter5
             var viewModel = new MainWindowViewModel(model);
             MainWindow = new MainWindow() { DataContext = viewModel };
             MainWindow.Deactivated += (sender, e1) => model.Save();
+            MainWindow.Closed += (sender, e2) => model.Save();
             MainWindow.Show();
 
             DispatcherUnhandledException += (sender, dispatcherUnhandledExceptionEventArgs) =>

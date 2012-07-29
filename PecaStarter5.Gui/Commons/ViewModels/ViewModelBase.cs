@@ -44,7 +44,7 @@ namespace Progressive.Commons.ViewModels
                 if (Validator.TryValidateObject(
                     this,
                     new ValidationContext(this, null, null),
-                    results))
+                    results, true))
                 {
                     return "";
                 }

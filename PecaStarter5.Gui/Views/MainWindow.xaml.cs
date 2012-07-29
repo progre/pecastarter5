@@ -24,9 +24,9 @@ namespace Progressive.PecaStarter5.Views
             try
             {
                 var viewModel = (dynamic)DataContext;
-                if (viewModel.IsBusy)
+                if (viewModel.IsProcessing)
                 {
-                    Xceed.Wpf.Toolkit.MessageBox.Show("処理が実行中なので終了できません。", "",
+                    Xceed.Wpf.Toolkit.MessageBox.Show("処理中なので終了できません。", "",
                         MessageBoxButton.OK, MessageBoxImage.Error);
                     e.Cancel = true;
                     return;

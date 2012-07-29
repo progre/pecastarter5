@@ -27,6 +27,16 @@ namespace Progressive.PecaStarter5.ViewModel
             Dispose(false);
         }
 
+        public bool IsBroadcasting
+        {
+            get { return MainPanelViewModel.BroadcastControlViewModel.BroadcastingChannel != null; }
+        }
+
+        public bool IsProcessing
+        {
+            get { return MainPanelViewModel.BroadcastControlViewModel.IsProcessing; }
+        }
+
         public string Title { get { return m_model.Title; } }
 
         public double Left

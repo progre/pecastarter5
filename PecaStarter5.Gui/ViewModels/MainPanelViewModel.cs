@@ -132,15 +132,11 @@ namespace Progressive.PecaStarter5.ViewModels
             {
                 foreach (var ex1 in aggregateException.InnerExceptions)
                 {
-                    NotifyAlert(ex1.Message + Environment.NewLine + ex1.StackTrace);
+                    NotifyExceptionAlert(ex1);
                 }
                 return;
             }
-            else
-            {
-                NotifyAlert(ex.Message + ex.StackTrace);
-                return;
-            }
+            NotifyAlert(ex.Message + Environment.NewLine + Environment.NewLine + ex.StackTrace);
         }
 
         private void NotifyAlert(string value)
