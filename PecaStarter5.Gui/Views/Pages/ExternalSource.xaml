@@ -1,7 +1,7 @@
 ﻿<UserControl x:Class="Progressive.PecaStarter5.Views.Pages.ExternalSource"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:c="clr-namespace:Progressive.PecaStarter.View.Control"
+    xmlns:c="clr-namespace:Progressive.PecaStarter5.Views.Controls"
     xmlns:cv="clr-namespace:Progressive.Commons.Views.Converters">
     <UserControl.Resources>
         <ResourceDictionary>

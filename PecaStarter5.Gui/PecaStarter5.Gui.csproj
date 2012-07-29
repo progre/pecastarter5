@@ -80,7 +80,7 @@
     <Compile Include="Commons\Views\Controls\Behaviors\BehaviorBase.cs" />
     <Compile Include="Commons\Views\Controls\ButtonBase.cs" />
     <Compile Include="Commons\Views\Controls\CountdownButton.cs" />
-    <Compile Include="Commons\Views\Controls\TextBoxWithHistory.xaml.cs">
+    <Compile Include="Views\Controls\TextBoxWithHistory.xaml.cs">
       <DependentUpon>TextBoxWithHistory.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
@@ -136,7 +136,7 @@
     <Compile Include="Commons\Views\TaskTrayIconManager.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Commons\Views\Controls\TextBoxWithHistory.xaml">
+    <Page Include="Views\Controls\TextBoxWithHistory.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
