@@ -18,10 +18,24 @@ namespace Progressive.PecaStarter5.ViewModels.Controls
 
             BroadcastCommand = new DelegateCommand(() =>
             {
+                // 画面ロック
                 IsProcessing = true;
-                parent.ExternalSourceViewModel.UpdateHistory();
-                var parameter = ViewModelDxo.ToBroadcastParameter(parent.ExternalSourceViewModel);
+
+                // ヒストリ更新
+                var externalSourceViewModel = parent.ExternalSourceViewModel;
+                externalSourceViewModel.UpdateHistory();
+
+                // YP規約チェック
                 var yp = parent.YellowPagesListViewModel.SelectedYellowPages;
+                if (!yp.IsAccepted)
+                {
+                    parent.OnException(new ApplicationException("YPの規約に同意していません。配信を開始するにはYPの規約を確認し、同意する必要があります。"));
+                    parent.SelectedIndex = 2;
+                    IsProcessing = false;
+                    return;
+                }
+
+                var parameter = ViewModelDxo.ToBroadcastParameter(externalSourceViewModel);
                 model.Service.BroadcastAsync(yp.Model, yp.AcceptedHash, yp.Parameters.Dictionary,
                     parameter,
                     new Progress<string>(x => parent.Feedback = x))
@@ -43,7 +57,14 @@ namespace Progressive.PecaStarter5.ViewModels.Controls
                     return false;
                 if (BroadcastingChannel != null)
                     return false;
-                if (!string.IsNullOrEmpty(parent.ExternalSourceViewModel.Error))
+                if (parent.YellowPagesListViewModel.SelectedYellowPages == null)
+                    return false;
+                var externalSourceViewModel = parent.ExternalSourceViewModel;
+                if (!string.IsNullOrEmpty(externalSourceViewModel.Error)
+                    || !string.IsNullOrEmpty(externalSourceViewModel.Name.Error)
+                    || !string.IsNullOrEmpty(externalSourceViewModel.Genre.Error)
+                    || !string.IsNullOrEmpty(externalSourceViewModel.Description.Error)
+                    || !string.IsNullOrEmpty(externalSourceViewModel.Comment.Error))
                     return false;
                 return true;
             });
