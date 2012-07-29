@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Progressive.PecaStarter5.ViewModels.Pages;
 using Progressive.Peercast4Net;
-using System.Threading.Tasks;
 
 namespace Progressive.PecaStarter5.ViewModels.Commands
 {

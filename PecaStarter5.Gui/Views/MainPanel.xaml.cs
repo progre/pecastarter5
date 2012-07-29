@@ -1,19 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using System.Windows.Controls;
 
 namespace Progressive.PecaStarter5.Views
 {
@@ -34,12 +22,7 @@ namespace Progressive.PecaStarter5.Views
 
         private void OnAssemblyPathItemClicked(object sender, System.Windows.RoutedEventArgs e)
         {
-            Process.Start(new FileInfo(Assembly.GetExecutingAssembly().Location).Directory.FullName);
-        }
-
-        private void OnConfigurationPathItemClicked(object sender, System.Windows.RoutedEventArgs e)
-        {
-            //Process.Start(new FileInfo((DataContext as MainWindowViewModel).ConfigurationPath).Directory.FullName);
+            Process.Start(new FileInfo(Assembly.GetEntryAssembly().Location).Directory.FullName);
         }
     }
 }
