@@ -2,24 +2,20 @@
 using Progressive.Commons.ViewModels;
 using Progressive.PecaStarter5.Models;
 using Progressive.PecaStarter5.Models.Plugins;
-using Progressive.Peercast4Net;
 
 namespace Progressive.PecaStarter5.ViewModels.Pages
 {
     public class SettingsViewModel : ViewModelBase
     {
         private Configuration configuration;
-        private Peercast peercast;
         private LoggerPlugin loggerPlugin;
 
-        public SettingsViewModel(Configuration configuration, Peercast peercast, LoggerPlugin loggerPlugin)
+        public SettingsViewModel(Configuration configuration, LoggerPlugin loggerPlugin)
         {
             this.configuration = configuration;
-            this.peercast = peercast;
             this.loggerPlugin = loggerPlugin;
 
             // configurationと連動していない項目
-            peercast.Address = "localhost:" + configuration.Port;
             loggerPlugin.IsEnabled = Logging;
             loggerPlugin.BasePath = LogPath;
         }
@@ -34,7 +30,6 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
                 if (configuration.Port == value)
                     return;
                 configuration.Port = value;
-                peercast.Address = "localhost:" + value;
                 OnPropertyChanged("Port");
             }
         }

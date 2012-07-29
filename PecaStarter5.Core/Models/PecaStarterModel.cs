@@ -33,6 +33,17 @@ namespace Progressive.PecaStarter5.Models
             Title = title;
             Peercast = new Peercast();
             Configuration = new ConfigurationDao(externalResource).Get();
+            Configuration.PropertyChanged += (sender, e) =>
+            {
+                var config = (Configuration)sender;
+                if (e.PropertyName == "Port")
+                {
+                    Peercast.Address = "localhost:" + config.Port;
+                }
+            };
+            // Configを反映
+            Peercast.Address = "localhost:" + Configuration.Port;
+
             var tuple = GetYellowPagesLists();
             YellowPagesList = tuple.Item1;
             m_externalYellowPagesList = tuple.Item2;

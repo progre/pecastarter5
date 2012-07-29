@@ -21,7 +21,7 @@ namespace Progressive.PecaStarter5.ViewModels
             RelayListViewModel = new RelayListViewModel(model.Peercast, model.YellowPagesList);
             YellowPagesListViewModel = new YellowPagesListViewModel(model.YellowPagesList, model.Configuration);
             ExternalSourceViewModel = new ExternalSourceViewModel(model.Configuration);
-            SettingsViewModel = new SettingsViewModel(model.Configuration, model.Peercast, model.LoggerPlugin);
+            SettingsViewModel = new SettingsViewModel(model.Configuration, model.LoggerPlugin);
             BroadcastControlViewModel = new BroadcastControlViewModel(this, model);
 
             InitializeEvents();
