@@ -44,12 +44,12 @@ namespace Progressive.PecaStarter5.Models.Services
             progress.Report("チャンネルを作成中...");
             var param = (BroadcastParameter)parameter.Clone();
             param.Genre = yellowPages.GetPrefix(yellowPagesParameter) + param.Genre;
-            var id = await m_peercast.BroadcastAsync(param);
+            var tuple = await m_peercast.BroadcastAsync(param);
 
             var broadcastedParameter = new BroadcastedParameter
             {
-                Bitrate = -1, // TODO: ビットレート取得してない
-                Id = id,
+                Bitrate = tuple.Item2,
+                Id = tuple.Item1,
                 YellowPagesParameters = yellowPagesParameter,
                 BroadcastParameter = parameter
             };
@@ -69,7 +69,7 @@ namespace Progressive.PecaStarter5.Models.Services
                 }
                 if (exception != null)
                 {
-                    await m_peercast.StopAsync(id);
+                    await m_peercast.StopAsync(tuple.Item1);
                     throw exception;
                 }
             }
@@ -83,7 +83,7 @@ namespace Progressive.PecaStarter5.Models.Services
             // TODO: タイマー起動する
 
             progress.Report("チャンネルを作成しました");
-            return id;
+            return tuple.Item1;
         }
 
         public async Task UpdateAsync(IYellowPages yellowPages, Dictionary<string, string> yellowPagesParameter,

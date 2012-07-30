@@ -75,7 +75,7 @@ namespace Progressive.Peercast4Net
             });
         }
 
-        public async Task<string> BroadcastAsync(BroadcastParameter parameter)
+        public async Task<Tuple<string,int>> BroadcastAsync(BroadcastParameter parameter)
         {
             using (var dao = new PeercastDao(Address))
             {
@@ -85,17 +85,17 @@ namespace Progressive.Peercast4Net
                 }
                 await dao.FetchAsync(parameter.StreamUrl, parameter.Name, parameter.Genre, parameter.Description,
                     parameter.ContactUrl, parameter.Type);
-                var id = await Repeat(() => GetChannelIdAsync(dao, parameter.Name));
-                if (string.IsNullOrEmpty(id))
+                var tuple = await Repeat(() => GetChannelInfoAsync(dao, parameter.Name));
+                if (string.IsNullOrEmpty(tuple.Item1))
                 {
-                    await dao.StopAsync(id);
+                    await dao.StopAsync(tuple.Item1);
                     throw new PeercastException("チャンネルの作成に失敗しました。");
                 }
                 await dao.SetMetaAsync(parameter.Name, parameter.Genre, parameter.Description,
                     parameter.ContactUrl, parameter.Comment,
                     parameter.TrackArtist, parameter.TrackTitle, parameter.TrackAlbum,
                     parameter.TrackGenre, parameter.TrackContact);
-                return id;
+                return tuple;
             }
         }
 
@@ -129,9 +129,10 @@ namespace Progressive.Peercast4Net
             return (await GetXmlStatusAsync(dao)).Exists(name);
         }
 
-        private async Task<string> GetChannelIdAsync(PeercastDao dao, string name)
+        private async Task<Tuple<string, int>> GetChannelInfoAsync(PeercastDao dao, string name)
         {
-            return (await GetXmlStatusAsync(dao)).GetChannelId(name);
+            var status = await GetXmlStatusAsync(dao);
+            return  Tuple.Create(status.GetChannelId(name), status.GetBitrate(name));
         }
 
         private async Task<XmlStatus> GetXmlStatusAsync(PeercastDao dao)
@@ -140,12 +141,12 @@ namespace Progressive.Peercast4Net
             return new XmlStatus(xml);
         }
 
-        private async Task<string> Repeat(Func<Task<string>> func)
+        private async Task<Tuple<string, int>> Repeat(Func<Task<Tuple<string, int>>> func)
         {
             for (int i = 0; i < 5; i++)
             {
                 var result = await func();
-                if (!string.IsNullOrEmpty(result) && result != NullId)
+                if (!string.IsNullOrEmpty(result.Item1) && result.Item1 != NullId)
                     return result;
                 Thread.Sleep(i * 1000);
             }
