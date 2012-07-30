@@ -15,9 +15,9 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
         {
             var removeItemCommand = new RemoveItemCommand();
             Name = new ChannelNameTextBoxWithHistoryViewModel(removeItemCommand);
-            Genre = new TextBoxWithHistoryViewModel(removeItemCommand);
-            Description = new TextBoxWithHistoryViewModel(removeItemCommand);
-            Comment = new TextBoxWithHistoryViewModel(removeItemCommand);
+            Genre = new ParameterTextBoxWithHistoryViewModel(removeItemCommand);
+            Description = new ParameterTextBoxWithHistoryViewModel(removeItemCommand);
+            Comment = new ParameterTextBoxWithHistoryViewModel(removeItemCommand);
 
             this.configuration = configuration;
             StreamUrl = configuration.StreamUrl;

@@ -80,6 +80,7 @@
     <Compile Include="Commons\Views\Controls\Behaviors\BehaviorBase.cs" />
     <Compile Include="Commons\Views\Controls\ButtonBase.cs" />
     <Compile Include="Commons\Views\Controls\CountdownButton.cs" />
+    <Compile Include="ViewModels\Controls\ParameterTextBoxWithHistoryViewModel.cs" />
     <Compile Include="Views\Controls\TextBoxWithHistory.xaml.cs">
       <DependentUpon>TextBoxWithHistory.xaml</DependentUpon>
     </Compile>

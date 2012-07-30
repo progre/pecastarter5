@@ -14,12 +14,14 @@ namespace Progressive.PecaStarter5.ViewModels
 
         public static ValidationResult ValidateParameter(string value)
         {
-            return PeercastUtils.PercentEncode(value).Length <= MaxParameterLength ? ValidationResult.Success : new ValidationResult("文字数の制限を超えています");
+            return PeercastUtils.PercentEncode(value).Length <= MaxParameterLength
+                ? ValidationResult.Success : new ValidationResult("文字数の制限を超えています");
         }
 
         public static ValidationResult ValidateChannelName(string value)
         {
-            return HttpUtils.ToRfc3986(value, Encoding.UTF8).Length <= MaxParameterLength ? ValidationResult.Success : new ValidationResult("文字数の制限を超えています");
+            return HttpUtils.ToRfc3986(value, Encoding.UTF8).Length <= MaxParameterLength
+                ? ValidationResult.Success : new ValidationResult("文字数の制限を超えています");
         }
     }
 }

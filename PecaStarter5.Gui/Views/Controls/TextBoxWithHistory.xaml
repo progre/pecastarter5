@@ -18,7 +18,8 @@
     <DockPanel>
         <Button DockPanel.Dock="Right" Command="{Binding Command}"  CommandParameter="{Binding}"/>
         <ComboBox Height="24" IsEditable="True" IsTextSearchEnabled="False"
-            ItemsSource="{Binding History}" SelectedItem="{Binding Value, Mode=OneWay}" Text="{Binding Value, ValidatesOnDataErrors=True}">
+            ItemsSource="{Binding History}" SelectedItem="{Binding Value, Mode=OneWay}" Text="{Binding Value, ValidatesOnDataErrors=True}"
+            ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}">
             <ComboBox.Resources>
                 <Style TargetType="ComboBoxItem">
                     <EventSetter Event="MouseUp" Handler="ComboBoxItem_MouseUp"/>
