@@ -80,6 +80,7 @@
     <Compile Include="Commons\Views\Controls\Behaviors\BehaviorBase.cs" />
     <Compile Include="Commons\Views\Controls\ButtonBase.cs" />
     <Compile Include="Commons\Views\Controls\CountdownButton.cs" />
+    <Compile Include="ViewModels\Controls\ParameterTextBoxWithHistoryViewModel.cs" />
     <Compile Include="Views\Controls\TextBoxWithHistory.xaml.cs">
       <DependentUpon>TextBoxWithHistory.xaml</DependentUpon>
     </Compile>
@@ -224,9 +225,6 @@
       <Project>{F6BD0F22-BD5F-4E1B-A80A-BF47E28D1558}</Project>
       <Name>Peercast4Net</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <SplashScreen Include="Resources\splash.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

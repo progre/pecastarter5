@@ -5,6 +5,7 @@ using Progressive.PecaStarter5.Models.Channels;
 using Progressive.PecaStarter5.Models.Plugins;
 using Progressive.PecaStarter5.ViewModels.Controls;
 using Progressive.PecaStarter5.ViewModels.Pages;
+using Progressive.Peercast4Net;
 
 namespace Progressive.PecaStarter5.ViewModels
 {
@@ -96,9 +97,10 @@ namespace Progressive.PecaStarter5.ViewModels
                     Name = ch.Name,
                     Genre = ch.Genre,
                     Description = ch.Description,
+                    Contact = ch.ContactUrl,
                     Comment = ch.Comment
                 };
-                m_model.Interrupt(parameter);
+                m_model.Interrupt(e.YellowPages, parameter);
             };
 
             RelayListViewModel.ExceptionThrown += (sender, e) => OnException((Exception)e.ExceptionObject);
@@ -127,6 +129,11 @@ namespace Progressive.PecaStarter5.ViewModels
 
         private void NotifyExceptionAlert(Exception ex)
         {
+            if (ex is PeercastException)
+            {
+                NotifyAlert(ex.Message);
+                return;
+            }
             var aggregateException = ex as AggregateException;
             if (aggregateException != null && aggregateException.InnerExceptions.Count >= 1)
             {

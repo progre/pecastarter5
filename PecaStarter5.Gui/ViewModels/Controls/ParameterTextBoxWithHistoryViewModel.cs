@@ -3,15 +3,14 @@ using System.Windows.Input;
 
 namespace Progressive.PecaStarter5.ViewModels.Controls
 {
-    public class ChannelNameTextBoxWithHistoryViewModel : TextBoxWithHistoryViewModel
+    public class ParameterTextBoxWithHistoryViewModel : TextBoxWithHistoryViewModel
     {
-        public ChannelNameTextBoxWithHistoryViewModel(ICommand command)
+        public ParameterTextBoxWithHistoryViewModel(ICommand command)
             : base(command)
         {
         }
 
-        [Required(ErrorMessage = "チャンネル名は必須です")]
-        [CustomValidation(typeof(ParameterValidator), "ValidateChannelName")]
+        [CustomValidation(typeof(ParameterValidator), "ValidateParameter")]
         public override string Value
         {
             get { return base.Value; }

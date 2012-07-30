@@ -1,4 +1,5 @@
 ﻿using System.Threading;
+using System;
 
 namespace Progressive.PecaStarter5.Models
 {
@@ -8,10 +9,10 @@ namespace Progressive.PecaStarter5.Models
 
         public event TimerCallback Ticked;
 
-        public void BeginTimer(string name)
+        public void BeginTimer(IYellowPages yellowPages, string name)
         {
             const int period = 10 * 60 * 1000;
-            m_timer = new Timer(Ticked, name, period, period);
+            m_timer = new Timer(Ticked, Tuple.Create(yellowPages, name), period, period);
         }
 
         public void EndTimer()

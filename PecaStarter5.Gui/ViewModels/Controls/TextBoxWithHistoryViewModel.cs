@@ -13,7 +13,6 @@ namespace Progressive.PecaStarter5.ViewModels.Controls
         }
 
         private string value = "";
-        [CustomValidation(typeof(ParameterValidator), "ValidateParameter", ErrorMessage = "文字数の制限を超えています")]
         public virtual string Value
         {
             get { return value; }
@@ -35,7 +34,7 @@ namespace Progressive.PecaStarter5.ViewModels.Controls
 
         public void UpdateHistory()
         {
-            string value = this.value;
+            string value = Value;
             if (History.Count == 0 && string.IsNullOrEmpty(value))
             {
                 return;
