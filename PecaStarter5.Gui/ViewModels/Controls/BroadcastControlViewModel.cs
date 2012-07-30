@@ -21,36 +21,33 @@ namespace Progressive.PecaStarter5.ViewModels.Controls
             {
                 // 画面ロック
                 IsProcessing = true;
-
                 // ヒストリ更新
                 externalSourceViewModel.UpdateHistory();
-
                 // YP規約チェック
                 var yp = parent.YellowPagesListViewModel.SelectedYellowPages;
                 if (!yp.IsAccepted)
                 {
-                    parent.OnException(new ApplicationException("YPの規約に同意していません。配信を開始するにはYPの規約を確認し、同意する必要があります。"));
+                    parent.OnException(new ApplicationException("YPの規約に同意していません。" + Environment.NewLine
+                        + "配信を開始するにはYPの規約を確認し、同意する必要があります。"));
                     parent.SelectedIndex = 2;
                     IsProcessing = false;
                     return;
                 }
-
                 var parameter = ViewModelDxo.ToBroadcastParameter(externalSourceViewModel);
-                model.Service.BroadcastAsync(yp.Model, yp.AcceptedHash, yp.Parameters.Dictionary,
-                    parameter,
-                    new Progress<string>(x => parent.Feedback = x))
-                    .ContinueWith(t =>
+                var id = model.Service.BroadcastAsync(
+                    yp.Model, yp.AcceptedHash, yp.Parameters.Dictionary, parameter,
+                    new Progress<string>(x => parent.Feedback = x)).ContinueWith(t =>
+                {
+                    if (t.IsFaulted)
                     {
-                        if (t.IsFaulted)
-                        {
-                            parent.OnException(t.Exception);
-                            IsProcessing = false;
-                            return;
-                        }
-                        BroadcastingChannel = new BroadcastingChannel(parameter.Name, t.Result);
-                        model.Broadcast(yp.Model, parameter);
+                        parent.OnException(t.Exception);
                         IsProcessing = false;
-                    }, TaskScheduler.FromCurrentSynchronizationContext());
+                        return;
+                    }
+                    model.Broadcast(yp.Model, parameter);
+                    BroadcastingChannel = new BroadcastingChannel(parameter.Name, t.Result);
+                    IsProcessing = false;
+                }, TaskScheduler.FromCurrentSynchronizationContext());
             }, () =>
             {
                 if (IsProcessing)
