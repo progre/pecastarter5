@@ -92,7 +92,7 @@ namespace Progressive.PecaStarter5.Models.Services
             // 更新
             progress.Report("通信中...");
             var param = (UpdateParameter)parameter.Clone();
-            param.Genre = yellowPages.GetPrefix(yellowPagesParameter);
+            param.Genre = yellowPages.GetPrefix(yellowPagesParameter) + param.Genre;
             await m_peercast.UpdateAsync(param);
 
             var updatedParameter = new UpdatedParameter
