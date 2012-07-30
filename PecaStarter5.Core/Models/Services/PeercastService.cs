@@ -80,8 +80,6 @@ namespace Progressive.PecaStarter5.Models.Services
                 Task.WaitAll(m_plugins.Select(x => x.OnBroadcastedAsync(broadcastedParameter)).ToArray());
             });
 
-            // TODO: タイマー起動する
-
             progress.Report("チャンネルを作成しました");
             return tuple.Item1;
         }
@@ -142,21 +140,6 @@ namespace Progressive.PecaStarter5.Models.Services
                 Task.WaitAll(m_plugins.Select(x => x.OnStopedAsync(stopedParameter)).ToArray());
             });
             progress.Report("チャンネルを切断しました");
-        }
-
-        public async Task TickAsync(IYellowPages yellowPages)
-        {
-            // 外部YPに通知
-            if (yellowPages.IsExternal)
-            {
-                await Find(m_externalYellowPagesList, yellowPages.Name).OnTickedAsync("", -1, -1);
-            }
-
-            // プラグイン処理
-            await Task.Factory.StartNew(() =>
-            {
-                Task.WaitAll(m_plugins.Select(x => x.OnTickedAsync("", -1, -1)).ToArray());
-            });
         }
 
         private async Task<bool> IsUpdatedYellowPagesAsync(IYellowPages yellowPages, int acceptedHash)

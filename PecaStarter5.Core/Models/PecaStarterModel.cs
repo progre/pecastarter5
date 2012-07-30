@@ -26,7 +26,11 @@ namespace Progressive.PecaStarter5.Models
         {
             m_externalResource = externalResource;
             m_timer = new BroadcastTimer();
-            m_timer.Ticked += s => OnTickedAsync((string)s);
+            m_timer.Ticked += s =>
+            {
+                var tuple1 = (Tuple<IYellowPages, string>)s;
+                OnTickedAsync(tuple1.Item1, tuple1.Item2);
+            };
             LoggerPlugin = new LoggerPlugin();
             m_plugins = new IPlugin[] { LoggerPlugin };
 
@@ -62,12 +66,12 @@ namespace Progressive.PecaStarter5.Models
             new ConfigurationDao(m_externalResource).Put(Configuration);
         }
 
-        public void Broadcast(BroadcastParameter parameter)
+        public void Broadcast(IYellowPages yellowPages, BroadcastParameter parameter)
         {
-            m_timer.BeginTimer(parameter.Name);
+            m_timer.BeginTimer(yellowPages, parameter.Name);
         }
 
-        public void Interrupt(InterruptedParameter parameter)
+        public void Interrupt(IYellowPages yellowPages, InterruptedParameter parameter)
         {
             m_timer.EndTimer();
 
@@ -80,7 +84,7 @@ namespace Progressive.PecaStarter5.Models
                 });
             }
 
-            m_timer.BeginTimer(parameter.Name);
+            m_timer.BeginTimer(yellowPages, parameter.Name);
         }
 
         public void Stop()
@@ -104,11 +108,18 @@ namespace Progressive.PecaStarter5.Models
             return Tuple.Create(yellowPagesList, externalYellowPagesList);
         }
 
-        private async Task OnTickedAsync(string name)
+        private async Task OnTickedAsync(IYellowPages yellowPages, string name)
         {
             try
             {
                 var tuple = await Peercast.GetListenersAsync(name);
+
+                // 外部YPに通知
+                if (yellowPages.IsExternal)
+                {
+                    await ((IExternalYellowPages)yellowPages).OnTickedAsync(name, tuple.Item1, tuple.Item2);
+                }
+
                 Task.WaitAll(m_plugins.Select(x => x.OnTickedAsync(name, tuple.Item1, tuple.Item2)).ToArray());
             }
             catch (Exception ex)

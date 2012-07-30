@@ -97,9 +97,10 @@ namespace Progressive.PecaStarter5.ViewModels
                     Name = ch.Name,
                     Genre = ch.Genre,
                     Description = ch.Description,
+                    Contact = ch.ContactUrl,
                     Comment = ch.Comment
                 };
-                m_model.Interrupt(parameter);
+                m_model.Interrupt(e.YellowPages, parameter);
             };
 
             RelayListViewModel.ExceptionThrown += (sender, e) => OnException((Exception)e.ExceptionObject);
