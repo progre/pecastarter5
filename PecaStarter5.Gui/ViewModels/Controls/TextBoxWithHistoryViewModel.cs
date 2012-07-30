@@ -35,7 +35,7 @@ namespace Progressive.PecaStarter5.ViewModels.Controls
 
         public void UpdateHistory()
         {
-            string value = this.value;
+            string value = Value;
             if (History.Count == 0 && string.IsNullOrEmpty(value))
             {
                 return;

@@ -72,6 +72,11 @@ namespace Progressive.PecaStarter5.ViewModel
 
         private Configuration Configuration { get { return m_model.Configuration; } }
 
+        public void UpdateModel()
+        {
+            MainPanelViewModel.ExternalSourceViewModel.UpdateHistory();
+        }
+
         #region IDisposable メンバー
 
         public void Dispose()

@@ -35,13 +35,13 @@ namespace Progressive.PecaStarter5
             var model = new PecaStarterModel(Title, new ExternalResource(ApplicationName, ApplicationPath));
             var viewModel = new MainWindowViewModel(model);
             MainWindow = new MainWindow() { DataContext = viewModel };
-            MainWindow.Deactivated += (sender, e1) => model.Save();
-            MainWindow.Closed += (sender, e2) => model.Save();
+            MainWindow.Deactivated += (sender, e1) => Save(viewModel, model);
+            MainWindow.Closed += (sender, e2) => Save(viewModel, model);
             MainWindow.Show();
 
             DispatcherUnhandledException += (sender, dispatcherUnhandledExceptionEventArgs) =>
             {
-                model.Save();
+                Save(viewModel, model);
                 if (MessageBox.Show(
                     "未解決のエラーが発生しました。（" + dispatcherUnhandledExceptionEventArgs.Exception.Message + "）プログラムを終了します。",
                     "PecaStarter", MessageBoxButton.OKCancel, MessageBoxImage.Error)
@@ -50,6 +50,12 @@ namespace Progressive.PecaStarter5
                     dispatcherUnhandledExceptionEventArgs.Handled = true;
                 }
             };
+        }
+
+        private void Save(MainWindowViewModel viewModel, PecaStarterModel model)
+        {
+            viewModel.UpdateModel();
+            model.Save();
         }
     }
 }

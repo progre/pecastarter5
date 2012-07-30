@@ -33,7 +33,7 @@
         <Label Grid.Column="0" Grid.Row="1" Content="チャンネル名:"/>
         <UserControl Grid.Column="1" Grid.Row="1"
                 IsEnabled="{Binding IsLocked, Converter={StaticResource NotConverter}}">
-            <c:TextBoxWithHistory DataContext="{Binding Name, Mode=OneWay}"/>
+            <c:TextBoxWithHistory DataContext="{Binding Name}"/>
         </UserControl>
         <Label Grid.Column="0" Grid.Row="2" Content="ジャンル:"/>
         <DockPanel Grid.Column="1" Grid.Row="2">
