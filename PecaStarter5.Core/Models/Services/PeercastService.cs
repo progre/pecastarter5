@@ -32,7 +32,7 @@ namespace Progressive.PecaStarter5.Models.Services
                 progress.Report("規約の更新を確認中...");
                 if (await IsUpdatedYellowPagesAsync(yellowPages, acceptedHash.Value))
                 {
-                    throw new ApplicationException("イエローページの規約が更新されています。規約を再確認してください。");
+                    throw new Exception("イエローページの規約が更新されています。規約を再確認してください。");
                 }
             }
 

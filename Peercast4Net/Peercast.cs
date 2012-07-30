@@ -75,7 +75,7 @@ namespace Progressive.Peercast4Net
             });
         }
 
-        public async Task<Tuple<string,int>> BroadcastAsync(BroadcastParameter parameter)
+        public async Task<Tuple<string, int>> BroadcastAsync(BroadcastParameter parameter)
         {
             using (var dao = new PeercastDao(Address))
             {
@@ -86,10 +86,11 @@ namespace Progressive.Peercast4Net
                 await dao.FetchAsync(parameter.StreamUrl, parameter.Name, parameter.Genre, parameter.Description,
                     parameter.ContactUrl, parameter.Type);
                 var tuple = await Repeat(() => GetChannelInfoAsync(dao, parameter.Name));
-                if (string.IsNullOrEmpty(tuple.Item1))
+                if (NullId == tuple.Item1)
                 {
                     await dao.StopAsync(tuple.Item1);
-                    throw new PeercastException("チャンネルの作成に失敗しました。");
+                    throw new PeercastException("チャンネルの作成に失敗しました。" + Environment.NewLine
+                        + "エンコードが開始されているか、またはストリームURLが正しいか確認してください。");
                 }
                 await dao.SetMetaAsync(parameter.Name, parameter.Genre, parameter.Description,
                     parameter.ContactUrl, parameter.Comment,
@@ -132,7 +133,7 @@ namespace Progressive.Peercast4Net
         private async Task<Tuple<string, int>> GetChannelInfoAsync(PeercastDao dao, string name)
         {
             var status = await GetXmlStatusAsync(dao);
-            return  Tuple.Create(status.GetChannelId(name), status.GetBitrate(name));
+            return Tuple.Create(status.GetChannelId(name), status.GetBitrate(name));
         }
 
         private async Task<XmlStatus> GetXmlStatusAsync(PeercastDao dao)
@@ -143,14 +144,15 @@ namespace Progressive.Peercast4Net
 
         private async Task<Tuple<string, int>> Repeat(Func<Task<Tuple<string, int>>> func)
         {
+            var result = Tuple.Create(NullId, 0);
             for (int i = 0; i < 5; i++)
             {
-                var result = await func();
+                result = await func();
                 if (!string.IsNullOrEmpty(result.Item1) && result.Item1 != NullId)
                     return result;
                 Thread.Sleep(i * 1000);
             }
-            return null;
+            return result;
         }
     }
 }
