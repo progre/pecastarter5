@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using Forms = System.Windows.Forms;
+using Xceed.Wpf.Toolkit;
 
 namespace Progressive.PecaStarter5.Views.Pages
 {
@@ -31,6 +32,12 @@ namespace Progressive.PecaStarter5.Views.Pages
                 button.DataContext = fbd.SelectedPath;
                 button.GetBindingExpression(Button.DataContextProperty).UpdateSource();
             }
+        }
+
+        private void IntegerUpDown_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            if (e.NewValue == null)
+                ((IntegerUpDown)sender).Value = (int?)e.OldValue;
         }
     }
 }

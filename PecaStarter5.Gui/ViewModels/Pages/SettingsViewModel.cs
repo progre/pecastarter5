@@ -20,8 +20,6 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
             loggerPlugin.BasePath = LogPath;
         }
 
-        [Required(ErrorMessage = "1～65535の値を入力してください")]
-        [Range(1, 65535, ErrorMessage = "1～65535の値を入力してください")]
         public int Port
         {
             get { return configuration.Port; }

@@ -57,6 +57,8 @@ namespace Progressive.PecaStarter5.ViewModels.Controls
                     return false;
                 if (BroadcastingChannel != null)
                     return false;
+                if (!string.IsNullOrEmpty(parent.SettingsViewModel.Error))
+                    return false;
                 if (parent.YellowPagesListViewModel.SelectedYellowPages == null)
                     return false;
                 if (!string.IsNullOrEmpty(externalSourceViewModel.Error)
@@ -91,6 +93,8 @@ namespace Progressive.PecaStarter5.ViewModels.Controls
                     return false;
                 if (BroadcastingChannel == null)
                     return false;
+                if (!string.IsNullOrEmpty(parent.SettingsViewModel.Error))
+                    return false;
                 return true;
             });
 
@@ -119,6 +123,8 @@ namespace Progressive.PecaStarter5.ViewModels.Controls
                     return false;
                 if (BroadcastingChannel == null)
                     return false;
+                if (!string.IsNullOrEmpty(parent.SettingsViewModel.Error))
+                    return false;
                 return true;
             });
 
@@ -128,6 +134,7 @@ namespace Progressive.PecaStarter5.ViewModels.Controls
             externalSourceViewModel.Description.PropertyChanged += OnParameterPropertyChanged;
             externalSourceViewModel.Comment.PropertyChanged += OnParameterPropertyChanged;
             parent.YellowPagesListViewModel.PropertyChanged += OnParameterPropertyChanged;
+            parent.SettingsViewModel.PropertyChanged += OnParameterPropertyChanged;
         }
 
         private bool isProcessing;
@@ -166,6 +173,7 @@ namespace Progressive.PecaStarter5.ViewModels.Controls
         {
             BroadcastCommand.OnCanExecuteChanged();
             UpdateCommand.OnCanExecuteChanged();
+            StopCommand.OnCanExecuteChanged();
         }
     }
 }
