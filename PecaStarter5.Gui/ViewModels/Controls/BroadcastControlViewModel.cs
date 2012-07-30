@@ -16,13 +16,13 @@ namespace Progressive.PecaStarter5.ViewModels.Controls
         {
             m_model = model;
 
+            var externalSourceViewModel = parent.ExternalSourceViewModel;
             BroadcastCommand = new DelegateCommand(() =>
             {
                 // 画面ロック
                 IsProcessing = true;
 
                 // ヒストリ更新
-                var externalSourceViewModel = parent.ExternalSourceViewModel;
                 externalSourceViewModel.UpdateHistory();
 
                 // YP規約チェック
@@ -59,7 +59,6 @@ namespace Progressive.PecaStarter5.ViewModels.Controls
                     return false;
                 if (parent.YellowPagesListViewModel.SelectedYellowPages == null)
                     return false;
-                var externalSourceViewModel = parent.ExternalSourceViewModel;
                 if (!string.IsNullOrEmpty(externalSourceViewModel.Error)
                     || !string.IsNullOrEmpty(externalSourceViewModel.Name.Error)
                     || !string.IsNullOrEmpty(externalSourceViewModel.Genre.Error)
@@ -123,7 +122,11 @@ namespace Progressive.PecaStarter5.ViewModels.Controls
                 return true;
             });
 
-            parent.ExternalSourceViewModel.PropertyChanged += OnParameterPropertyChanged;
+            externalSourceViewModel.PropertyChanged += OnParameterPropertyChanged;
+            externalSourceViewModel.Name.PropertyChanged += OnParameterPropertyChanged;
+            externalSourceViewModel.Genre.PropertyChanged += OnParameterPropertyChanged;
+            externalSourceViewModel.Description.PropertyChanged += OnParameterPropertyChanged;
+            externalSourceViewModel.Comment.PropertyChanged += OnParameterPropertyChanged;
             parent.YellowPagesListViewModel.PropertyChanged += OnParameterPropertyChanged;
         }
 

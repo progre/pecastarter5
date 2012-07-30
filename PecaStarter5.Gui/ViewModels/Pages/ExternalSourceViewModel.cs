@@ -50,7 +50,6 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
                     return;
                 configuration.StreamUrl = value;
                 OnPropertyChanged("StreamUrl");
-
             }
         }
 
