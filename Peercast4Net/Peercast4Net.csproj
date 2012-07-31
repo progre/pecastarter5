@@ -57,14 +57,17 @@
     <Compile Include="Daos\PeercastDao.cs" />
     <Compile Include="Daos\TestingPeercastDao.cs" />
     <Compile Include="IChannel.cs" />
+    <Compile Include="IPeercast.cs" />
     <Compile Include="Parameters.cs" />
     <Compile Include="Peercast.cs" />
     <Compile Include="PeercastException.cs" />
     <Compile Include="PeercastServerDefine.cs" />
+    <Compile Include="PeercastStation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings\SettingssHtmlParser.cs" />
     <Compile Include="Utils\PeercastUtils.cs" />
     <Compile Include="XmlStatus.cs" />
+    <Compile Include="YellowPages.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

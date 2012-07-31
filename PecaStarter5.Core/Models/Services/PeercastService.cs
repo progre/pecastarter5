@@ -38,15 +38,13 @@ namespace Progressive.PecaStarter5.Models.Services
                     }
                 }
 
-                // YP更新
-                progress.Report("YPの設定を調整中...");
-                m_peercast.SetYellowPagesAsync(yellowPages.Host).Wait();
-
                 // 開始
                 progress.Report("チャンネルを作成中...");
                 var param = (BroadcastParameter)parameter.Clone();
                 param.Genre = yellowPages.GetPrefix(yellowPagesParameter) + param.Genre;
-                var tuple = m_peercast.BroadcastAsync(param).Result;
+                var tuple = m_peercast.BroadcastAsync(
+                    new Peercast4Net.YellowPages() { Name = yellowPages.Name, Url = yellowPages.Host },
+                    param).Result;
 
                 var broadcastedParameter = new BroadcastedParameter
                 {
