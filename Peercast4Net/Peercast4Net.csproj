@@ -44,6 +44,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Daos\PeercastDaoBase.cs" />
+    <Compile Include="Daos\PeercastStationDao.cs" />
     <Compile Include="Datas\Channel.cs" />
     <Compile Include="Commons\ShiftJisEncodings.cs" />
     <Compile Include="Commons\Utils\HttpUtils.cs" />
