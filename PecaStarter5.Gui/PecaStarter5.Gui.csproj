@@ -60,6 +60,7 @@
   <ItemGroup>
     <Compile Include="Commons\Models\DynamicDictionary.cs" />
     <Compile Include="Commons\ViewModels\Commands\DelegateCommand.cs" />
+    <Compile Include="Commons\Views\Controls\NulllessIntegerUpDown.cs" />
     <Compile Include="ViewModels\Controls\TextBoxWithHistoryViewModel.cs" />
     <Page Include="Views\Pages\RelayChannel.xaml">
       <SubType>Designer</SubType>
