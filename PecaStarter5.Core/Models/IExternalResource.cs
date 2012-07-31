@@ -8,5 +8,6 @@ namespace Progressive.PecaStarter5.Models
         Stream GetConfigurationInputStream();
         Stream GetConfigurationOutputStream();
         IEnumerable<Stream> GetYellowPagesDefineInputStream();
+        string DefaultLogPath { get; }
     }
 }

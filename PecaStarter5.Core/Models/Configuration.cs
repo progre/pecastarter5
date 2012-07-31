@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
+using System.Xml.Serialization;
 
 namespace Progressive.PecaStarter5.Models
 {
@@ -46,21 +47,32 @@ namespace Progressive.PecaStarter5.Models
 
         public bool IsSavePosition { get; set; }
         public bool Logging { get; set; }
-        private string logPath;
+        private string m_logPath;
         public string LogPath
         {
-            get { return logPath; }
+            get { return m_logPath; }
             set
             {
                 if (!string.IsNullOrWhiteSpace(value))
-                    logPath = value;
+                    m_logPath = value;
                 else
-                    logPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal)
-                        + Path.DirectorySeparatorChar + "PeercastLog";
+                    m_logPath = DefaultLogPath;
             }
         }
         public int Delay { get; set; }
         public int Port { get; set; }
+
+        [XmlIgnore]
+        private string m_defaultLogPath;
+        public string DefaultLogPath
+        {
+            get { return m_defaultLogPath; }
+            set
+            {
+                m_defaultLogPath = value;
+                LogPath = LogPath;
+            }
+        }
 
         #region INotifyPropertyChanged メンバー
 

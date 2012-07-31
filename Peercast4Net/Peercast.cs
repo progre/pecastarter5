@@ -75,29 +75,32 @@ namespace Progressive.Peercast4Net
             });
         }
 
-        public async Task<Tuple<string, int>> BroadcastAsync(BroadcastParameter parameter)
+        public Task<Tuple<string, int>> BroadcastAsync(BroadcastParameter parameter)
         {
-            using (var dao = new PeercastDao(Address))
+            return Task.Factory.StartNew(() =>
             {
-                if (await ExistsAsync(dao, parameter.Name))
+                using (var dao = new PeercastDao(Address))
                 {
-                    throw new PeercastException("同名のチャンネルが既にあります。");
+                    if (ExistsAsync(dao, parameter.Name).Result)
+                    {
+                        throw new PeercastException("同名のチャンネルが既にあります。");
+                    }
+                    dao.FetchAsync(parameter.StreamUrl, parameter.Name, parameter.Genre, parameter.Description,
+                        parameter.ContactUrl, parameter.Type).Wait();
+                    var tuple = Repeat(() => GetChannelInfoAsync(dao, parameter.Name)).Result;
+                    if (NullId == tuple.Item1)
+                    {
+                        dao.StopAsync(tuple.Item1).Wait();
+                        throw new PeercastException("チャンネルの作成に失敗しました。" + Environment.NewLine
+                            + "エンコードが開始されているか、またはストリームURLが正しいか確認してください。");
+                    }
+                    dao.SetMetaAsync(parameter.Name, parameter.Genre, parameter.Description,
+                        parameter.ContactUrl, parameter.Comment,
+                        parameter.TrackArtist, parameter.TrackTitle, parameter.TrackAlbum,
+                        parameter.TrackGenre, parameter.TrackContact).Wait();
+                    return tuple;
                 }
-                await dao.FetchAsync(parameter.StreamUrl, parameter.Name, parameter.Genre, parameter.Description,
-                    parameter.ContactUrl, parameter.Type);
-                var tuple = await Repeat(() => GetChannelInfoAsync(dao, parameter.Name));
-                if (NullId == tuple.Item1)
-                {
-                    await dao.StopAsync(tuple.Item1);
-                    throw new PeercastException("チャンネルの作成に失敗しました。" + Environment.NewLine
-                        + "エンコードが開始されているか、またはストリームURLが正しいか確認してください。");
-                }
-                await dao.SetMetaAsync(parameter.Name, parameter.Genre, parameter.Description,
-                    parameter.ContactUrl, parameter.Comment,
-                    parameter.TrackArtist, parameter.TrackTitle, parameter.TrackAlbum,
-                    parameter.TrackGenre, parameter.TrackContact);
-                return tuple;
-            }
+            });
         }
 
         public async Task UpdateAsync(UpdateParameter parameter)
