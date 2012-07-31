@@ -15,6 +15,21 @@ namespace Progressive.PecaStarter5
             m_path = path;
         }
 
+        public string DefaultLogPath
+        {
+            get { return m_path + "log"; }
+        }
+
+        private string ConfigurationFilePath
+        {
+            get { return m_path + m_name + ".xml"; }
+        }
+
+        private string YellowPagesDirectoryPath
+        {
+            get { return m_path + "yellowpages" + Path.DirectorySeparatorChar; }
+        }
+
         public Stream GetConfigurationInputStream()
         {
             return new FileStream(ConfigurationFilePath, FileMode.Open);
@@ -31,16 +46,6 @@ namespace Progressive.PecaStarter5
             {
                 yield return new FileStream(path, FileMode.Open);
             }
-        }
-
-        private string ConfigurationFilePath
-        {
-            get { return m_path + m_name + ".xml"; }
-        }
-
-        private string YellowPagesDirectoryPath
-        {
-            get { return m_path + "yellowpages" + Path.DirectorySeparatorChar; }
         }
     }
 }

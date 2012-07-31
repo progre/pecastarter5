@@ -37,6 +37,7 @@ namespace Progressive.PecaStarter5.Models
             Title = title;
             Peercast = new Peercast();
             Configuration = new ConfigurationDao(externalResource).Get();
+            Configuration.DefaultLogPath = externalResource.DefaultLogPath;
             Configuration.PropertyChanged += (sender, e) =>
             {
                 var config = (Configuration)sender;
