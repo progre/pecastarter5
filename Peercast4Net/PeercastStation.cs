@@ -1,47 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Threading.Tasks;
+using Progressive.Peercast4Net.Datas;
 
 namespace Progressive.Peercast4Net
 {
-    public class PeercastStation : IPeercast
+    public class PeercastStation : PeercastBase
     {
         #region IPeercast メンバー
 
-        public string Address
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public System.Threading.Tasks.Task<Tuple<string, int>> BroadcastAsync(YellowPages yellowPages, BroadcastParameter parameter)
+        public override Task<Tuple<string, int>> BroadcastAsync(YellowPages yellowPages, BroadcastParameter parameter)
         {
             throw new NotImplementedException();
         }
 
-        public System.Threading.Tasks.Task<IEnumerable<IChannel>> GetChannelsAsync()
+        public override Task<IEnumerable<IChannel>> GetChannelsAsync()
         {
             throw new NotImplementedException();
         }
 
-        public System.Threading.Tasks.Task<Tuple<int, int>> GetListenersAsync(string name)
+        public override Task<Tuple<int, int>> GetListenersAsync(string name)
         {
             throw new NotImplementedException();
         }
 
-        public System.Threading.Tasks.Task StopAsync(string id)
+        public override Task StopAsync(string id)
         {
             throw new NotImplementedException();
         }
 
-        public System.Threading.Tasks.Task UpdateAsync(UpdateParameter parameter)
+        public override Task UpdateAsync(UpdateParameter parameter)
         {
             throw new NotImplementedException();
         }

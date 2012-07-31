@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 
-namespace Progressive.Peercast4Net
+namespace Progressive.Peercast4Net.Datas
 {
-    public class XmlStatus
+    class XmlStatus
     {
         private XDocument xml;
 

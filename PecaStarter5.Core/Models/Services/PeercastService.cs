@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Progressive.PecaStarter5.Models.ExternalYellowPages;
 using Progressive.PecaStarter5.Models.Plugins;
 using Progressive.Peercast4Net;
+using Progressive.Peercast4Net.Datas;
 
 namespace Progressive.PecaStarter5.Models.Services
 {
@@ -43,7 +44,7 @@ namespace Progressive.PecaStarter5.Models.Services
                 var param = (BroadcastParameter)parameter.Clone();
                 param.Genre = yellowPages.GetPrefix(yellowPagesParameter) + param.Genre;
                 var tuple = m_peercast.BroadcastAsync(
-                    new Peercast4Net.YellowPages() { Name = yellowPages.Name, Url = yellowPages.Host },
+                    new Peercast4Net.Datas.YellowPages() { Name = yellowPages.Name, Url = yellowPages.Host },
                     param).Result;
 
                 var broadcastedParameter = new BroadcastedParameter

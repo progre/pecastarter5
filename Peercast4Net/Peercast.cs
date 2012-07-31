@@ -5,11 +5,12 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Progressive.Peercast4Net.Daos;
-using Progressive.Peercast4Net.Settings;
+using Progressive.Peercast4Net.Utils;
+using Progressive.Peercast4Net.Datas;
 
 namespace Progressive.Peercast4Net
 {
-    public class Peercast : IPeercast
+    public class Peercast : PeercastBase
     {
         public const string NullId = "00000000000000000000000000000000";
 
@@ -17,21 +18,7 @@ namespace Progressive.Peercast4Net
         {
         }
 
-        private string address = "localhost:7144";
-        public string Address
-        {
-            get { return address; }
-            set
-            {
-                if (!Regex.IsMatch(value, "^[^;/?:@&=+$,]+(:[0-9]{1,5})$"))
-                {
-                    throw new ArgumentException("Invalid address.");
-                }
-                address = value;
-            }
-        }
-
-        public async Task<IEnumerable<IChannel>> GetChannelsAsync()
+        public override async Task<IEnumerable<IChannel>> GetChannelsAsync()
         {
             using (var dao = new PeercastDao(Address))
             {
@@ -40,7 +27,7 @@ namespace Progressive.Peercast4Net
             }
         }
 
-        public async Task<Tuple<int, int>> GetListenersAsync(string name)
+        public override async Task<Tuple<int, int>> GetListenersAsync(string name)
         {
             using (var dao = new PeercastDao(Address))
             {
@@ -48,7 +35,7 @@ namespace Progressive.Peercast4Net
             }
         }
 
-        public Task<Tuple<string, int>> BroadcastAsync(YellowPages yellowPages, BroadcastParameter parameter)
+        public override Task<Tuple<string, int>> BroadcastAsync(YellowPages yellowPages, BroadcastParameter parameter)
         {
             return Task.Factory.StartNew(() =>
             {
@@ -78,7 +65,7 @@ namespace Progressive.Peercast4Net
             });
         }
 
-        public async Task UpdateAsync(UpdateParameter parameter)
+        public override async Task UpdateAsync(UpdateParameter parameter)
         {
             using (var dao = new PeercastDao(Address))
             {
@@ -89,7 +76,7 @@ namespace Progressive.Peercast4Net
             }
         }
 
-        public Task StopAsync(string id)
+        public override Task StopAsync(string id)
         {
             using (var dao = new PeercastDao(Address))
             {

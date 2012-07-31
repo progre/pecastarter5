@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Progressive.Peercast4Net.Datas;
 
 namespace Progressive.Peercast4Net
 {

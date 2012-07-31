@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using CreteLib;
 
-namespace Progressive.Peercast4Net.Settings
+namespace Progressive.Peercast4Net.Utils
 {
     class SettingsHtmlParser
     {

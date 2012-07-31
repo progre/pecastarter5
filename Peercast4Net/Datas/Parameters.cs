@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Progressive.Peercast4Net
+namespace Progressive.Peercast4Net.Datas
 {
     [Obsolete]
     public interface IChannelParameter : IBroadcastParameter, IUpdateParameter

@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Progressive.Peercast4Net;
+using Progressive.Peercast4Net.Datas;
 
 namespace Progressive.PecaStarter5.Models.Plugins
 {

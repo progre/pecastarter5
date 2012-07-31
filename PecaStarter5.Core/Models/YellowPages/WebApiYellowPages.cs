@@ -165,12 +165,11 @@ namespace Progressive.PecaStarter5.Models
         #endregion
     }
 
-    class YellowPagesException : ApplicationException
+    class YellowPagesException : Exception
     {
-        public string Message { get; private set; }
         public YellowPagesException(string message)
+            :base(message)
         {
-            Message = message;
         }
     }
 }

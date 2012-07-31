@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows;
 using System.Windows.Input;
 using Progressive.Commons.ViewModels;
 using Progressive.PecaStarter5.Models;
 using Progressive.PecaStarter5.ViewModels.Commands;
 using Progressive.Peercast4Net;
+using Progressive.Peercast4Net.Datas;
 
 namespace Progressive.PecaStarter5.ViewModels.Pages
 {
