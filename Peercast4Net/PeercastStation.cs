@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Progressive.Peercast4Net.Datas;
+using Progressive.Peercast4Net.Daos;
 
 namespace Progressive.Peercast4Net
 {
@@ -9,14 +10,22 @@ namespace Progressive.Peercast4Net
     {
         #region IPeercast メンバー
 
-        public override Task<Tuple<string, int>> BroadcastAsync(YellowPages yellowPages, BroadcastParameter parameter)
+        public override async Task<Tuple<string, int>> BroadcastAsync(YellowPages yellowPages, BroadcastParameter parameter)
         {
-            throw new NotImplementedException();
+            using (var dao = new PeercastStationDao(Address))
+            {
+                await dao.AddYellowPageAsync("pcp", yellowPages.Name, yellowPages.Url);
+                throw new NotImplementedException();
+            }
         }
 
-        public override Task<IEnumerable<IChannel>> GetChannelsAsync()
+        public override async Task<IEnumerable<IChannel>> GetChannelsAsync()
         {
-            throw new NotImplementedException();
+            using (var dao = new PeercastStationDao(Address))
+            {
+                var xml = await dao.GetViewXmlAsync();
+                return new XmlStatus(xml).Channels;
+            }
         }
 
         public override Task<Tuple<int, int>> GetListenersAsync(string name)

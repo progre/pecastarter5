@@ -129,7 +129,7 @@ namespace Progressive.PecaStarter5.ViewModels
 
         private void NotifyExceptionAlert(Exception ex)
         {
-            if (ex is PeercastException)
+            if (ex is PeercastException || ex is YellowPagesException)
             {
                 NotifyAlert(ex.Message);
                 return;

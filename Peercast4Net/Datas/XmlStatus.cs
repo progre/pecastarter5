@@ -24,6 +24,9 @@ namespace Progressive.Peercast4Net.Datas
             var founds = FoundChannelElements;
             var relay = channel.Element("relay");
             var hits = founds.Where(ch => ch.Attribute("id").Value == channel.Attribute("id").Value).Single().Element("hits");
+            int age;
+            if (!int.TryParse(channel.Attribute("age").Value, out age))
+                age = -1;
             return new Channel()
             {
                 Name = channel.Attribute("name").Value,
@@ -33,7 +36,7 @@ namespace Progressive.Peercast4Net.Datas
                 Genre = channel.Attribute("genre").Value,
                 Description = channel.Attribute("desc").Value,
                 ContactUrl = channel.Attribute("url").Value,
-                Age = int.Parse(channel.Attribute("age").Value),
+                Age = age,
                 Comment = channel.Attribute("comment").Value,
                 LocalListeners = int.Parse(relay.Attribute("listeners").Value),
                 LocalRelays = int.Parse(relay.Attribute("relays").Value),

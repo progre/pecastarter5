@@ -9,8 +9,8 @@ namespace Progressive.Peercast4Net.Daos
     {
         protected const string ViewXmlUrl = "/admin?cmd=viewxml";
 
-        protected string address;
-        protected WebClient client;
+        protected readonly string address;
+        protected readonly WebClient client;
 
         public PeercastDaoBase(string address)
         {
