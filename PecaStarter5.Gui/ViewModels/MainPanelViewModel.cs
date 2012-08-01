@@ -19,7 +19,7 @@ namespace Progressive.PecaStarter5.ViewModels
             m_model = model;
 
             // タブ情報の初期化
-            RelayListViewModel = new RelayListViewModel(model.Peercast, model.YellowPagesList);
+            RelayListViewModel = new RelayListViewModel(model.Service, model.YellowPagesList);
             YellowPagesListViewModel = new YellowPagesListViewModel(model.YellowPagesList, model.Configuration);
             ExternalSourceViewModel = new ExternalSourceViewModel(model.Configuration);
             SettingsViewModel = new SettingsViewModel(model.Configuration, model.LoggerPlugin);

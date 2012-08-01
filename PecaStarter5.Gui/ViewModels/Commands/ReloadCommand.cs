@@ -2,46 +2,46 @@
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Progressive.PecaStarter5.Models.Services;
 using Progressive.PecaStarter5.ViewModels.Pages;
-using Progressive.Peercast4Net;
 
 namespace Progressive.PecaStarter5.ViewModels.Commands
 {
     class ReloadCommand : ICommand
     {
-        private readonly RelayListViewModel parent;
-        private readonly Peercast peercast;
+        private readonly RelayListViewModel m_parent;
+        private readonly PeercastService m_peercastService;
 
-        public ReloadCommand(RelayListViewModel parent, Peercast peercast)
+        public ReloadCommand(RelayListViewModel parent, PeercastService peercastService)
         {
-            this.parent = parent;
-            this.peercast = peercast;
+            m_parent = parent;
+            m_peercastService = peercastService;
         }
 
         #region ICommand メンバー
 
         public bool CanExecute(object parameter)
         {
-            return !parent.IsLoading;
+            return !m_parent.IsLoading;
         }
 
         public event EventHandler CanExecuteChanged;
 
         public void Execute(object parameter)
         {
-            parent.IsLoading = true;
+            m_parent.IsLoading = true;
             OnCanExecuteChanged();
-            peercast.GetChannelsAsync().ContinueWith(t =>
+            m_peercastService.GetChannelsAsync().ContinueWith(t =>
             {
                 if (t.IsFaulted)
                 {
-                    parent.OnExceptionThrown(t.Exception);
-                    parent.IsLoading = false;
+                    m_parent.OnExceptionThrown(t.Exception);
+                    m_parent.IsLoading = false;
                     OnCanExecuteChanged();
                     return;
                 }
-                parent.Channels = t.Result.ToList();
-                parent.IsLoading = false;
+                m_parent.Channels = t.Result.ToList();
+                m_parent.IsLoading = false;
                 OnCanExecuteChanged();
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }
