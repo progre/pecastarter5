@@ -11,13 +11,13 @@ namespace Progressive.PecaStarter5.Models
     {
         public Configuration()
         {
-            Port = 7144;
             YellowPagesList = new List<YellowPages>();
             NameHistory = new Collection<string>();
             GenreHistory = new Collection<string>();
             DescriptionHistory = new Collection<string>();
             CommentHistory = new Collection<string>();
         }
+
         public double Left { get; set; }
         public double Top { get; set; }
         public double Width { get; set; }
@@ -32,15 +32,15 @@ namespace Progressive.PecaStarter5.Models
         public string ContactUrl { get; set; }
         public Collection<string> CommentHistory { get; set; }
 
-        private bool hasNotifyIcon;
+        private bool m_hasNotifyIcon;
         public bool HasNotifyIcon
         {
-            get { return hasNotifyIcon; }
+            get { return m_hasNotifyIcon; }
             set
             {
-                if (hasNotifyIcon == value)
+                if (m_hasNotifyIcon == value)
                     return;
-                hasNotifyIcon = value;
+                m_hasNotifyIcon = value;
                 OnPropertyChanged("HasNotifyIcon");
             }
         }
@@ -61,10 +61,22 @@ namespace Progressive.PecaStarter5.Models
             }
         }
         public int Delay { get; set; }
-        public int Port { get; set; }
 
-        [XmlIgnore]
+        private int m_port = 7144;
+        public int Port
+        {
+            get { return m_port; }
+            set
+            {
+                if (m_port == value)
+                    return;
+                m_port = value;
+                OnPropertyChanged("Port");
+            }
+        }
+
         private string m_defaultLogPath;
+        [XmlIgnore]
         public string DefaultLogPath
         {
             get { return m_defaultLogPath; }
