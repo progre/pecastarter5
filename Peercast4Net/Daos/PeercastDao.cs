@@ -54,11 +54,6 @@ namespace Progressive.Peercast4Net.Daos
             return AccessAsync(string.Format(KeepCommand, id));
         }
 
-        public virtual Task<string> GetViewXmlAsync()
-        {
-            return DownloadAsync(ViewXmlUrl);
-        }
-
         public virtual Task<string> GetSettingsHtmlAsync()
         {
             return DownloadAsync(SettingsHtmlUrl);

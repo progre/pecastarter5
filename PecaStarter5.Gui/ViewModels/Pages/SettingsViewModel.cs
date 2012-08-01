@@ -20,6 +20,18 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
             loggerPlugin.BasePath = LogPath;
         }
 
+        public PeercastType PeercastType
+        {
+            get { return configuration.PeercastType; }
+            set
+            {
+                if (configuration.PeercastType == value)
+                    return;
+                configuration.PeercastType = value;
+                OnPropertyChanged("PeercastType");
+            }
+        }
+
         public int Port
         {
             get { return configuration.Port; }

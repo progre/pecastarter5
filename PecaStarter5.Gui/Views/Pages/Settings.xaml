@@ -9,11 +9,15 @@
         <ResourceDictionary Source="..\Styles\ResourceDictionary.xaml"/>
     </UserControl.Resources>
     <Grid>
+        <Grid.Resources>
+            <c:EnumBoolConverter x:Key="EnumBoolConverter"/>
+        </Grid.Resources>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
@@ -21,19 +25,29 @@
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Label Grid.Column="0" Grid.Row="0" Content="Peercast ポート番号:"/>
-        <ct:NulllessIntegerUpDown Grid.Column="1" Grid.Row="0" Width="64" HorizontalAlignment="Left"
-            Maximum="65535" Minimum="0" Value="{Binding Port, ValidatesOnDataErrors=True}"/>
-        <CheckBox Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="1" Content="タスクトレイに最小化" IsChecked="{Binding HasNotifyIcon}"/>
-        <CheckBox Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="2" Content="終了時にウィンドウ位置を保存する" IsChecked="{Binding IsSavePosition}"/>
-        <Label Grid.Column="0" Grid.Row="3" Content="切断遅延:"/>
-        <ct:NulllessIntegerUpDown Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" Width="54"
-            Minimum="0" Text="{Binding Delay}"/>
-        <CheckBox Name="LoggingCheckBox" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="4" Content="配信ログを取る"
-                  IsEnabled="{Binding IsLocked}" IsChecked="{Binding Logging}"/>
-        <Label Grid.Column="0" Grid.Row="5" Content="ログの保存場所:"
-               IsEnabled="{Binding ElementName=LoggingCheckBox, Path=IsChecked}"/>
-        <DockPanel Grid.Column="1" Grid.Row="5" IsEnabled="{Binding ElementName=LoggingCheckBox, Path=IsChecked}">
+        <Label Grid.Column="0" Grid.Row="0" Content="本体種別:"/>
+        <StackPanel Grid.Column="1" Grid.Row="0">
+            <RadioButton Content="Peercast" IsChecked="{Binding PeercastType,
+                    Converter={StaticResource EnumBoolConverter}, ConverterParameter=Peercast}"/>
+            <RadioButton Content="Peercast Station" IsChecked="{Binding PeercastType,
+                    Converter={StaticResource EnumBoolConverter}, ConverterParameter=PeercastStation}"/>
+        </StackPanel>
+        <Label Grid.Column="0" Grid.Row="1" Content="ポート番号:"/>
+        <ct:NulllessIntegerUpDown Grid.Column="1" Grid.Row="1" Width="64" HorizontalAlignment="Left"
+                Maximum="65535" Minimum="0" Value="{Binding Port, ValidatesOnDataErrors=True}"/>
+        <CheckBox Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="2" Content="タスクトレイに最小化"
+                IsChecked="{Binding HasNotifyIcon}"/>
+        <CheckBox Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="3" Content="終了時にウィンドウ位置を保存する"
+                IsChecked="{Binding IsSavePosition}"/>
+        <Label Grid.Column="0" Grid.Row="4" Content="切断遅延:"/>
+        <ct:NulllessIntegerUpDown Grid.Column="1" Grid.Row="4" HorizontalAlignment="Left" Width="54"
+                Minimum="0" Text="{Binding Delay}"/>
+        <CheckBox Name="LoggingCheckBox" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="5" Content="配信ログを取る"
+                IsEnabled="{Binding IsLocked}" IsChecked="{Binding Logging}"/>
+        <Label Grid.Column="0" Grid.Row="6" Content="ログの保存場所:"
+                IsEnabled="{Binding ElementName=LoggingCheckBox, Path=IsChecked}"/>
+        <DockPanel Grid.Column="1" Grid.Row="6"
+                IsEnabled="{Binding ElementName=LoggingCheckBox, Path=IsChecked}">
             <Button Content="..." DockPanel.Dock="Right" Width="auto" Click="Button_Click"
                     DataContext="{Binding LogPath, Mode=TwoWay}"/>
             <TextBox Text="{Binding LogPath}"/>

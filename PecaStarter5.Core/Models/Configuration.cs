@@ -45,6 +45,7 @@ namespace Progressive.PecaStarter5.Models
             }
         }
 
+        public PeercastType PeercastType { get; set; }
         public bool IsSavePosition { get; set; }
         public bool Logging { get; set; }
         private string m_logPath;
