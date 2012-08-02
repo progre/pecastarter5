@@ -21,7 +21,9 @@ namespace Progressive.PecaStarter5.ViewModels.Commands
             {
                 return false;
             }
-            if (m_parent.SelectedChannel == null || m_parent.SelectedChannel.Status != "BROADCAST")
+            if (m_parent.SelectedChannel == null
+                || (m_parent.SelectedChannel.Status != "BROADCAST"
+                && m_parent.SelectedChannel.Status != "Receiving"))
             {
                 return false;
             }

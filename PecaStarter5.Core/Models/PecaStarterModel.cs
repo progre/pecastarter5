@@ -27,12 +27,12 @@ namespace Progressive.PecaStarter5.Models
 
         public PecaStarterModel(string title, IExternalResource externalResource)
         {
+            Title = title;
+            m_externalResource = externalResource;
             m_peercast = new Peercast();
             m_peercastStation = new PeercastStation();
-            m_externalResource = externalResource;
-            m_plugins = new IPlugin[] { LoggerPlugin };
-            Title = title;
             LoggerPlugin = new LoggerPlugin();
+            m_plugins = new IPlugin[] { LoggerPlugin };
             var tuple = GetYellowPagesLists();
             m_externalYellowPagesList = tuple.Item2;
             YellowPagesList = tuple.Item1;

@@ -37,6 +37,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -59,6 +60,7 @@
     <Compile Include="Daos\PeercastDao.cs" />
     <Compile Include="Daos\TestingPeercastDao.cs" />
     <Compile Include="Datas\IChannel.cs" />
+    <Compile Include="DynamicJson.cs" />
     <Compile Include="IPeercast.cs" />
     <Compile Include="Datas\Parameters.cs" />
     <Compile Include="Peercast.cs" />
@@ -70,6 +72,9 @@
     <Compile Include="Utils\PeercastUtils.cs" />
     <Compile Include="Datas\XmlStatus.cs" />
     <Compile Include="Datas\YellowPages.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
