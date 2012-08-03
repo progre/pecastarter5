@@ -5,6 +5,7 @@ using Progressive.Commons.ViewModels.Commands;
 using Progressive.PecaStarter5.Models;
 using Progressive.PecaStarter5.Models.Channels;
 using Progressive.PecaStarter5.ViewModels.Dxos;
+using Progressive.Peercast4Net.Datas;
 
 namespace Progressive.PecaStarter5.ViewModels.Controls
 {

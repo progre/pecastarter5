@@ -15,7 +15,7 @@ namespace Progressive.PecaStarter5.ViewModel
             m_model = model;
             MainPanelViewModel = new MainPanelViewModel(model);
 
-            Configuration.PropertyChanged += (sender, e) =>
+            MainPanelViewModel.SettingsViewModel.PropertyChanged += (sender, e) =>
             {
                 if (e.PropertyName == "HasNotifyIcon")
                     OnPropertyChanged("HasNotifyIcon");

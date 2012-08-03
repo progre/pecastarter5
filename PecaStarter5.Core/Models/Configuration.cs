@@ -7,7 +7,7 @@ using System.Xml.Serialization;
 
 namespace Progressive.PecaStarter5.Models
 {
-    public class Configuration : INotifyPropertyChanged
+    public class Configuration
     {
         public Configuration()
         {
@@ -18,6 +18,7 @@ namespace Progressive.PecaStarter5.Models
             DescriptionHistory = new Collection<string>();
             CommentHistory = new Collection<string>();
         }
+
         public double Left { get; set; }
         public double Top { get; set; }
         public double Width { get; set; }
@@ -32,19 +33,8 @@ namespace Progressive.PecaStarter5.Models
         public string ContactUrl { get; set; }
         public Collection<string> CommentHistory { get; set; }
 
-        private bool hasNotifyIcon;
-        public bool HasNotifyIcon
-        {
-            get { return hasNotifyIcon; }
-            set
-            {
-                if (hasNotifyIcon == value)
-                    return;
-                hasNotifyIcon = value;
-                OnPropertyChanged("HasNotifyIcon");
-            }
-        }
-
+        public bool HasNotifyIcon { get; set; }
+        public PeercastType PeercastType { get; set; }
         public bool IsSavePosition { get; set; }
         public bool Logging { get; set; }
         private string m_logPath;
@@ -62,8 +52,8 @@ namespace Progressive.PecaStarter5.Models
         public int Delay { get; set; }
         public int Port { get; set; }
 
-        [XmlIgnore]
         private string m_defaultLogPath;
+        [XmlIgnore]
         public string DefaultLogPath
         {
             get { return m_defaultLogPath; }
@@ -72,21 +62,6 @@ namespace Progressive.PecaStarter5.Models
                 m_defaultLogPath = value;
                 LogPath = LogPath;
             }
-        }
-
-        #region INotifyPropertyChanged メンバー
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        #endregion
-
-        private void OnPropertyChanged(string propertyName)
-        {
-            if (PropertyChanged == null)
-                return;
-            if (GetType().GetProperty(propertyName) == null)
-                return;
-            PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
 
         public class YellowPages

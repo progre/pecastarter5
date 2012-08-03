@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Text;
-using System.Threading;
 
 namespace Progressive.PecaStarter5.Models
 {
@@ -10,7 +9,6 @@ namespace Progressive.PecaStarter5.Models
         private string path;
         private string name;
         private DateTime startAt;
-        private Timer timer;
 
         public static Logger StartNew(string path, string name)
         {

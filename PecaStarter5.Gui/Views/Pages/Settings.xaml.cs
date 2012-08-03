@@ -33,11 +33,5 @@ namespace Progressive.PecaStarter5.Views.Pages
                 button.GetBindingExpression(Button.DataContextProperty).UpdateSource();
             }
         }
-
-        private void IntegerUpDown_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
-        {
-            if (e.NewValue == null)
-                ((IntegerUpDown)sender).Value = (int?)e.OldValue;
-        }
     }
 }

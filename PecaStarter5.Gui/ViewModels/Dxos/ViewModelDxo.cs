@@ -1,5 +1,5 @@
 ﻿using Progressive.PecaStarter5.ViewModels.Pages;
-using Progressive.Peercast4Net;
+using Progressive.Peercast4Net.Datas;
 
 namespace Progressive.PecaStarter5.ViewModels.Dxos
 {

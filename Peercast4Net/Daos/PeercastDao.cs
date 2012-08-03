@@ -9,23 +9,18 @@ using Progressive.Peercast4Net.Utils;
 
 namespace Progressive.Peercast4Net.Daos
 {
-    class PeercastDao : IDisposable
+    class PeercastDao : PeercastDaoBase
     {
         protected const string SettingsHtmlUrl = "/html/ja/settings.html";
         protected const string ApplyUrl = "/admin?cmd=apply";
-        protected const string ViewXmlUrl = "/admin?cmd=viewxml";
         protected const string FetchCommand = "/admin?cmd=fetch&url={0}&name={1}&genre={2}&desc={3}&contact={4}&type={5}";
         protected const string SetMetaCommand = "/admin?cmd=setmeta&name={0}&genre={1}&desc={2}&url={3}&comment={4}&t_artist={5}&t_title={6}&t_album={7}&t_genre={8}&t_contact={9}";
         protected const string StopCommand = "/admin?cmd=stop&id={0}";
         protected const string KeepCommand = "/admin?cmd=keep&id={0}";
 
-        protected string address;
-        private WebClient client;
-
         public PeercastDao(string address)
+            :base(address)
         {
-            client = new WebClient();
-            this.address = address;
         }
 
         public virtual Task FetchAsync(string url, string name, string genre, string description, string contactUrl, string type)
@@ -59,11 +54,6 @@ namespace Progressive.Peercast4Net.Daos
             return AccessAsync(string.Format(KeepCommand, id));
         }
 
-        public virtual Task<string> GetViewXmlAsync()
-        {
-            return DownloadAsync(ViewXmlUrl);
-        }
-
         public virtual Task<string> GetSettingsHtmlAsync()
         {
             return DownloadAsync(SettingsHtmlUrl);
@@ -81,33 +71,11 @@ namespace Progressive.Peercast4Net.Daos
             return AccessAsync(sb.ToString());
         }
 
-        #region IDisposable メンバー
-
-        public virtual void Dispose()
-        {
-            client.Dispose();
-        }
-
-        #endregion
-
         private async Task AccessAsync(string url)
         {
             try
             {
                 await client.AccessAsync("http://" + address + url);
-            }
-            catch (WebException)
-            {
-                throw new PeercastException("Peercastへの接続に失敗しました。" + Environment.NewLine
-                    + "Peercastが起動しているか、またはポート番号が正しいか確認してください。");
-            }
-        }
-
-        private async Task<string> DownloadAsync(string url)
-        {
-            try
-            {
-                return await client.DownloadAsync("http://" + address + url);
             }
             catch (WebException)
             {

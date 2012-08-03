@@ -31,7 +31,7 @@
             <StackPanel DockPanel.Dock="Right" VerticalAlignment="Bottom" Orientation="Horizontal">
                 <TextBlock Width="65" Text="type"/>
                 <TextBlock Width="35" Text="relays"/>
-                <TextBlock Width="70" Text="status"/>
+                <TextBlock Width="80" Text="status"/>
             </StackPanel>
             <Grid>
                 <TextBlock VerticalAlignment="Bottom" Text="チャンネル名"/>

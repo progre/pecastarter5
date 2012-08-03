@@ -5,11 +5,12 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Progressive.Peercast4Net.Daos;
-using Progressive.Peercast4Net.Settings;
+using Progressive.Peercast4Net.Utils;
+using Progressive.Peercast4Net.Datas;
 
 namespace Progressive.Peercast4Net
 {
-    public class Peercast
+    public class Peercast : PeercastBase
     {
         public const string NullId = "00000000000000000000000000000000";
 
@@ -17,46 +18,16 @@ namespace Progressive.Peercast4Net
         {
         }
 
-        private string address = "localhost:7144";
-        public string Address
-        {
-            get { return address; }
-            set
-            {
-                if (!Regex.IsMatch(value, "^[^;/?:@&=+$,]+(:[0-9]{1,5})$"))
-                {
-                    throw new ArgumentException("Invalid address.");
-                }
-                address = value;
-            }
-        }
-
-        public async Task<string> GetYellowPagesAsync()
-        {
-            IList<KeyValuePair<string, string>> nvc;
-            using (var dao = new PeercastDao(Address))
-            {
-                nvc = await GetSettingsAsync(dao);
-            }
-            return nvc.Single(x => x.Key == "yp").Value;
-        }
-
-        public async Task SetYellowPagesAsync(string yellowPagesAddress)
+        public override async Task<IEnumerable<IChannel>> GetChannelsAsync()
         {
             using (var dao = new PeercastDao(Address))
             {
-                var nvc = await GetSettingsAsync(dao);
-                var ypParam = nvc.Single(x => x.Key == "yp");
-                if (yellowPagesAddress == ypParam.Value)
-                    return;
-
-                nvc.Remove(ypParam);
-                nvc.Add(new KeyValuePair<string, string>("yp", yellowPagesAddress));
-                await dao.ApplyAsync(nvc);
+                var xml = await dao.GetViewXmlAsync();
+                return new XmlStatus(xml).Channels;
             }
         }
 
-        public async Task<Tuple<int, int>> GetListenersAsync(string name)
+        public override async Task<Tuple<int, int>> GetListenersAsync(string name)
         {
             using (var dao = new PeercastDao(Address))
             {
@@ -64,23 +35,14 @@ namespace Progressive.Peercast4Net
             }
         }
 
-        public Task<IEnumerable<IChannel>> GetChannelsAsync()
+        public override Task<Tuple<string, int>> BroadcastAsync(YellowPages yellowPages, BroadcastParameter parameter)
         {
             return Task.Factory.StartNew(() =>
             {
                 using (var dao = new PeercastDao(Address))
                 {
-                    return new XmlStatus(dao.GetViewXmlAsync().Result).Channels;
-                }
-            });
-        }
+                    SetYellowPagesAwait(dao, yellowPages.Url);
 
-        public Task<Tuple<string, int>> BroadcastAsync(BroadcastParameter parameter)
-        {
-            return Task.Factory.StartNew(() =>
-            {
-                using (var dao = new PeercastDao(Address))
-                {
                     if (ExistsAsync(dao, parameter.Name).Result)
                     {
                         throw new PeercastException("同名のチャンネルが既にあります。");
@@ -103,7 +65,7 @@ namespace Progressive.Peercast4Net
             });
         }
 
-        public async Task UpdateAsync(UpdateParameter parameter)
+        public override async Task UpdateAsync(UpdateParameter parameter)
         {
             using (var dao = new PeercastDao(Address))
             {
@@ -114,12 +76,24 @@ namespace Progressive.Peercast4Net
             }
         }
 
-        public Task StopAsync(string id)
+        public override Task StopAsync(string id)
         {
             using (var dao = new PeercastDao(Address))
             {
                 return dao.StopAsync(id);
             }
+        }
+
+        private void SetYellowPagesAwait(PeercastDao dao, string yellowPagesAddress)
+        {
+            var nvc = GetSettingsAsync(dao).Result;
+            var ypParam = nvc.Single(x => x.Key == "yp");
+            if (yellowPagesAddress == ypParam.Value)
+                return;
+
+            nvc.Remove(ypParam);
+            nvc.Add(new KeyValuePair<string, string>("yp", yellowPagesAddress));
+            dao.ApplyAsync(nvc).Wait();
         }
 
         private async Task<IList<KeyValuePair<string, string>>> GetSettingsAsync(PeercastDao dao)

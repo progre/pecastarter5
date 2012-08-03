@@ -14,7 +14,7 @@ namespace Progressive.PecaStarter5
     {
         private string Title
         {
-            get { return "Peca Starter " + Assembly.GetExecutingAssembly().GetName().Version.ToString() + " DP"; }
+            get { return "Peca Starter " + Assembly.GetExecutingAssembly().GetName().Version.ToString() + " Beta"; }
         }
 
         private string ApplicationName

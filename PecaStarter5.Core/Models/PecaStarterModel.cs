@@ -8,12 +8,15 @@ using Progressive.PecaStarter5.Models.Plugins;
 using Progressive.PecaStarter5.Models.Services;
 using Progressive.PecaStarter5.Models.YellowPagesXml;
 using Progressive.Peercast4Net;
+using Progressive.Peercast4Net.Datas;
 
 namespace Progressive.PecaStarter5.Models
 {
     // TODO: VMにあるロジック・エンティティを可能な限りここに移動
     public class PecaStarterModel
     {
+        private readonly Peercast m_peercast;
+        private readonly PeercastStation m_peercastStation;
         private readonly IExternalResource m_externalResource;
         private readonly BroadcastTimer m_timer;
         private readonly List<IExternalYellowPages> m_externalYellowPagesList;
@@ -24,40 +27,34 @@ namespace Progressive.PecaStarter5.Models
 
         public PecaStarterModel(string title, IExternalResource externalResource)
         {
+            Title = title;
             m_externalResource = externalResource;
+            m_peercast = new Peercast();
+            m_peercastStation = new PeercastStation();
+            LoggerPlugin = new LoggerPlugin();
+            m_plugins = new IPlugin[] { LoggerPlugin };
+            var tuple = GetYellowPagesLists();
+            m_externalYellowPagesList = tuple.Item2;
+            YellowPagesList = tuple.Item1;
+
             m_timer = new BroadcastTimer();
             m_timer.Ticked += s =>
             {
                 var tuple1 = (Tuple<IYellowPages, string>)s;
-                OnTickedAsync(tuple1.Item1, tuple1.Item2);
+                Service.OnTickedAsync(tuple1.Item1, tuple1.Item2).ContinueWith(t =>
+                {
+                    if (t.IsFaulted)
+                        OnAsyncExceptionThrown(t.Exception);
+                });
             };
-            LoggerPlugin = new LoggerPlugin();
-            m_plugins = new IPlugin[] { LoggerPlugin };
 
-            Title = title;
-            Peercast = new Peercast();
             Configuration = new ConfigurationDao(externalResource).Get();
             Configuration.DefaultLogPath = externalResource.DefaultLogPath;
-            Configuration.PropertyChanged += (sender, e) =>
-            {
-                var config = (Configuration)sender;
-                if (e.PropertyName == "Port")
-                {
-                    Peercast.Address = "localhost:" + config.Port;
-                }
-            };
-            // Configを反映
-            Peercast.Address = "localhost:" + Configuration.Port;
-
-            var tuple = GetYellowPagesLists();
-            YellowPagesList = tuple.Item1;
-            m_externalYellowPagesList = tuple.Item2;
-            Service = new PeercastService(Peercast, m_externalYellowPagesList, m_plugins);
+            Service = new PeercastService(m_externalYellowPagesList, m_plugins, Configuration);
         }
 
         public string Title { get; private set; }
         public PeercastService Service { get; private set; }
-        public Peercast Peercast { get; private set; }
         public LoggerPlugin LoggerPlugin { get; private set; }
         public Configuration Configuration { get; private set; }
         public List<IYellowPages> YellowPagesList { get; private set; }
@@ -107,26 +104,6 @@ namespace Progressive.PecaStarter5.Models
                 }
             }
             return Tuple.Create(yellowPagesList, externalYellowPagesList);
-        }
-
-        private async Task OnTickedAsync(IYellowPages yellowPages, string name)
-        {
-            try
-            {
-                var tuple = await Peercast.GetListenersAsync(name);
-
-                // 外部YPに通知
-                if (yellowPages.IsExternal)
-                {
-                    await ((IExternalYellowPages)yellowPages).OnTickedAsync(name, tuple.Item1, tuple.Item2);
-                }
-
-                Task.WaitAll(m_plugins.Select(x => x.OnTickedAsync(name, tuple.Item1, tuple.Item2)).ToArray());
-            }
-            catch (Exception ex)
-            {
-                OnAsyncExceptionThrown(ex);
-            }
         }
 
         private void OnAsyncExceptionThrown(Exception ex)

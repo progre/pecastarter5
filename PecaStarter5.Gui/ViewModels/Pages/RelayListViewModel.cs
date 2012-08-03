@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows;
 using System.Windows.Input;
 using Progressive.Commons.ViewModels;
 using Progressive.PecaStarter5.Models;
+using Progressive.PecaStarter5.Models.Services;
 using Progressive.PecaStarter5.ViewModels.Commands;
-using Progressive.Peercast4Net;
+using Progressive.Peercast4Net.Datas;
 
 namespace Progressive.PecaStarter5.ViewModels.Pages
 {
@@ -13,11 +13,11 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
     {
         public event UnhandledExceptionEventHandler ExceptionThrown;
 
-        public RelayListViewModel(Peercast peercast, IEnumerable<IYellowPages> yellowPagesList)
+        public RelayListViewModel(PeercastService peercastService, IEnumerable<IYellowPages> yellowPagesList)
         {
             YellowPagesList = yellowPagesList;
-            ReloadCommand = new ReloadCommand(this, peercast);
-            OpenCommand = new OpenCommand(this, peercast, yellowPagesList);
+            ReloadCommand = new ReloadCommand(this, peercastService);
+            OpenCommand = new OpenCommand(this);
         }
 
         private bool isLoading = false;

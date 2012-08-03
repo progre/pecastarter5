@@ -19,7 +19,7 @@ namespace Progressive.PecaStarter5.ViewModels
             m_model = model;
 
             // タブ情報の初期化
-            RelayListViewModel = new RelayListViewModel(model.Peercast, model.YellowPagesList);
+            RelayListViewModel = new RelayListViewModel(model.Service, model.YellowPagesList);
             YellowPagesListViewModel = new YellowPagesListViewModel(model.YellowPagesList, model.Configuration);
             ExternalSourceViewModel = new ExternalSourceViewModel(model.Configuration);
             SettingsViewModel = new SettingsViewModel(model.Configuration, model.LoggerPlugin);
@@ -107,10 +107,12 @@ namespace Progressive.PecaStarter5.ViewModels
 
             BroadcastControlViewModel.PropertyChanged += (sender, e) =>
             {
-                if (e.PropertyName != "BroadcastingChannel")
+                var propertyName = e.PropertyName;
+                if (propertyName != "IsProcessing" && propertyName != "BroadcastingChannel")
                     return;
 
-                if (((BroadcastControlViewModel)sender).BroadcastingChannel == null)
+                var broadcastControlViewModel = (BroadcastControlViewModel)sender;
+                if (!broadcastControlViewModel.IsProcessing && broadcastControlViewModel.BroadcastingChannel == null)
                 {
                     YellowPagesListViewModel.IsLocked = false;
                     if (YellowPagesListViewModel.SelectedYellowPages != null)
@@ -129,7 +131,7 @@ namespace Progressive.PecaStarter5.ViewModels
 
         private void NotifyExceptionAlert(Exception ex)
         {
-            if (ex is PeercastException)
+            if (ex is PeercastException || ex is YellowPagesException)
             {
                 NotifyAlert(ex.Message);
                 return;

@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Progressive.Peercast4Net.Commons.Utils;
+﻿using System.Text;
 using Progressive.Peercast4Net.Commons;
-using System.Net;
-using System.Threading.Tasks;
+using Progressive.Peercast4Net.Commons.Utils;
 
 namespace Progressive.Peercast4Net.Utils
 {

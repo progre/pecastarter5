@@ -1,4 +1,4 @@
-﻿namespace Progressive.Peercast4Net
+﻿namespace Progressive.Peercast4Net.Datas
 {
     class Channel : IChannel
     {

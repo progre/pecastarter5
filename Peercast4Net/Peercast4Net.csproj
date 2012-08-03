@@ -37,6 +37,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -44,7 +45,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Channel.cs" />
+    <Compile Include="Daos\PeercastDaoBase.cs" />
+    <Compile Include="Daos\PeercastStationDao.cs" />
+    <Compile Include="Datas\Channel.cs" />
     <Compile Include="Commons\ShiftJisEncodings.cs" />
     <Compile Include="Commons\Utils\HttpUtils.cs" />
     <Compile Include="Commons\WebClientExtension.cs" />
@@ -56,15 +59,22 @@
     <Compile Include="CreteLib\NodeType.cs" />
     <Compile Include="Daos\PeercastDao.cs" />
     <Compile Include="Daos\TestingPeercastDao.cs" />
-    <Compile Include="IChannel.cs" />
-    <Compile Include="Parameters.cs" />
+    <Compile Include="Datas\IChannel.cs" />
+    <Compile Include="DynamicJson.cs" />
+    <Compile Include="IPeercast.cs" />
+    <Compile Include="Datas\Parameters.cs" />
     <Compile Include="Peercast.cs" />
+    <Compile Include="PeercastBase.cs" />
     <Compile Include="PeercastException.cs" />
-    <Compile Include="PeercastServerDefine.cs" />
+    <Compile Include="PeercastStation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Settings\SettingssHtmlParser.cs" />
+    <Compile Include="Utils\SettingssHtmlParser.cs" />
     <Compile Include="Utils\PeercastUtils.cs" />
-    <Compile Include="XmlStatus.cs" />
+    <Compile Include="Datas\XmlStatus.cs" />
+    <Compile Include="Datas\YellowPages.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
