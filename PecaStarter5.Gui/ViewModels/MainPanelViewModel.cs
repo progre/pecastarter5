@@ -107,10 +107,12 @@ namespace Progressive.PecaStarter5.ViewModels
 
             BroadcastControlViewModel.PropertyChanged += (sender, e) =>
             {
-                if (e.PropertyName != "BroadcastingChannel")
+                var propertyName = e.PropertyName;
+                if (propertyName != "IsProcessing" && propertyName != "BroadcastingChannel")
                     return;
 
-                if (((BroadcastControlViewModel)sender).BroadcastingChannel == null)
+                var broadcastControlViewModel = (BroadcastControlViewModel)sender;
+                if (!broadcastControlViewModel.IsProcessing && broadcastControlViewModel.BroadcastingChannel == null)
                 {
                     YellowPagesListViewModel.IsLocked = false;
                     if (YellowPagesListViewModel.SelectedYellowPages != null)
