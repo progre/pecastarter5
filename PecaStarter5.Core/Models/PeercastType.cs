@@ -2,6 +2,7 @@
 {
     public enum PeercastType
     {
+        None,
         Peercast,
         PeercastStation
     }

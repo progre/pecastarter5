@@ -1,8 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Windows;
-using Progressive.Commons.Views;
 using Microsoft.CSharp.RuntimeBinder;
+using Progressive.Commons.Views;
 
 namespace Progressive.PecaStarter5.Views
 {
@@ -17,39 +17,31 @@ namespace Progressive.PecaStarter5.Views
         {
             Loaded += OnLoaded;
             InitializeComponent();
+
+            DataContext = Application.Current.FindResource("DataContext");
         }
 
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
         {
-            try
+            var viewModel = (dynamic)DataContext;
+            if (viewModel.IsProcessing)
             {
-                var viewModel = (dynamic)DataContext;
-                if (viewModel.IsProcessing)
+                Xceed.Wpf.Toolkit.MessageBox.Show("処理中なので終了できません。", "",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+                e.Cancel = true;
+                return;
+            }
+            if (viewModel.IsBroadcasting)
+            {
+                var result = Xceed.Wpf.Toolkit.MessageBox.Show("配信中です。強制的に終了しますか？", "",
+                    MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.None);
+                if (result != MessageBoxResult.Yes)
                 {
-                    Xceed.Wpf.Toolkit.MessageBox.Show("処理中なので終了できません。", "",
-                        MessageBoxButton.OK, MessageBoxImage.Error);
                     e.Cancel = true;
                     return;
                 }
-                if (viewModel.IsBroadcasting)
-                {
-                    var result = Xceed.Wpf.Toolkit.MessageBox.Show("配信中です。強制的に終了しますか？", "",
-                        MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.None);
-                    if (result != MessageBoxResult.Yes)
-                    {
-                        e.Cancel = true;
-                        return;
-                    }
-                }
             }
-            catch (RuntimeBinderException)
-            {
-                // バインド失敗時は無視
-            }
-            finally
-            {
-                base.OnClosing(e);
-            }
+            base.OnClosing(e);
         }
 
         protected override void OnClosed(EventArgs e)

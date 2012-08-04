@@ -14,7 +14,8 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
             this.YellowPagesViewModels = yellowPagesList.Select(x => new YellowPagesViewModel(x)).ToArray();
             this.settings = settings;
 
-            SelectedYellowPages = YellowPagesViewModels.SingleOrDefault(x => x.Name == settings.SelectedYellowPages);
+            var recent = settings.SelectedYellowPages;
+            SelectedYellowPages = YellowPagesViewModels.SingleOrDefault(x => x.Name == recent);
             foreach (var yp in YellowPagesViewModels)
             {
                 yp.PropertyChanged += (sender, e) => OnPropertyChanged("Prefix");

@@ -11,6 +11,9 @@ namespace Progressive.PecaStarter5.ViewModels
 {
     public class MainPanelViewModel : ViewModelBase
     {
+        public const int YellowPagesTabIndex = 2;
+        public const int ExternalSourceTabIndex = 3;
+
         private PecaStarterModel m_model;
 
         public MainPanelViewModel(PecaStarterModel model)
@@ -34,7 +37,7 @@ namespace Progressive.PecaStarter5.ViewModels
         public SettingsViewModel SettingsViewModel { get; private set; }
         public BroadcastControlViewModel BroadcastControlViewModel { get; private set; }
 
-        private int m_selectedIndex;
+        private int m_selectedIndex = YellowPagesTabIndex;
         public int SelectedIndex
         {
             get { return m_selectedIndex; }
@@ -89,7 +92,7 @@ namespace Progressive.PecaStarter5.ViewModels
                 BroadcastControlViewModel.BroadcastingChannel = new BroadcastingChannel(ch.Name, ch.Id);
 
                 // ソースタブに移動
-                SelectedIndex = 3;
+                SelectedIndex = ExternalSourceTabIndex;
 
                 // plugin処理
                 var parameter = new InterruptedParameter()
@@ -131,9 +134,16 @@ namespace Progressive.PecaStarter5.ViewModels
 
         private void NotifyExceptionAlert(Exception ex)
         {
-            if (ex is PeercastException || ex is YellowPagesException)
+            if (ex is PeercastException)
             {
                 NotifyAlert(ex.Message);
+                return;
+            }
+            if (ex is YellowPagesException)
+            {
+                NotifyAlert(ex.Message);
+                SelectedIndex = YellowPagesTabIndex;
+                YellowPagesListViewModel.SelectedYellowPages.IsAccepted = false;
                 return;
             }
             var aggregateException = ex as AggregateException;
@@ -151,6 +161,8 @@ namespace Progressive.PecaStarter5.ViewModels
         private void NotifyAlert(string value)
         {
             Alert = value;
+            OnPropertyChanged("Alert");
+            Alert = "";
             OnPropertyChanged("Alert");
         }
     }
