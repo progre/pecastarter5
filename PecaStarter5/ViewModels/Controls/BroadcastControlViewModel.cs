@@ -30,7 +30,7 @@ namespace Progressive.PecaStarter5.ViewModels.Controls
                 {
                     parent.OnException(new ApplicationException("YPの規約に同意していません。" + Environment.NewLine
                         + "配信を開始するにはYPの規約を確認し、同意する必要があります。"));
-                    parent.SelectedIndex = 2;
+                    parent.SelectedIndex = MainPanelViewModel.YellowPagesTabIndex;
                     IsProcessing = false;
                     return;
                 }
