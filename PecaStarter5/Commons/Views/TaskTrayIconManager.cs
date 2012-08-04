@@ -49,7 +49,7 @@ namespace Progressive.Commons.Views
             if (taskTrayIcon == null)
             {
                 taskTrayIcon = new TaskTrayIcon(root);
-                taskTrayIcon.Icon = Resources.Icon;
+                taskTrayIcon.Icon = Resources.icon;
                 taskTrayIcon.Text = root.Title;
                 taskTrayIcon.BalloonTipText = "";
                 taskTrayIcon.BalloonTipTitle = root.Title;

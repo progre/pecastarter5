@@ -60,32 +60,12 @@
   <ItemGroup>
     <Compile Include="Commons\Models\DynamicDictionary.cs" />
     <Compile Include="Commons\ViewModels\Commands\DelegateCommand.cs" />
-    <Compile Include="Commons\Views\Controls\NulllessIntegerUpDown.cs" />
-    <Compile Include="Commons\Views\Converters\EnumBoolConverter.cs" />
     <Compile Include="ViewModels\Controls\TextBoxWithHistoryViewModel.cs" />
-    <Page Include="Views\Pages\RelayChannel.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Styles\BusyAnimationStyle.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Compile Include="ViewModels\Commands\OpenCommand.cs" />
     <Compile Include="ViewModels\Commands\ReloadCommand.cs" />
     <Compile Include="Commons\ViewModels\ViewModelBase.cs" />
-    <Compile Include="Commons\Views\Utils\WpfUtils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Commons\Views\Controls\Alert.cs" />
-    <Compile Include="Commons\Views\Controls\AskButton.cs" />
-    <Compile Include="Commons\Views\Controls\Behaviors\AskBehavior.cs" />
-    <Compile Include="Commons\Views\Controls\Behaviors\BehaviorBase.cs" />
-    <Compile Include="Commons\Views\Controls\ButtonBase.cs" />
-    <Compile Include="Commons\Views\Controls\CountdownButton.cs" />
     <Compile Include="ViewModels\Controls\ParameterTextBoxWithHistoryViewModel.cs" />
-    <Compile Include="Views\Controls\TextBoxWithHistory.xaml.cs">
-      <DependentUpon>TextBoxWithHistory.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -103,102 +83,6 @@
     <Compile Include="ViewModels\Pages\YellowPagesListViewModel.cs" />
     <Compile Include="ViewModels\Pages\YellowPagesViewModel.cs" />
     <Compile Include="ViewModels\ParameterValidator.cs" />
-    <Compile Include="Views\Controls\BroadcastControl.xaml.cs">
-      <DependentUpon>BroadcastControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Converters\AgeConverter.cs" />
-    <Compile Include="Commons\Views\Converters\VisibilityConverters.cs" />
-    <Compile Include="Commons\Views\GlassWindow.cs" />
-    <Compile Include="Views\Converters\BroadcastVisibilityConverter.cs" />
-    <Compile Include="Commons\Views\Converters\NotConverter.cs" />
-    <Compile Include="Views\MainPanel.xaml.cs">
-      <DependentUpon>MainPanel.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Pages\ComponentFactory.cs" />
-    <Compile Include="Views\Pages\ExternalSource.xaml.cs">
-      <DependentUpon>ExternalSource.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Pages\RelayChannel.xaml.cs">
-      <DependentUpon>RelayChannel.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Pages\RelayList.xaml.cs">
-      <DependentUpon>RelayList.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Pages\Settings.xaml.cs">
-      <DependentUpon>Settings.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Pages\YellowPages.xaml.cs">
-      <DependentUpon>YellowPages.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Pages\YellowPagesList.xaml.cs">
-      <DependentUpon>YellowPagesList.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Commons\Views\TaskTrayIconManager.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="Views\Controls\TextBoxWithHistory.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="Views\Controls\BroadcastControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\MainPanel.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="Views\Pages\ExternalSource.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="Views\Pages\RelayList.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="Views\Pages\Settings.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="Views\Pages\YellowPages.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="Views\Pages\YellowPagesList.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="Views\Styles\ExternalSourceStyle.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="Views\Styles\ResourceDictionary.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">

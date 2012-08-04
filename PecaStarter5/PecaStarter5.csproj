@@ -58,6 +58,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -69,11 +70,27 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WPFToolkit.Extended, Version=1.6.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.1.6.0\lib\net40\WPFToolkit.Extended.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Commons\Views\Controls\Alert.cs" />
+    <Compile Include="Commons\Views\Controls\AskButton.cs" />
+    <Compile Include="Commons\Views\Controls\Behaviors\AskBehavior.cs" />
+    <Compile Include="Commons\Views\Controls\Behaviors\BehaviorBase.cs" />
+    <Compile Include="Commons\Views\Controls\ButtonBase.cs" />
+    <Compile Include="Commons\Views\Controls\CountdownButton.cs" />
+    <Compile Include="Commons\Views\Controls\NulllessIntegerUpDown.cs" />
+    <Compile Include="Commons\Views\Converters\EnumBoolConverter.cs" />
+    <Compile Include="Commons\Views\Converters\NotConverter.cs" />
+    <Compile Include="Commons\Views\Converters\VisibilityConverters.cs" />
+    <Compile Include="Commons\Views\GlassWindow.cs" />
+    <Compile Include="Commons\Views\TaskTrayIconManager.cs" />
+    <Compile Include="Commons\Views\Utils\WpfUtils.cs" />
     <Compile Include="ExternalResource.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -88,6 +105,39 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Views\Controls\BroadcastControl.xaml.cs">
+      <DependentUpon>BroadcastControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Controls\TextBoxWithHistory.xaml.cs">
+      <DependentUpon>TextBoxWithHistory.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Converters\AgeConverter.cs" />
+    <Compile Include="Views\Converters\BroadcastVisibilityConverter.cs" />
+    <Compile Include="Views\MainPanel.xaml.cs">
+      <DependentUpon>MainPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Pages\ComponentFactory.cs" />
+    <Compile Include="Views\Pages\ExternalSource.xaml.cs">
+      <DependentUpon>ExternalSource.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Pages\RelayChannel.xaml.cs">
+      <DependentUpon>RelayChannel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Pages\RelayList.xaml.cs">
+      <DependentUpon>RelayList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Pages\Settings.xaml.cs">
+      <DependentUpon>Settings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Pages\YellowPages.xaml.cs">
+      <DependentUpon>YellowPages.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Pages\YellowPagesList.xaml.cs">
+      <DependentUpon>YellowPagesList.xaml</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -97,6 +147,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="App.config" />
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -108,6 +159,10 @@
       <Project>{AD7CE32A-D2F6-4B6F-9C53-28B2F471C8F9}</Project>
       <Name>PecaStarter5.Core</Name>
       <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\PecaStarter5.ExternalLibrary\PecaStarter5.ExternalLibrary.csproj">
+      <Project>{55EFCA17-BE39-4976-BA28-E5C0FABF8E89}</Project>
+      <Name>PecaStarter5.ExternalLibrary</Name>
     </ProjectReference>
     <ProjectReference Include="..\PecaStarter5.Gui\PecaStarter5.Gui.csproj">
       <Project>{F1A27F3F-502A-446D-81AE-B582FF83E568}</Project>
@@ -147,7 +202,7 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\splash.png" />
+    <SplashScreen Include="Resources\splash.png" />
     <Content Include="yellowpages\CycleYP.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -166,6 +221,84 @@
     <Content Include="yellowpages\wp.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Views\Controls\BroadcastControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Views\Controls\TextBoxWithHistory.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Views\MainPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Views\MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Views\Pages\ExternalSource.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Views\Pages\RelayChannel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Views\Pages\RelayList.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Views\Pages\Settings.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Views\Pages\YellowPages.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Views\Pages\YellowPagesList.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Views\Styles\BusyAnimationStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Views\Styles\ExternalSourceStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Views\Styles\ResourceDictionary.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
