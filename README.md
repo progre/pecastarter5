@@ -16,6 +16,8 @@ Peercast-IM または Peercast Station
 Peercastが起動され、Windows Media EncoderまたはKTE等のエンコードが開始されていることを確認します。
 情報を入力し、配信開始ボタンを押すとリレーが開始されます。
 
+サポート
 --------
-ぷろぐれ  
-http://www.prgrssv.org/
+* [最新版のダウンロード](https://github.com/progre/PecaStarter5/downloads)
+* [既知の不具合一覧](https://github.com/progre/PecaStarter5/issues)
+* [ぷろぐれ ポータルサイト](http://www.prgrssv.org/)
