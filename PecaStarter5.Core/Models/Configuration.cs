@@ -13,6 +13,7 @@ namespace Progressive.PecaStarter5.Models
         {
             Port = 7144;
             YellowPagesList = new List<YellowPages>();
+            StreamUrl = "http://localhost:8080";
             NameHistory = new Collection<string>();
             GenreHistory = new Collection<string>();
             DescriptionHistory = new Collection<string>();
