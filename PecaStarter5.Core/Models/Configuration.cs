@@ -12,12 +12,14 @@ namespace Progressive.PecaStarter5.Models
         public Configuration()
         {
             Port = 7144;
+            SelectedYellowPages = "WP";
             YellowPagesList = new List<YellowPages>();
             StreamUrl = "http://localhost:8080";
             NameHistory = new Collection<string>();
             GenreHistory = new Collection<string>();
             DescriptionHistory = new Collection<string>();
             CommentHistory = new Collection<string>();
+            PeercastType = PeercastType.Peercast;
         }
 
         public double Left { get; set; }
