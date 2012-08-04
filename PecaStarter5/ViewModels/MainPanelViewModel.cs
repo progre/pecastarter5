@@ -37,7 +37,7 @@ namespace Progressive.PecaStarter5.ViewModels
         public SettingsViewModel SettingsViewModel { get; private set; }
         public BroadcastControlViewModel BroadcastControlViewModel { get; private set; }
 
-        private int m_selectedIndex;
+        private int m_selectedIndex = YellowPagesTabIndex;
         public int SelectedIndex
         {
             get { return m_selectedIndex; }
