@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-using Progressive.Commons.ViewModels;
+﻿using Progressive.Commons.ViewModels;
 using Progressive.PecaStarter5.Commons.Models;
 using Progressive.PecaStarter5.Models;
-using System.Threading.Tasks;
 
 namespace Progressive.PecaStarter5.ViewModels.Pages
 {

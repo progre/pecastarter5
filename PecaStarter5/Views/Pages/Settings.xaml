@@ -41,7 +41,7 @@
                 IsChecked="{Binding IsSavePosition}"/>
         <Label Grid.Column="0" Grid.Row="4" Content="切断遅延:"/>
         <ct:NulllessIntegerUpDown Grid.Column="1" Grid.Row="4" HorizontalAlignment="Left" Width="54"
-                Minimum="0" Text="{Binding Delay}"/>
+                Minimum="0" Value="{Binding Delay}"/>
         <CheckBox Name="LoggingCheckBox" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="5" Content="配信ログを取る"
                 IsEnabled="{Binding IsLocked}" IsChecked="{Binding Logging}"/>
         <Label Grid.Column="0" Grid.Row="6" Content="ログの保存場所:"

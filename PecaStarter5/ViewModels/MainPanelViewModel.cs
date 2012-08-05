@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using Progressive.Commons.ViewModels;
 using Progressive.PecaStarter5.Models;
 using Progressive.PecaStarter5.Models.Channels;
@@ -6,6 +7,7 @@ using Progressive.PecaStarter5.Models.Plugins;
 using Progressive.PecaStarter5.ViewModels.Controls;
 using Progressive.PecaStarter5.ViewModels.Pages;
 using Progressive.Peercast4Net;
+using System.Threading.Tasks;
 
 namespace Progressive.PecaStarter5.ViewModels
 {
@@ -14,7 +16,8 @@ namespace Progressive.PecaStarter5.ViewModels
         public const int YellowPagesTabIndex = 2;
         public const int ExternalSourceTabIndex = 3;
 
-        private PecaStarterModel m_model;
+        private readonly PecaStarterModel m_model;
+        private readonly ChannelViewModel m_channelViewModel;
 
         public MainPanelViewModel(PecaStarterModel model)
         {
@@ -23,30 +26,11 @@ namespace Progressive.PecaStarter5.ViewModels
 
             // タブ情報の初期化
             RelayListViewModel = new RelayListViewModel(model.Service, model.YellowPagesList);
-            YellowPagesListViewModel = new YellowPagesListViewModel(model.YellowPagesList, model.Configuration);
-            ExternalSourceViewModel = new ExternalSourceViewModel(model.Configuration);
+            m_channelViewModel = new ChannelViewModel(model.YellowPagesList, model.Configuration);
             SettingsViewModel = new SettingsViewModel(model.Configuration, model.LoggerPlugin);
             BroadcastControlViewModel = new BroadcastControlViewModel(this, model);
 
             InitializeEvents();
-        }
-
-        public RelayListViewModel RelayListViewModel { get; private set; }
-        public YellowPagesListViewModel YellowPagesListViewModel { get; private set; }
-        public ExternalSourceViewModel ExternalSourceViewModel { get; private set; }
-        public SettingsViewModel SettingsViewModel { get; private set; }
-        public BroadcastControlViewModel BroadcastControlViewModel { get; private set; }
-
-        private int m_selectedIndex = YellowPagesTabIndex;
-        public int SelectedIndex
-        {
-            get { return m_selectedIndex; }
-            set
-            {
-                SetProperty("SelectedIndex", ref m_selectedIndex, value);
-                if (value == 3 && YellowPagesListViewModel.SelectedYellowPages != null)
-                    ExternalSourceViewModel.Prefix = YellowPagesListViewModel.SelectedYellowPages.Prefix;
-            }
         }
 
         public string Alert { get; set; }
@@ -58,55 +42,42 @@ namespace Progressive.PecaStarter5.ViewModels
             set { SetProperty("Feedback", ref m_feedback, value); }
         }
 
-        public void OnException(Exception ex)
+        public BroadcastControlViewModel BroadcastControlViewModel { get; private set; }
+
+        private int m_selectedIndex = YellowPagesTabIndex;
+        public int SelectedIndex
         {
-            Feedback = "中止";
-            NotifyExceptionAlert(ex);
+            get { return m_selectedIndex; }
+            set
+            {
+                SetProperty("SelectedIndex", ref m_selectedIndex, value);
+                if (value == ExternalSourceTabIndex)
+                {
+                    m_channelViewModel.SyncPrefix();
+                    // YPタブから通知が取れないから苦肉の策
+                    Task.Factory.StartNew(() => Thread.Sleep(50))
+                        .ContinueWith(t => m_channelViewModel.SyncPrefix(),
+                        TaskScheduler.FromCurrentSynchronizationContext());
+                }
+            }
         }
+
+        public RelayListViewModel RelayListViewModel { get; private set; }
+        public YellowPagesListViewModel YellowPagesListViewModel
+        {
+            get { return m_channelViewModel.YellowPagesListViewModel; }
+        }
+        public ExternalSourceViewModel ExternalSourceViewModel
+        {
+            get { return m_channelViewModel.ExternalSourceViewModel; }
+        }
+        public SettingsViewModel SettingsViewModel { get; private set; }
 
         private void InitializeEvents()
         {
+            var syncContext = SynchronizationContext.Current;
             m_model.AsyncExceptionThrown += (sender, e) =>
-            {
-                NotifyExceptionAlert((Exception)e.ExceptionObject);
-                // TODO: 同期オブジェクトに渡さないとどうなるか実験
-                //SynchronizationContext.Current.Post(s => NotifyExceptionAlert((Exception)s), e.ExceptionObject);
-            };
-
-            RelayListViewModel.ChannelSelected += (sender, e) =>
-            {
-                var ch = e.Channel;
-                // YPタブを指定のYPに
-                YellowPagesListViewModel.SelectedYellowPagesModel = e.YellowPages;
-
-                // ソースタブに値を反映
-                var esvm = ExternalSourceViewModel;
-                esvm.Name.Value = ch.Name;
-                esvm.Genre.Value = YellowPagesListViewModel.SelectedYellowPages.Parse(ch.Genre);
-                esvm.Description.Value = ch.Description;
-                esvm.ContactUrl = ch.ContactUrl;
-                esvm.Comment.Value = ch.Comment;
-                esvm.Name.Value = ch.Name;
-
-                // 配信ボタンに反映
-                BroadcastControlViewModel.BroadcastingChannel = new BroadcastingChannel(ch.Name, ch.Id);
-
-                // ソースタブに移動
-                SelectedIndex = ExternalSourceTabIndex;
-
-                // plugin処理
-                var parameter = new InterruptedParameter()
-                {
-                    Name = ch.Name,
-                    Genre = ch.Genre,
-                    Description = ch.Description,
-                    Contact = ch.ContactUrl,
-                    Comment = ch.Comment
-                };
-                m_model.Interrupt(e.YellowPages, parameter);
-            };
-
-            RelayListViewModel.ExceptionThrown += (sender, e) => OnException((Exception)e.ExceptionObject);
+                syncContext.Post(s => NotifyExceptionAlert((Exception)s), e.ExceptionObject);
 
             BroadcastControlViewModel.PropertyChanged += (sender, e) =>
             {
@@ -114,22 +85,32 @@ namespace Progressive.PecaStarter5.ViewModels
                 if (propertyName != "IsProcessing" && propertyName != "BroadcastingChannel")
                     return;
 
-                var broadcastControlViewModel = (BroadcastControlViewModel)sender;
-                if (!broadcastControlViewModel.IsProcessing && broadcastControlViewModel.BroadcastingChannel == null)
-                {
-                    YellowPagesListViewModel.IsLocked = false;
-                    if (YellowPagesListViewModel.SelectedYellowPages != null)
-                        YellowPagesListViewModel.SelectedYellowPages.IsLocked = false;
-                    ExternalSourceViewModel.IsLocked = false;
-                }
+                var vm = (BroadcastControlViewModel)sender;
+                if (vm.IsProcessing || vm.BroadcastingChannel != null)
+                    m_channelViewModel.Lock();
                 else
-                {
-                    YellowPagesListViewModel.IsLocked = true;
-                    if (YellowPagesListViewModel.SelectedYellowPages != null)
-                        YellowPagesListViewModel.SelectedYellowPages.IsLocked = true;
-                    ExternalSourceViewModel.IsLocked = true;
-                }
+                    m_channelViewModel.Unlock();
             };
+
+            RelayListViewModel.ChannelSelected += (sender, e) =>
+            {
+                var ch = e.Channel;
+                // 配信ボタンに反映
+                BroadcastControlViewModel.BroadcastingChannel = new BroadcastingChannel(ch.Name, ch.Id);
+                // YPタブとソースタブに反映
+                m_channelViewModel.LoadChannel(e.YellowPages, ch);
+                // ソースタブに移動
+                SelectedIndex = ExternalSourceTabIndex;
+                // plugin処理
+                m_model.Interrupt(e.YellowPages, new InterruptedParameter(ch));
+            };
+            RelayListViewModel.ExceptionThrown += (sender, e) => OnException((Exception)e.ExceptionObject);
+        }
+
+        public void OnException(Exception ex)
+        {
+            Feedback = "中止";
+            NotifyExceptionAlert(ex);
         }
 
         private void NotifyExceptionAlert(Exception ex)
