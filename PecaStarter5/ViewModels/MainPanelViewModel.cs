@@ -7,6 +7,7 @@ using Progressive.PecaStarter5.Models.Plugins;
 using Progressive.PecaStarter5.ViewModels.Controls;
 using Progressive.PecaStarter5.ViewModels.Pages;
 using Progressive.Peercast4Net;
+using System.Threading.Tasks;
 
 namespace Progressive.PecaStarter5.ViewModels
 {
@@ -50,8 +51,14 @@ namespace Progressive.PecaStarter5.ViewModels
             set
             {
                 SetProperty("SelectedIndex", ref m_selectedIndex, value);
-                if (value == 3)
+                if (value == ExternalSourceTabIndex)
+                {
                     m_channelViewModel.SyncPrefix();
+                    // YPタブから通知が取れないから苦肉の策
+                    Task.Factory.StartNew(() => Thread.Sleep(50))
+                        .ContinueWith(t => m_channelViewModel.SyncPrefix(),
+                        TaskScheduler.FromCurrentSynchronizationContext());
+                }
             }
         }
 
