@@ -79,6 +79,20 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
 
         public TextBoxWithHistoryViewModel Comment { get; private set; }
 
+        public bool HasError
+        {
+            get
+            {
+                if (!string.IsNullOrEmpty(Error)
+                    || !string.IsNullOrEmpty(Name.Error)
+                    || !string.IsNullOrEmpty(Genre.Error)
+                    || !string.IsNullOrEmpty(Description.Error)
+                    || !string.IsNullOrEmpty(Comment.Error))
+                    return true;
+                return false;
+            }
+        }
+
         public void UpdateHistory()
         {
             Name.UpdateHistory();

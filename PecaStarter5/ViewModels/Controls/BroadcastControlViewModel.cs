@@ -5,7 +5,6 @@ using Progressive.Commons.ViewModels.Commands;
 using Progressive.PecaStarter5.Models;
 using Progressive.PecaStarter5.Models.Channels;
 using Progressive.PecaStarter5.ViewModels.Dxos;
-using Progressive.Peercast4Net.Datas;
 
 namespace Progressive.PecaStarter5.ViewModels.Controls
 {
@@ -59,11 +58,7 @@ namespace Progressive.PecaStarter5.ViewModels.Controls
                     return false;
                 if (parent.YellowPagesListViewModel.SelectedYellowPages == null)
                     return false;
-                if (!string.IsNullOrEmpty(externalSourceViewModel.Error)
-                    || !string.IsNullOrEmpty(externalSourceViewModel.Name.Error)
-                    || !string.IsNullOrEmpty(externalSourceViewModel.Genre.Error)
-                    || !string.IsNullOrEmpty(externalSourceViewModel.Description.Error)
-                    || !string.IsNullOrEmpty(externalSourceViewModel.Comment.Error))
+                if (externalSourceViewModel.HasError)
                     return false;
                 return true;
             });
@@ -92,6 +87,8 @@ namespace Progressive.PecaStarter5.ViewModels.Controls
                 if (BroadcastingChannel == null)
                     return false;
                 if (!string.IsNullOrEmpty(parent.SettingsViewModel.Error))
+                    return false;
+                if (externalSourceViewModel.HasError)
                     return false;
                 return true;
             });
@@ -139,7 +136,7 @@ namespace Progressive.PecaStarter5.ViewModels.Controls
         public bool IsProcessing
         {
             get { return isProcessing; }
-            set
+            private set
             {
                 SetProperty("IsProcessing", ref isProcessing, value);
                 BroadcastCommand.OnCanExecuteChanged();
