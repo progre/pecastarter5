@@ -129,6 +129,7 @@
     <Compile Include="ViewModels\Pages\YellowPagesListViewModel.cs" />
     <Compile Include="ViewModels\Pages\YellowPagesViewModel.cs" />
     <Compile Include="ViewModels\ParameterValidator.cs" />
+    <Compile Include="Commons\Views\Controls\AllSelectableTextBox.cs" />
     <Compile Include="Views\Controls\BroadcastControl.xaml.cs">
       <DependentUpon>BroadcastControl.xaml</DependentUpon>
     </Compile>
