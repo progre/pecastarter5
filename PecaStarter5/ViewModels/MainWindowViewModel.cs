@@ -29,7 +29,7 @@ namespace Progressive.PecaStarter5.ViewModel
 
         public bool IsBroadcasting
         {
-            get { return MainPanelViewModel.BroadcastControlViewModel.BroadcastingChannel != null; }
+            get { return MainPanelViewModel.BroadcastControlViewModel.IsBroadcasting; }
         }
 
         public bool IsProcessing

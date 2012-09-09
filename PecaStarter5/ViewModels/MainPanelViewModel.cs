@@ -86,7 +86,7 @@ namespace Progressive.PecaStarter5.ViewModels
                     return;
 
                 var vm = (BroadcastControlViewModel)sender;
-                if (vm.IsProcessing || vm.BroadcastingChannel != null)
+                if (vm.IsProcessing || vm.IsBroadcasting)
                     m_channelViewModel.Lock();
                 else
                     m_channelViewModel.Unlock();
@@ -105,6 +105,14 @@ namespace Progressive.PecaStarter5.ViewModels
                 m_model.Interrupt(e.YellowPages, new InterruptedParameter(ch));
             };
             RelayListViewModel.ExceptionThrown += (sender, e) => OnException((Exception)e.ExceptionObject);
+
+            ExternalSourceViewModel.PropertyChanged += OnParameterPropertyChanged;
+            ExternalSourceViewModel.Name.PropertyChanged += OnParameterPropertyChanged;
+            ExternalSourceViewModel.Genre.PropertyChanged += OnParameterPropertyChanged;
+            ExternalSourceViewModel.Description.PropertyChanged += OnParameterPropertyChanged;
+            ExternalSourceViewModel.Comment.PropertyChanged += OnParameterPropertyChanged;
+            YellowPagesListViewModel.PropertyChanged += OnParameterPropertyChanged;
+            SettingsViewModel.PropertyChanged += OnParameterPropertyChanged;
         }
 
         public void OnException(Exception ex)
@@ -145,6 +153,11 @@ namespace Progressive.PecaStarter5.ViewModels
             OnPropertyChanged("Alert");
             Alert = "";
             OnPropertyChanged("Alert");
+        }
+
+        private void OnParameterPropertyChanged(object sender, EventArgs e)
+        {
+            BroadcastControlViewModel.RaiseCanExecuteChanged();
         }
     }
 }

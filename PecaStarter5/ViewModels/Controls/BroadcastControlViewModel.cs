@@ -52,9 +52,9 @@ namespace Progressive.PecaStarter5.ViewModels.Controls
             {
                 if (IsProcessing)
                     return false;
-                if (BroadcastingChannel != null)
+                if (IsBroadcasting)
                     return false;
-                if (!string.IsNullOrEmpty(parent.SettingsViewModel.Error))
+                if (parent.SettingsViewModel.HasError)
                     return false;
                 if (parent.YellowPagesListViewModel.SelectedYellowPages == null)
                     return false;
@@ -84,9 +84,9 @@ namespace Progressive.PecaStarter5.ViewModels.Controls
             {
                 if (IsProcessing)
                     return false;
-                if (BroadcastingChannel == null)
+                if (!IsBroadcasting)
                     return false;
-                if (!string.IsNullOrEmpty(parent.SettingsViewModel.Error))
+                if (parent.SettingsViewModel.HasError)
                     return false;
                 if (externalSourceViewModel.HasError)
                     return false;
@@ -116,20 +116,12 @@ namespace Progressive.PecaStarter5.ViewModels.Controls
             {
                 if (IsProcessing)
                     return false;
-                if (BroadcastingChannel == null)
+                if (!IsBroadcasting)
                     return false;
-                if (!string.IsNullOrEmpty(parent.SettingsViewModel.Error))
+                if (parent.SettingsViewModel.HasError)
                     return false;
                 return true;
             });
-
-            externalSourceViewModel.PropertyChanged += OnParameterPropertyChanged;
-            externalSourceViewModel.Name.PropertyChanged += OnParameterPropertyChanged;
-            externalSourceViewModel.Genre.PropertyChanged += OnParameterPropertyChanged;
-            externalSourceViewModel.Description.PropertyChanged += OnParameterPropertyChanged;
-            externalSourceViewModel.Comment.PropertyChanged += OnParameterPropertyChanged;
-            parent.YellowPagesListViewModel.PropertyChanged += OnParameterPropertyChanged;
-            parent.SettingsViewModel.PropertyChanged += OnParameterPropertyChanged;
         }
 
         private bool isProcessing;
@@ -139,9 +131,7 @@ namespace Progressive.PecaStarter5.ViewModels.Controls
             private set
             {
                 SetProperty("IsProcessing", ref isProcessing, value);
-                BroadcastCommand.OnCanExecuteChanged();
-                UpdateCommand.OnCanExecuteChanged();
-                StopCommand.OnCanExecuteChanged();
+                RaiseCanExecuteChanged();
             }
         }
 
@@ -153,9 +143,7 @@ namespace Progressive.PecaStarter5.ViewModels.Controls
             {
                 if (!SetProperty("BroadcastingChannel", ref broadcastingChannel, value))
                     return;
-                BroadcastCommand.OnCanExecuteChanged();
-                UpdateCommand.OnCanExecuteChanged();
-                StopCommand.OnCanExecuteChanged();
+                RaiseCanExecuteChanged();
             }
         }
 
@@ -164,7 +152,12 @@ namespace Progressive.PecaStarter5.ViewModels.Controls
         public DelegateCommand StopCommand { get; private set; }
         public Configuration Configuration { get { return m_model.Configuration; } } // カウントダウンボタンが使用
 
-        private void OnParameterPropertyChanged(object sender, EventArgs e)
+        public bool IsBroadcasting
+        {
+            get { return BroadcastingChannel != null; }
+        }
+
+        public void RaiseCanExecuteChanged()
         {
             BroadcastCommand.OnCanExecuteChanged();
             UpdateCommand.OnCanExecuteChanged();
