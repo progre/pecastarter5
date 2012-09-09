@@ -70,5 +70,10 @@ namespace Progressive.Commons.ViewModels
         }
 
         #endregion
+
+        public virtual bool HasError
+        {
+            get { return !string.IsNullOrEmpty(Error); }
+        }
     }
 }
