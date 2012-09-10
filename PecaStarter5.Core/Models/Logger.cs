@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Progressive.PecaStarter5.Models
 {
-    public class Logger
+    internal class Logger
     {
         private string path;
         private string name;

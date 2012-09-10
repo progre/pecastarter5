@@ -5,7 +5,7 @@ using System.Windows.Data;
 
 namespace Progressive.PecaStarter.View.Converter
 {
-    public class AgeConverter : IValueConverter
+    internal class AgeConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

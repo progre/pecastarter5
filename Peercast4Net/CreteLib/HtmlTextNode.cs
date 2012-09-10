@@ -2,7 +2,7 @@
 
 namespace CreteLib
 {
-    public class HtmlTextNode : HtmlNode
+    internal class HtmlTextNode : HtmlNode
     {
         //テキスト
         private String _text = null;

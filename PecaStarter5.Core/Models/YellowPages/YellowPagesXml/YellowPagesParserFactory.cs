@@ -7,7 +7,7 @@ using System.IO;
 
 namespace Progressive.PecaStarter5.Models.YellowPagesXml
 {
-    public class YellowPagesParserFactory
+    internal class YellowPagesParserFactory
     {
         public static YellowPagesParser GetInstance(Stream stream)
         {

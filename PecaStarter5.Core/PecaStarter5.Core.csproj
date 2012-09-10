@@ -50,9 +50,9 @@
     <Compile Include="Models\IExternalResource.cs" />
     <Compile Include="Models\PecaStarterModel.cs" />
     <Compile Include="Models\PeercastType.cs" />
-    <Compile Include="Models\Plugins\IPlugin.cs" />
+    <Compile Include="Plugin\IPlugin.cs" />
     <Compile Include="Models\Plugins\LoggerPlugin.cs" />
-    <Compile Include="Models\Plugins\Parameters.cs" />
+    <Compile Include="Plugin\Parameters.cs" />
     <Compile Include="Models\Services\PeercastService.cs" />
     <Compile Include="Models\YellowPages\IYellowPages.cs" />
     <Compile Include="Models\Logger.cs" />

@@ -6,7 +6,7 @@ using System.Windows.Data;
 
 namespace Progressive.Commons.Views.Converters
 {
-    public class NotConverter : IValueConverter
+    internal class NotConverter : IValueConverter
     {
         #region IValueConverter メンバー
 

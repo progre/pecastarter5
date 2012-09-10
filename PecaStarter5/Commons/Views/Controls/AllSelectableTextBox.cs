@@ -7,7 +7,7 @@ using System.Windows.Controls.Primitives;
 
 namespace Progressive.Commons.Views.Controls
 {
-    public class AllSelectableTextBox : TextBox
+    internal class AllSelectableTextBox : TextBox
     {
         public AllSelectableTextBox()
         {

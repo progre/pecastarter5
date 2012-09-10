@@ -6,7 +6,7 @@ using System.Net;
 
 namespace Progressive.PecaStarter5.Models.YellowPagesXml
 {
-    public abstract class YellowPagesParser
+    internal abstract class YellowPagesParser
     {
         protected XDocument Xml { get; private set; }
 

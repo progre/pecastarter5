@@ -9,7 +9,7 @@ using Progressive.Peercast4Net.Datas;
 
 namespace Progressive.PecaStarter5.ViewModels.Pages
 {
-    public class RelayListViewModel : ViewModelBase
+    internal class RelayListViewModel : ViewModelBase
     {
         public event UnhandledExceptionEventHandler ExceptionThrown;
 
@@ -87,7 +87,7 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
         }
     }
 
-    public class SelectedEventArgs : EventArgs
+    internal class SelectedEventArgs : EventArgs
     {
         public IChannel Channel { get; private set; }
         public IYellowPages YellowPages { get; private set; }

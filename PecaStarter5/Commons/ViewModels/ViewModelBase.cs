@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Progressive.Commons.ViewModels
 {
-    public class ViewModelBase : INotifyPropertyChanged, IDataErrorInfo
+    internal class ViewModelBase : INotifyPropertyChanged, IDataErrorInfo
     {
         #region INotifyPropertyChanged メンバー
 

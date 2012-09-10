@@ -7,7 +7,7 @@ using Progressive.Peercast4Net;
 
 namespace Progressive.PecaStarter5.Models.YellowPagesXml
 {
-    public class WebApiYellowPagesParser : YellowPagesParser
+    internal class WebApiYellowPagesParser : YellowPagesParser
     {
         private static string[] DefaultBroadcastParameters
         {

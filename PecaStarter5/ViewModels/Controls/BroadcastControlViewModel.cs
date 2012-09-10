@@ -8,7 +8,7 @@ using Progressive.PecaStarter5.ViewModels.Dxos;
 
 namespace Progressive.PecaStarter5.ViewModels.Controls
 {
-    public class BroadcastControlViewModel : ViewModelBase
+    internal class BroadcastControlViewModel : ViewModelBase
     {
         private PecaStarterModel m_model;
 

@@ -5,7 +5,7 @@ using System.Xml.Linq;
 
 namespace Progressive.PecaStarter5.Models.YellowPagesXml
 {
-    public class PeercastYellowPagesParser : YellowPagesParser
+    internal class PeercastYellowPagesParser : YellowPagesParser
     {
         public override IList<string> Components
         {

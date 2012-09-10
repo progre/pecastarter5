@@ -4,7 +4,7 @@ using Progressive.PecaStarter5.Models;
 
 namespace Progressive.PecaStarter5.ViewModels.Pages
 {
-    public class YellowPagesViewModel : ViewModelBase
+    internal class YellowPagesViewModel : ViewModelBase
     {
         public YellowPagesViewModel(IYellowPages model)
         {

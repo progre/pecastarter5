@@ -5,7 +5,7 @@ using Progressive.PecaStarter5.Models.Plugins;
 
 namespace Progressive.PecaStarter5.ViewModels.Pages
 {
-    public class SettingsViewModel : ViewModelBase
+    internal class SettingsViewModel : ViewModelBase
     {
         private Configuration configuration;
         private LoggerPlugin loggerPlugin;

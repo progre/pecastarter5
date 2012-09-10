@@ -1,4 +1,4 @@
-﻿using Progressive.PecaStarter5.Models.Plugins;
+﻿using Progressive.PecaStarter5.Plugin;
 
 namespace Progressive.PecaStarter5.Models.ExternalYellowPages
 {

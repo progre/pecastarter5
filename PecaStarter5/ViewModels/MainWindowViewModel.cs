@@ -5,7 +5,7 @@ using Progressive.PecaStarter5.ViewModels;
 
 namespace Progressive.PecaStarter5.ViewModel
 {
-    public class MainWindowViewModel : ViewModelBase, IDisposable
+    internal class MainWindowViewModel : ViewModelBase, IDisposable
     {
         private bool m_disposed;
         private PecaStarterModel m_model;

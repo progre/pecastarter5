@@ -5,7 +5,7 @@ using Progressive.Commons.ViewModels;
 
 namespace Progressive.PecaStarter5.ViewModels.Controls
 {
-    public class TextBoxWithHistoryViewModel : ViewModelBase
+    internal class TextBoxWithHistoryViewModel : ViewModelBase
     {
         public TextBoxWithHistoryViewModel(ICommand command)
         {

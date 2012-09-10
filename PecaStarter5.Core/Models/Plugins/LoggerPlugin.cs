@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Progressive.PecaStarter5.Plugin;
 
 namespace Progressive.PecaStarter5.Models.Plugins
 {

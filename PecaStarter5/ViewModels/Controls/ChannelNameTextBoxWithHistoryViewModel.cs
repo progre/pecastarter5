@@ -3,7 +3,7 @@ using System.Windows.Input;
 
 namespace Progressive.PecaStarter5.ViewModels.Controls
 {
-    public class ChannelNameTextBoxWithHistoryViewModel : TextBoxWithHistoryViewModel
+    internal class ChannelNameTextBoxWithHistoryViewModel : TextBoxWithHistoryViewModel
     {
         public ChannelNameTextBoxWithHistoryViewModel(ICommand command)
             : base(command)

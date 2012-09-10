@@ -6,7 +6,7 @@ namespace CreteLib
     /// <summary>
     /// Htmlドキュメントを表すクラス
     /// </summary>
-    public class HtmlDocument : HtmlNode
+    internal class HtmlDocument : HtmlNode
     {
         //全てのノード
         private HtmlNodeList _allNodes = null;

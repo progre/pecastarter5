@@ -3,7 +3,7 @@ using System.Text;
 
 namespace CreteLib
 {
-    public class HtmlParser
+    internal class HtmlParser
     {
         private char[] _source = null;
         private bool _ignoreCase;

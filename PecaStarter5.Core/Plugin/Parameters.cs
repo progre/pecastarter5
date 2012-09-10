@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Progressive.Peercast4Net.Datas;
 
-namespace Progressive.PecaStarter5.Models.Plugins
+namespace Progressive.PecaStarter5.Plugin
 {
     public class BroadcastedParameter
     {

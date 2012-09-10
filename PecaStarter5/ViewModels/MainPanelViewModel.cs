@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Threading;
+using System.Threading.Tasks;
 using Progressive.Commons.ViewModels;
 using Progressive.PecaStarter5.Models;
 using Progressive.PecaStarter5.Models.Channels;
-using Progressive.PecaStarter5.Models.Plugins;
+using Progressive.PecaStarter5.Plugin;
 using Progressive.PecaStarter5.ViewModels.Controls;
 using Progressive.PecaStarter5.ViewModels.Pages;
 using Progressive.Peercast4Net;
-using System.Threading.Tasks;
 
 namespace Progressive.PecaStarter5.ViewModels
 {
-    public class MainPanelViewModel : ViewModelBase
+    internal class MainPanelViewModel : ViewModelBase
     {
         public const int YellowPagesTabIndex = 2;
         public const int ExternalSourceTabIndex = 3;

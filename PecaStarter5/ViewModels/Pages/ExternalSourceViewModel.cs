@@ -7,7 +7,7 @@ using Progressive.PecaStarter5.ViewModels.Controls;
 
 namespace Progressive.PecaStarter5.ViewModels.Pages
 {
-    public class ExternalSourceViewModel : ViewModelBase
+    internal class ExternalSourceViewModel : ViewModelBase
     {
         private readonly Configuration configuration;
 
