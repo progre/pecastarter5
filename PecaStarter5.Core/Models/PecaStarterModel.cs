@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using Progressive.PecaStarter5.Models.Daos;
 using Progressive.PecaStarter5.Models.ExternalYellowPages;
-using Progressive.PecaStarter5.Models.Plugins;
 using Progressive.PecaStarter5.Models.Services;
 using Progressive.PecaStarter5.Models.YellowPagesXml;
-using Progressive.PecaStarter5.Plugin;
 using Progressive.Peercast4Net;
 using Progressive.Peercast4Net.Datas;
+using Progressive.PecaStarter5.Plugin;
 
 namespace Progressive.PecaStarter5.Models
 {
@@ -30,8 +29,7 @@ namespace Progressive.PecaStarter5.Models
             m_externalResource = externalResource;
             m_peercast = new Peercast();
             m_peercastStation = new PeercastStation();
-            LoggerPlugin = new LoggerPlugin();
-            m_plugins = new IPlugin[] { LoggerPlugin };
+            m_plugins = new IPlugin[] { };
             var tuple = GetYellowPagesLists();
             m_externalYellowPagesList = tuple.Item2;
             YellowPagesList = tuple.Item1;
@@ -54,7 +52,6 @@ namespace Progressive.PecaStarter5.Models
 
         public string Title { get; private set; }
         public PeercastService Service { get; private set; }
-        public LoggerPlugin LoggerPlugin { get; private set; }
         public Configuration Configuration { get; private set; }
         public List<IYellowPages> YellowPagesList { get; private set; }
 
@@ -63,7 +60,7 @@ namespace Progressive.PecaStarter5.Models
             new ConfigurationDao(m_externalResource).Put(Configuration);
         }
 
-        public void Broadcast(IYellowPages yellowPages, BroadcastParameter parameter)
+        public void Broadcast(IYellowPages yellowPages, Progressive.Peercast4Net.Datas.BroadcastParameter parameter)
         {
             m_timer.BeginTimer(yellowPages, parameter.Name);
         }

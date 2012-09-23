@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Progressive.PecaStarter5.Models.ExternalYellowPages;
-using Progressive.PecaStarter5.Plugin;
 using Progressive.Peercast4Net;
 using Progressive.Peercast4Net.Datas;
+using Progressive.PecaStarter5.Plugin;
 
 namespace Progressive.PecaStarter5.Models.Services
 {
@@ -14,11 +14,11 @@ namespace Progressive.PecaStarter5.Models.Services
         private readonly Peercast m_peercast = new Peercast();
         private readonly PeercastStation m_peercastStation = new PeercastStation();
         private readonly IEnumerable<IExternalYellowPages> m_externalYellowPagesList;
-        private readonly IEnumerable<IPlugin> m_plugins;
+        private readonly IEnumerable<Progressive.PecaStarter5.Plugin.IPlugin> m_plugins;
         private readonly Configuration m_configuration;
 
         public PeercastService(IEnumerable<IExternalYellowPages> externalYellowPagesList,
-            IEnumerable<IPlugin> plugins, Configuration configuration)
+            IEnumerable<Progressive.PecaStarter5.Plugin.IPlugin> plugins, Configuration configuration)
         {
             m_externalYellowPagesList = externalYellowPagesList;
             m_plugins = plugins;
@@ -63,7 +63,7 @@ namespace Progressive.PecaStarter5.Models.Services
                     new Peercast4Net.Datas.YellowPages() { Name = yellowPages.Name, Url = yellowPages.Host },
                     param).Result;
 
-                var broadcastedParameter = new BroadcastedParameter
+                var broadcastedParameter = new Progressive.PecaStarter5.Plugin.BroadcastedParameter
                 {
                     Bitrate = tuple.Item2,
                     Id = tuple.Item1,

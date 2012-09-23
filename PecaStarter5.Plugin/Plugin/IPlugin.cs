@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using Progressive.Peercast4Net;
 
 namespace Progressive.PecaStarter5.Plugin
 {

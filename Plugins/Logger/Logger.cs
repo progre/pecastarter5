@@ -1,13 +1,13 @@
 ﻿using System.Threading.Tasks;
 using Progressive.PecaStarter5.Plugin;
 
-namespace Progressive.PecaStarter5.Models.Plugins
+namespace Progressive.PecaStarter5.Plugins.Logger
 {
-    public class LoggerPlugin : IPlugin
+    public class Logger : IPlugin
     {
-        private Logger m_logger;
+        private Models.Logger m_logger;
 
-        public LoggerPlugin()
+        public Logger()
         {
             BasePath = "";
         }
@@ -23,7 +23,7 @@ namespace Progressive.PecaStarter5.Models.Plugins
             {
                 if (!IsEnabled)
                     return;
-                m_logger = Logger.StartNew(BasePath, parameter.BroadcastParameter.Name);
+                m_logger = Models.Logger.StartNew(BasePath, parameter.BroadcastParameter.Name);
                 var param = parameter.BroadcastParameter;
                 m_logger.Insert("", "", param.Genre, param.Description, param.Comment);
             });
@@ -72,7 +72,7 @@ namespace Progressive.PecaStarter5.Models.Plugins
             {
                 if (!IsEnabled)
                     return;
-                m_logger = Logger.StartNew(BasePath, parameter.Name);
+                m_logger = Models.Logger.StartNew(BasePath, parameter.Name);
                 m_logger.Insert("", "", parameter.Genre, parameter.Description, parameter.Comment);
             });
         }

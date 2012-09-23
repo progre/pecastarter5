@@ -40,7 +40,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Logger.cs" />
+    <Compile Include="Models\Logger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\PecaStarter5.Plugin\PecaStarter5.Plugin.csproj">
+      <Project>{104854C7-DFC8-4FE8-B8B3-8809B776D62A}</Project>
+      <Name>PecaStarter5.Plugin</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Peercast4Net\Peercast4Net.csproj">
+      <Project>{F6BD0F22-BD5F-4E1B-A80A-BF47E28D1558}</Project>
+      <Name>Peercast4Net</Name>
+      <Private>False</Private>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

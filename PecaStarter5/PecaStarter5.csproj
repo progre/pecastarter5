@@ -119,6 +119,7 @@
     <Compile Include="ViewModels\Controls\ChannelNameTextBoxWithHistoryViewModel.cs" />
     <Compile Include="ViewModels\Controls\ParameterTextBoxWithHistoryViewModel.cs" />
     <Compile Include="ViewModels\Controls\TextBoxWithHistoryViewModel.cs" />
+    <Compile Include="ViewModels\Dxos\ModelDxo.cs" />
     <Compile Include="ViewModels\Dxos\ViewModelDxo.cs" />
     <Compile Include="ViewModels\MainPanelViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
@@ -163,6 +164,9 @@
     <Compile Include="Views\Pages\YellowPagesList.xaml.cs">
       <DependentUpon>YellowPagesList.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Pages\PluginSettings.xaml.cs">
+      <DependentUpon>PluginSettings.xaml</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -193,6 +197,10 @@
       <Project>{55EFCA17-BE39-4976-BA28-E5C0FABF8E89}</Project>
       <Name>PecaStarter5.ExternalLibrary</Name>
       <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\PecaStarter5.Plugin\PecaStarter5.Plugin.csproj">
+      <Project>{104854C7-DFC8-4FE8-B8B3-8809B776D62A}</Project>
+      <Name>PecaStarter5.Plugin</Name>
     </ProjectReference>
     <ProjectReference Include="..\Peercast4Net\Peercast4Net.csproj">
       <Project>{F6BD0F22-BD5F-4E1B-A80A-BF47E28D1558}</Project>
@@ -313,6 +321,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\Pages\PluginSettings.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\Styles\BusyAnimationStyle.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

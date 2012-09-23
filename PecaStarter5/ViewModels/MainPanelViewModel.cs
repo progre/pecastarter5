@@ -8,6 +8,7 @@ using Progressive.PecaStarter5.Plugin;
 using Progressive.PecaStarter5.ViewModels.Controls;
 using Progressive.PecaStarter5.ViewModels.Pages;
 using Progressive.Peercast4Net;
+using Progressive.PecaStarter5.ViewModels.Dxos;
 
 namespace Progressive.PecaStarter5.ViewModels
 {
@@ -27,7 +28,7 @@ namespace Progressive.PecaStarter5.ViewModels
             // タブ情報の初期化
             RelayListViewModel = new RelayListViewModel(model.Service, model.YellowPagesList);
             m_channelViewModel = new ChannelViewModel(model.YellowPagesList, model.Configuration);
-            SettingsViewModel = new SettingsViewModel(model.Configuration, model.LoggerPlugin);
+            SettingsViewModel = new SettingsViewModel(model.Configuration);
             BroadcastControlViewModel = new BroadcastControlViewModel(this, model);
 
             InitializeEvents();
@@ -102,7 +103,7 @@ namespace Progressive.PecaStarter5.ViewModels
                 // ソースタブに移動
                 SelectedIndex = ExternalSourceTabIndex;
                 // plugin処理
-                m_model.Interrupt(e.YellowPages, new InterruptedParameter(ch));
+                m_model.Interrupt(e.YellowPages, ModelDxo.ToInterruptedParameter(ch));
             };
             RelayListViewModel.ExceptionThrown += (sender, e) => OnException((Exception)e.ExceptionObject);
 

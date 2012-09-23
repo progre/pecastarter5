@@ -26,15 +26,6 @@ namespace Progressive.PecaStarter5.Plugin
 
     public class InterruptedParameter
     {
-        public InterruptedParameter(IChannel channel)
-        {
-            Name = channel.Name;
-            Genre = channel.Genre;
-            Description = channel.Description;
-            Contact = channel.ContactUrl;
-            Comment = channel.Comment;
-        }
-
         public string Name { get; set; }
         public string Genre { get; set; }
         public string Description { get; set; }
