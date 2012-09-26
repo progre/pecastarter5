@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Xml.Linq;
 
-namespace Progressive.PecaStarter5.Models.YellowPagesXml
+namespace Progressive.PecaStarter5.Models.YellowPages.YellowPagesXml
 {
     internal class PeercastYellowPagesParser : YellowPagesParser
     {

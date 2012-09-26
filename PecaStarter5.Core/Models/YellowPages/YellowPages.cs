@@ -2,9 +2,9 @@
 using System.Net;
 using System.Threading.Tasks;
 
-namespace Progressive.PecaStarter5.Models
+namespace Progressive.PecaStarter5.Models.YellowPages
 {
-    class YellowPages : IYellowPages
+    abstract class YellowPagesBase : IYellowPages
     {
         #region IYellowPages メンバー
 

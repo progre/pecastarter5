@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using Progressive.PecaStarter5.Models.Broadcasts;
 using Progressive.PecaStarter5.Models.Daos;
-using Progressive.PecaStarter5.Models.ExternalYellowPages;
-using Progressive.PecaStarter5.Models.YellowPagesXml;
+using Progressive.PecaStarter5.Models.YellowPages;
+using Progressive.PecaStarter5.Models.YellowPages.YellowPagesXml;
 using Progressive.PecaStarter5.Plugin;
 using Progressive.Peercast4Net;
 

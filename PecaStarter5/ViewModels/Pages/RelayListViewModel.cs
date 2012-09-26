@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Windows.Input;
 using Progressive.Commons.ViewModels;
-using Progressive.PecaStarter5.Models;
 using Progressive.PecaStarter5.Models.Broadcasts;
+using Progressive.PecaStarter5.Models.YellowPages;
 using Progressive.PecaStarter5.ViewModels.Commands;
 using Progressive.Peercast4Net.Datas;
 

@@ -1,7 +1,7 @@
-﻿using Progressive.PecaStarter5.Plugin;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using Progressive.PecaStarter5.Plugin;
 
-namespace Progressive.PecaStarter5.Models.ExternalYellowPages
+namespace Progressive.PecaStarter5.Models.YellowPages
 {
     public interface IExternalYellowPages
     {

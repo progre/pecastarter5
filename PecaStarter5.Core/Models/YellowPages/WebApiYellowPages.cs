@@ -5,12 +5,11 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Codeplex.Data;
-using Progressive.PecaStarter5.Models.ExternalYellowPages;
 using Progressive.PecaStarter5.Plugin;
 
-namespace Progressive.PecaStarter5.Models
+namespace Progressive.PecaStarter5.Models.YellowPages
 {
-    class WebApiYellowPages : YellowPages, IExternalYellowPages
+    class WebApiYellowPages : YellowPagesBase, IExternalYellowPages
     {
         public override bool IsExternal { get { return true; } }
         public string BroadcastUrl { get; set; }

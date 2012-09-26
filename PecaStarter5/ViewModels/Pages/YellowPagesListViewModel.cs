@@ -2,6 +2,7 @@
 using System.Linq;
 using Progressive.Commons.ViewModels;
 using Progressive.PecaStarter5.Models;
+using Progressive.PecaStarter5.Models.YellowPages;
 
 namespace Progressive.PecaStarter5.ViewModels.Pages
 {
