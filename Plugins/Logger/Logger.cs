@@ -43,7 +43,7 @@ namespace Progressive.PecaStarter5.Plugins.Logger
             }
         }
 
-        public Task OnBroadcastedAsync(BroadcastedParameter parameter)
+        public Task OnBroadcastedAsync(BroadcastingParameter parameter)
         {
             return Task.Factory.StartNew(() =>
             {
@@ -68,7 +68,7 @@ namespace Progressive.PecaStarter5.Plugins.Logger
             });
         }
 
-        public Task OnStopedAsync(StopedParameter parameter)
+        public Task OnStopedAsync(StoppedParameter parameter)
         {
             return Task.Factory.StartNew(() =>
             {

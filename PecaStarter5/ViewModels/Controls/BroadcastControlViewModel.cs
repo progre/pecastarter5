@@ -46,7 +46,7 @@ namespace Progressive.PecaStarter5.ViewModels.Controls
                         IsProcessing = false;
                         return;
                     }
-                    BroadcastingChannel = new BroadcastingChannel(parameter.Name, t.Result);
+                    BroadcastingChannel = new BroadcastingChannel(parameter.Name, t.Result.Id);
                     IsProcessing = false;
                 }, TaskScheduler.FromCurrentSynchronizationContext());
             }, () =>

@@ -30,7 +30,7 @@ namespace Progressive.PecaStarter5.Models
 
             Configuration = new ConfigurationDao(externalResource).Get();
             Configuration.DefaultLogPath = externalResource.DefaultLogPath;
-            BroadcastModel = new BroadcastModel(Plugins, new PeercastService(m_externalYellowPagesList, Plugins, Configuration));
+            BroadcastModel = new BroadcastModel(Configuration, m_externalYellowPagesList, Plugins);
         }
 
         public BroadcastModel BroadcastModel { get; private set; }

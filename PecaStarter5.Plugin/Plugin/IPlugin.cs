@@ -35,7 +35,7 @@ namespace Progressive.PecaStarter5.Plugin
         /// </summary>
         /// <param name="parameter"></param>
         /// <returns></returns>
-        Task OnBroadcastedAsync(BroadcastedParameter parameter);
+        Task OnBroadcastedAsync(BroadcastingParameter parameter);
         /// <summary>
         /// 配信情報更新時に通知されるメソッド
         /// </summary>
@@ -47,7 +47,7 @@ namespace Progressive.PecaStarter5.Plugin
         /// </summary>
         /// <param name="parameter"></param>
         /// <returns></returns>
-        Task OnStopedAsync(StopedParameter parameter);
+        Task OnStopedAsync(StoppedParameter parameter);
         /// <summary>
         /// 配信開始後10分毎に通知されるメソッド
         /// </summary>

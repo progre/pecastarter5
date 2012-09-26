@@ -3,7 +3,7 @@ using Progressive.Peercast4Net.Datas;
 
 namespace Progressive.PecaStarter5.Plugin
 {
-    public class BroadcastedParameter
+    public class BroadcastingParameter
     {
         public Dictionary<string, string> YellowPagesParameters { get; set; }
         public int Bitrate { get; set; }
@@ -17,7 +17,7 @@ namespace Progressive.PecaStarter5.Plugin
         public UpdateParameter UpdateParameter { get; set; }
     }
 
-    public class StopedParameter
+    public class StoppedParameter
     {
         public Dictionary<string, string> YellowPagesParameters { get; set; }
         public string Name { get; set; }

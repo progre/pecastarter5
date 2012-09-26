@@ -46,7 +46,7 @@ namespace Progressive.PecaStarter5.Models
 
         #region IPlugin メンバー
 
-        public Task OnBroadcastedAsync(BroadcastedParameter parameter)
+        public Task OnBroadcastedAsync(BroadcastingParameter parameter)
         {
             var nvc = new NameValueCollection();
             foreach (var param in BroadcastParameters)
@@ -56,7 +56,7 @@ namespace Progressive.PecaStarter5.Models
             return Post(BroadcastUrl, nvc);
         }
 
-        private string GetParameterValue(string parameterKey, BroadcastedParameter parameter)
+        private string GetParameterValue(string parameterKey, BroadcastingParameter parameter)
         {
             switch (parameterKey)
             {
@@ -124,7 +124,7 @@ namespace Progressive.PecaStarter5.Models
             }
         }
 
-        public Task OnStopedAsync(StopedParameter parameter)
+        public Task OnStopedAsync(StoppedParameter parameter)
         {
             var nvc = new NameValueCollection();
             foreach (var param in StopParameters)
@@ -134,7 +134,7 @@ namespace Progressive.PecaStarter5.Models
             return Post(StopUrl, nvc);
         }
 
-        private string GetParameterValue(string parameterKey, StopedParameter parameter)
+        private string GetParameterValue(string parameterKey, StoppedParameter parameter)
         {
             switch (parameterKey)
             {
