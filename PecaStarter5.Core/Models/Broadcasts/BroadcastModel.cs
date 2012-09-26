@@ -14,7 +14,7 @@ namespace Progressive.PecaStarter5.Models.Broadcasts
         /// <summary>非同期にエラーが発生した場合に通知されるイベント</summary>
         public event UnhandledExceptionEventHandler AsyncExceptionThrown;
 
-        public BroadcastModel(IEnumerable<IPlugin> plugins)
+        public BroadcastModel(IEnumerable<IPlugin> plugins, PeercastService service)
         {
             _plugins = plugins;
             m_timer = new BroadcastTimer();
@@ -27,9 +27,11 @@ namespace Progressive.PecaStarter5.Models.Broadcasts
                         OnAsyncExceptionThrown(t.Exception);
                 });
             };
+
+            Service = service;
         }
 
-        private PeercastService Service { get; set; }
+        public PeercastService Service { get; set; }
 
         public void Broadcast(IYellowPages yellowPages, Progressive.Peercast4Net.Datas.BroadcastParameter parameter)
         {
