@@ -43,15 +43,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\BroadcastTimer.cs" />
+    <Compile Include="Models\Broadcasts\BroadcastModel.cs" />
+    <Compile Include="Models\Broadcasts\BroadcastTimer.cs" />
     <Compile Include="Models\Channels\BroadcastingChannel.cs" />
     <Compile Include="Models\Daos\ConfigurationDao.cs" />
     <Compile Include="Models\ExternalYellowPages\IExternalYellowPages.cs" />
     <Compile Include="Models\IExternalResource.cs" />
     <Compile Include="Models\PecaStarterModel.cs" />
     <Compile Include="Models\PeercastType.cs" />
-    <Compile Include="Models\PluginLoader.cs" />
-    <Compile Include="Models\Services\PeercastService.cs" />
+    <Compile Include="Models\Broadcasts\PeercastService.cs" />
     <Compile Include="Models\YellowPages\IYellowPages.cs" />
     <Compile Include="Models\YellowPages\PeercastYellowPages.cs" />
     <Compile Include="Models\Configuration.cs" />
@@ -79,9 +79,7 @@
       <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\Plugins\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

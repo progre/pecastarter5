@@ -3,12 +3,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using Progressive.Commons.ViewModels;
 using Progressive.PecaStarter5.Models;
+using Progressive.PecaStarter5.Models.Broadcasts;
 using Progressive.PecaStarter5.Models.Channels;
-using Progressive.PecaStarter5.Plugin;
 using Progressive.PecaStarter5.ViewModels.Controls;
+using Progressive.PecaStarter5.ViewModels.Dxos;
 using Progressive.PecaStarter5.ViewModels.Pages;
 using Progressive.Peercast4Net;
-using Progressive.PecaStarter5.ViewModels.Dxos;
 
 namespace Progressive.PecaStarter5.ViewModels
 {
@@ -17,20 +17,21 @@ namespace Progressive.PecaStarter5.ViewModels
         public const int YellowPagesTabIndex = 2;
         public const int ExternalSourceTabIndex = 3;
 
-        private readonly PecaStarterModel m_model;
+        private readonly BroadcastModel m_model;
         private readonly ChannelViewModel m_channelViewModel;
 
         public MainPanelViewModel(PecaStarterModel model)
         {
             // Models
-            m_model = model;
+            m_model = model.BroadcastModel;
 
             // タブ情報の初期化
             RelayListViewModel = new RelayListViewModel(model.Service, model.YellowPagesList);
             m_channelViewModel = new ChannelViewModel(model.YellowPagesList, model.Configuration);
             SettingsViewModel = new SettingsViewModel(model.Configuration);
             PluginSettingsViewModel = new PluginSettingsViewModel(model.Plugins);
-            BroadcastControlViewModel = new BroadcastControlViewModel(this, model);
+            BroadcastControlViewModel = new BroadcastControlViewModel(this,
+                model.BroadcastModel, model.Configuration, model.Service);
 
             InitializeEvents();
         }
