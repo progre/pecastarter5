@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Progressive.PecaStarter5.Models.Configurations;
 using Progressive.PecaStarter5.Models.YellowPages;
 using Progressive.PecaStarter5.Plugin;
 using Progressive.Peercast4Net;

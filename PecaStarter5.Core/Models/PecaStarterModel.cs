@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Progressive.PecaStarter5.Models.Broadcasts;
-using Progressive.PecaStarter5.Models.Daos;
+using Progressive.PecaStarter5.Models.Configurations;
 using Progressive.PecaStarter5.Models.YellowPages;
 using Progressive.PecaStarter5.Models.YellowPages.YellowPagesXml;
 using Progressive.PecaStarter5.Plugin;

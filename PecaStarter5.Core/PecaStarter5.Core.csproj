@@ -46,7 +46,7 @@
     <Compile Include="Models\Broadcasts\BroadcastModel.cs" />
     <Compile Include="Models\Broadcasts\BroadcastTimer.cs" />
     <Compile Include="Models\Channels\BroadcastingChannel.cs" />
-    <Compile Include="Models\Daos\ConfigurationDao.cs" />
+    <Compile Include="Models\Configurations\ConfigurationDao.cs" />
     <Compile Include="Models\YellowPages\IExternalYellowPages.cs" />
     <Compile Include="Models\IExternalResource.cs" />
     <Compile Include="Models\PecaStarterModel.cs" />
@@ -54,7 +54,7 @@
     <Compile Include="Models\Broadcasts\PeercastService.cs" />
     <Compile Include="Models\YellowPages\IYellowPages.cs" />
     <Compile Include="Models\YellowPages\PeercastYellowPages.cs" />
-    <Compile Include="Models\Configuration.cs" />
+    <Compile Include="Models\Configurations\Configuration.cs" />
     <Compile Include="Models\YellowPages\WebApiYellowPages.cs" />
     <Compile Include="Models\YellowPages\YellowPages.cs" />
     <Compile Include="Models\YellowPages\YellowPagesXml\PeercastYellowPagesPaser.cs" />

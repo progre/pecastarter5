@@ -2,9 +2,9 @@
 using System.Threading.Tasks;
 using Progressive.Commons.ViewModels;
 using Progressive.Commons.ViewModels.Commands;
-using Progressive.PecaStarter5.Models;
 using Progressive.PecaStarter5.Models.Broadcasts;
 using Progressive.PecaStarter5.Models.Channels;
+using Progressive.PecaStarter5.Models.Configurations;
 using Progressive.PecaStarter5.ViewModels.Dxos;
 
 namespace Progressive.PecaStarter5.ViewModels.Controls

@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Progressive.PecaStarter5.Models;
+using Progressive.PecaStarter5.Models.Configurations;
 using Progressive.PecaStarter5.Models.YellowPages;
 using Progressive.Peercast4Net.Datas;
 
