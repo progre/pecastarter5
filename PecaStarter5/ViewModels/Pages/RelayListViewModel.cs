@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Windows.Input;
 using Progressive.Commons.ViewModels;
 using Progressive.PecaStarter5.Models;
-using Progressive.PecaStarter5.Models.Services;
+using Progressive.PecaStarter5.Models.Broadcasts;
 using Progressive.PecaStarter5.ViewModels.Commands;
 using Progressive.Peercast4Net.Datas;
 

@@ -7,7 +7,7 @@ using Progressive.Peercast4Net;
 using Progressive.Peercast4Net.Datas;
 using Progressive.PecaStarter5.Plugin;
 
-namespace Progressive.PecaStarter5.Models.Services
+namespace Progressive.PecaStarter5.Models.Broadcasts
 {
     public class PeercastService
     {

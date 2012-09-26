@@ -1,7 +1,7 @@
-﻿using System.Threading;
-using System;
+﻿using System;
+using System.Threading;
 
-namespace Progressive.PecaStarter5.Models
+namespace Progressive.PecaStarter5.Models.Broadcasts
 {
     class BroadcastTimer
     {
