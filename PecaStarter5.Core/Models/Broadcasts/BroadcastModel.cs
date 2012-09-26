@@ -1,17 +1,16 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
-using Progressive.PecaStarter5.Plugin;
 using System.Threading.Tasks;
-using Progressive.Peercast4Net.Datas;
-using Progressive.Peercast4Net;
 using Progressive.PecaStarter5.Models.ExternalYellowPages;
+using Progressive.PecaStarter5.Plugin;
+using Progressive.Peercast4Net;
+using Progressive.Peercast4Net.Datas;
 
 namespace Progressive.PecaStarter5.Models.Broadcasts
 {
     public class BroadcastModel
     {
-        private readonly BroadcastTimer m_timer;
+        private readonly BroadcastTimer timer;
         private readonly PeercastService _service;
         private readonly Configuration configuration;
         private readonly IEnumerable<IExternalYellowPages> externalYellowPagesList;
@@ -22,7 +21,7 @@ namespace Progressive.PecaStarter5.Models.Broadcasts
         /// <summary>非同期にエラーが発生した場合に通知されるイベント</summary>
         public event UnhandledExceptionEventHandler AsyncExceptionThrown;
 
-        internal BroadcastModel(Configuration configuration,
+        public BroadcastModel(Configuration configuration,
             IEnumerable<IExternalYellowPages> externalYellowPagesList,
             IEnumerable<IPlugin> plugins)
         {
@@ -30,25 +29,8 @@ namespace Progressive.PecaStarter5.Models.Broadcasts
             this.configuration = configuration;
             this.externalYellowPagesList = externalYellowPagesList;
             _plugins = plugins;
-            m_timer = new BroadcastTimer();
-            m_timer.Ticked += s =>
-            {
-                var tuple1 = (Tuple<IYellowPages, string>)s;
-                var yellowPages = tuple1.Item1;
-                var name = tuple1.Item2;
-                _service.OnTickedAsync(Peercast, yellowPages, name).ContinueWith(t =>
-                {
-                    if (t.IsFaulted)
-                        OnAsyncExceptionThrown(t.Exception);
-
-                    // プラグイン処理
-                    foreach (var plugin in _plugins)
-                        plugin.OnTickedAsync(name, t.Result.Item1, t.Result.Item2)
-                            .ContinueWith(
-                                t1 => OnAsyncExceptionThrown(t1.Exception),
-                                TaskContinuationOptions.OnlyOnFaulted);
-                });
-            };
+            timer = new BroadcastTimer();
+            timer.Ticked += timer_Ticked;
         }
 
         private IPeercast Peercast
@@ -109,7 +91,7 @@ namespace Progressive.PecaStarter5.Models.Broadcasts
                 // プラグイン処理
                 foreach (var plugin in _plugins)
                     plugin.OnStopedAsync(t.Result);
-                m_timer.EndTimer();
+                timer.EndTimer();
             });
         }
 
@@ -120,7 +102,7 @@ namespace Progressive.PecaStarter5.Models.Broadcasts
 
         public void Interrupt(IYellowPages yellowPages, InterruptedParameter parameter)
         {
-            m_timer.EndTimer();
+            timer.EndTimer();
 
             foreach (var plugin in _plugins)
             {
@@ -131,7 +113,26 @@ namespace Progressive.PecaStarter5.Models.Broadcasts
                 });
             }
 
-            m_timer.BeginTimer(yellowPages, parameter.Name);
+            timer.BeginTimer(yellowPages, parameter.Name);
+        }
+
+        private void timer_Ticked(object state)
+        {
+            var tuple1 = (Tuple<IYellowPages, string>)state;
+            var yellowPages = tuple1.Item1;
+            var name = tuple1.Item2;
+            _service.OnTickedAsync(Peercast, yellowPages, name).ContinueWith(t =>
+            {
+                if (t.IsFaulted)
+                    OnAsyncExceptionThrown(t.Exception);
+
+                // プラグイン処理
+                foreach (var plugin in _plugins)
+                    plugin.OnTickedAsync(name, t.Result.Item1, t.Result.Item2)
+                        .ContinueWith(
+                            t1 => OnAsyncExceptionThrown(t1.Exception),
+                            TaskContinuationOptions.OnlyOnFaulted);
+            });
         }
 
         private void OnAsyncExceptionThrown(Exception ex)
