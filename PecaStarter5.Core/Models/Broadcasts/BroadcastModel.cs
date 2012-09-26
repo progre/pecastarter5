@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Progressive.PecaStarter5.Plugin;
 
 namespace Progressive.PecaStarter5.Models.Broadcasts
@@ -33,9 +31,14 @@ namespace Progressive.PecaStarter5.Models.Broadcasts
 
         public PeercastService Service { get; set; }
 
-        public void Broadcast(IYellowPages yellowPages, Progressive.Peercast4Net.Datas.BroadcastParameter parameter)
+        public void AfterBroadcast(IYellowPages yellowPages, Progressive.Peercast4Net.Datas.BroadcastParameter parameter)
         {
             m_timer.BeginTimer(yellowPages, parameter.Name);
+        }
+
+        public void AfterStop()
+        {
+            m_timer.EndTimer();
         }
 
         public void Interrupt(IYellowPages yellowPages, InterruptedParameter parameter)
@@ -52,11 +55,6 @@ namespace Progressive.PecaStarter5.Models.Broadcasts
             }
 
             m_timer.BeginTimer(yellowPages, parameter.Name);
-        }
-
-        public void Stop()
-        {
-            m_timer.EndTimer();
         }
 
         private void OnAsyncExceptionThrown(Exception ex)

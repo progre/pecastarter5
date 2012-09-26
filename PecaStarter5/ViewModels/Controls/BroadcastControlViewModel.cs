@@ -46,7 +46,7 @@ namespace Progressive.PecaStarter5.ViewModels.Controls
                         IsProcessing = false;
                         return;
                     }
-                    broadcastModel.Broadcast(yp.Model, parameter);
+                    broadcastModel.AfterBroadcast(yp.Model, parameter);
                     BroadcastingChannel = new BroadcastingChannel(parameter.Name, t.Result);
                     IsProcessing = false;
                 }, TaskScheduler.FromCurrentSynchronizationContext());
@@ -111,7 +111,7 @@ namespace Progressive.PecaStarter5.ViewModels.Controls
                             return;
                         }
                         BroadcastingChannel = null;
-                        broadcastModel.Stop();
+                        broadcastModel.AfterStop();
                         IsProcessing = false;
                     }, TaskScheduler.FromCurrentSynchronizationContext());
             }, () =>
