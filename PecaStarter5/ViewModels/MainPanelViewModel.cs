@@ -29,6 +29,7 @@ namespace Progressive.PecaStarter5.ViewModels
             RelayListViewModel = new RelayListViewModel(model.Service, model.YellowPagesList);
             m_channelViewModel = new ChannelViewModel(model.YellowPagesList, model.Configuration);
             SettingsViewModel = new SettingsViewModel(model.Configuration);
+            PluginSettingsViewModel = new PluginSettingsViewModel(model.Plugins);
             BroadcastControlViewModel = new BroadcastControlViewModel(this, model);
 
             InitializeEvents();
@@ -73,6 +74,7 @@ namespace Progressive.PecaStarter5.ViewModels
             get { return m_channelViewModel.ExternalSourceViewModel; }
         }
         public SettingsViewModel SettingsViewModel { get; private set; }
+        public PluginSettingsViewModel PluginSettingsViewModel { get; private set; }
 
         private void InitializeEvents()
         {

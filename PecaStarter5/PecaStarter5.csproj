@@ -125,6 +125,8 @@
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\Pages\ChannelViewModel.cs" />
     <Compile Include="ViewModels\Pages\ExternalSourceViewModel.cs" />
+    <Compile Include="ViewModels\Pages\PluginColumnViewModel.cs" />
+    <Compile Include="ViewModels\Pages\PluginSettingsViewModel.cs" />
     <Compile Include="ViewModels\Pages\RelayListViewModel.cs" />
     <Compile Include="ViewModels\Pages\SettingsViewModel.cs" />
     <Compile Include="ViewModels\Pages\YellowPagesListViewModel.cs" />
@@ -148,6 +150,9 @@
     <Compile Include="Views\Pages\ComponentFactory.cs" />
     <Compile Include="Views\Pages\ExternalSource.xaml.cs">
       <DependentUpon>ExternalSource.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Pages\PluginColumn.xaml.cs">
+      <DependentUpon>PluginColumn.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Pages\RelayChannel.xaml.cs">
       <DependentUpon>RelayChannel.xaml</DependentUpon>
@@ -291,6 +296,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\Pages\PluginColumn.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Pages\RelayChannel.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

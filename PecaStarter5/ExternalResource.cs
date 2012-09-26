@@ -1,6 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Reflection;
 using Progressive.PecaStarter5.Models;
+using Progressive.PecaStarter5.Plugin;
 
 namespace Progressive.PecaStarter5
 {
@@ -30,6 +34,11 @@ namespace Progressive.PecaStarter5
             get { return m_path + "yellowpages" + Path.DirectorySeparatorChar; }
         }
 
+        private string PluginDirectoryPath
+        {
+            get { return m_path + "plugins" + Path.DirectorySeparatorChar; }
+        }
+
         public Stream GetConfigurationInputStream()
         {
             return new FileStream(ConfigurationFilePath, FileMode.Open);
@@ -45,6 +54,31 @@ namespace Progressive.PecaStarter5
             foreach (var path in Directory.GetFiles(YellowPagesDirectoryPath, "*.xml"))
             {
                 yield return new FileStream(path, FileMode.Open);
+            }
+        }
+
+        public IEnumerable<IPlugin> GetPlugins()
+        {
+            var iPluginName = typeof(IPlugin).FullName;
+
+            return Directory.GetFiles(PluginDirectoryPath, "*.dll")
+                .Select(x => LoadAssemblyFile(x))
+                .Where(x => x != null)
+                .SelectMany(x => x.GetTypes())
+                .Where(x => x.IsClass && !x.IsAbstract && !x.IsNotPublic
+                    && x.GetInterface(iPluginName) != null)
+                .Select(x => (IPlugin)Activator.CreateInstance(x));
+        }
+
+        private Assembly LoadAssemblyFile(string path)
+        {
+            try
+            {
+                return Assembly.LoadFile(path);
+            }
+            catch
+            {
+                return null;
             }
         }
     }

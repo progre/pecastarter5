@@ -1,4 +1,6 @@
 ﻿using System.Threading.Tasks;
+using System.Collections.Generic;
+using System;
 
 namespace Progressive.PecaStarter5.Plugin
 {
@@ -7,6 +9,27 @@ namespace Progressive.PecaStarter5.Plugin
     /// </summary>
     public interface IPlugin
     {
+        /// <summary>
+        /// プラグインの表示名
+        /// </summary>
+        string Name { get; }
+        /// <summary>
+        /// プラグインのバージョン
+        /// </summary>
+        Version Version { get; }
+        /// <summary>
+        /// 設定ダイアログがあるかどうか
+        /// </summary>
+        /// <returns></returns>
+        bool HasSettingsDialog { get; }
+        /// <summary>
+        /// 設定ダイアログを開く
+        /// </summary>
+        void ShowSettingsDialog();
+        /// <summary>
+        /// 終了時にディスクに保存され、次回起動時に復元される
+        /// </summary>
+        IDictionary<string, object> Repository { get; set; }
         /// <summary>
         /// 配信開始時に通知されるメソッド
         /// </summary>
@@ -39,5 +62,9 @@ namespace Progressive.PecaStarter5.Plugin
         /// <param name="parameter"></param>
         /// <returns></returns>
         Task OnInterruptedAsync(InterruptedParameter parameter);
+    }
+
+    public interface IPluginCommands
+    {
     }
 }

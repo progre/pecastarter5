@@ -18,7 +18,6 @@ namespace Progressive.PecaStarter5.Models
         private readonly IExternalResource m_externalResource;
         private readonly BroadcastTimer m_timer;
         private readonly List<IExternalYellowPages> m_externalYellowPagesList;
-        private readonly IEnumerable<IPlugin> m_plugins;
 
         /// <summary>非同期にエラーが発生した場合に通知されるイベント</summary>
         public event UnhandledExceptionEventHandler AsyncExceptionThrown;
@@ -29,7 +28,7 @@ namespace Progressive.PecaStarter5.Models
             m_externalResource = externalResource;
             m_peercast = new Peercast();
             m_peercastStation = new PeercastStation();
-            m_plugins = new IPlugin[] { };
+            Plugins = externalResource.GetPlugins();
             var tuple = GetYellowPagesLists();
             m_externalYellowPagesList = tuple.Item2;
             YellowPagesList = tuple.Item1;
@@ -47,12 +46,13 @@ namespace Progressive.PecaStarter5.Models
 
             Configuration = new ConfigurationDao(externalResource).Get();
             Configuration.DefaultLogPath = externalResource.DefaultLogPath;
-            Service = new PeercastService(m_externalYellowPagesList, m_plugins, Configuration);
+            Service = new PeercastService(m_externalYellowPagesList, Plugins, Configuration);
         }
 
         public string Title { get; private set; }
         public PeercastService Service { get; private set; }
         public Configuration Configuration { get; private set; }
+        public IEnumerable<IPlugin> Plugins { get; private set; }
         public List<IYellowPages> YellowPagesList { get; private set; }
 
         public void Save()
@@ -69,7 +69,7 @@ namespace Progressive.PecaStarter5.Models
         {
             m_timer.EndTimer();
 
-            foreach (var plugin in m_plugins)
+            foreach (var plugin in Plugins)
             {
                 plugin.OnInterruptedAsync(parameter).ContinueWith(t =>
                 {

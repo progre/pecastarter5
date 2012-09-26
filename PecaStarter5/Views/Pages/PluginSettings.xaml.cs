@@ -9,19 +9,7 @@ namespace Progressive.PecaStarter5.Views.Pages
     {
         public PluginSettings()
         {
-            //if (DesignerProperties.GetIsInDesignMode(this))
-            {
-                DataContext = new Hoge2{ Col = new[] { "", "", "", "", "", },
-                Hoge = "hg"};
-            }
-
             InitializeComponent();
-        }
-
-        public class Hoge2
-        {
-            public object Col { get; set; }
-            public object Hoge { get; set; }
         }
     }
 }

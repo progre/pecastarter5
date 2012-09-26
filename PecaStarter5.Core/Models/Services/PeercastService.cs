@@ -14,7 +14,7 @@ namespace Progressive.PecaStarter5.Models.Services
         private readonly Peercast m_peercast = new Peercast();
         private readonly PeercastStation m_peercastStation = new PeercastStation();
         private readonly IEnumerable<IExternalYellowPages> m_externalYellowPagesList;
-        private readonly IEnumerable<Progressive.PecaStarter5.Plugin.IPlugin> m_plugins;
+        private readonly IEnumerable<IPlugin> m_plugins;
         private readonly Configuration m_configuration;
 
         public PeercastService(IEnumerable<IExternalYellowPages> externalYellowPagesList,

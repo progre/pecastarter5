@@ -1,5 +1,10 @@
 ﻿using System.Threading.Tasks;
 using Progressive.PecaStarter5.Plugin;
+using Logger.Views;
+using System.Windows;
+using System;
+using System.Reflection;
+using System.Collections.Generic;
 
 namespace Progressive.PecaStarter5.Plugins.Logger
 {
@@ -12,10 +17,31 @@ namespace Progressive.PecaStarter5.Plugins.Logger
             BasePath = "";
         }
 
+        public string Name { get { return "ログ出力"; } }
+        public Version Version { get { return Assembly.GetExecutingAssembly().GetName().Version; } }
         public bool IsEnabled { get; set; }
         public string BasePath { get; set; }
 
         #region IPlugin メンバー
+
+        public bool HasSettingsDialog { get { return true; } }
+
+        public void ShowSettingsDialog()
+        {
+            new Settings().ShowDialog();
+        }
+
+        public IDictionary<string, object> Repository
+        {
+            get
+            {
+                throw new System.NotImplementedException();
+            }
+            set
+            {
+                throw new System.NotImplementedException();
+            }
+        }
 
         public Task OnBroadcastedAsync(BroadcastedParameter parameter)
         {

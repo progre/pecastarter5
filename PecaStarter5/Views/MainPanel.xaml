@@ -48,7 +48,7 @@
                     <p:Settings DataContext="{Binding SettingsViewModel}"/>
                 </TabItem>
                 <TabItem Header="拡張">
-                    <p:PluginSettings/>
+                    <p:PluginSettings DataContext="{Binding PluginSettingsViewModel}"/>
                 </TabItem>
             </TabControl>
             <ContentControl Visibility="{Binding SelectedIndex, Converter={StaticResource BroadcastVisibilityConverter}}">
