@@ -9,7 +9,7 @@ using Progressive.Peercast4Net.Datas;
 
 namespace Progressive.PecaStarter5.Models.Broadcasts
 {
-    public class PeercastService
+    internal class PeercastService
     {
         private readonly Peercast m_peercast = new Peercast();
         private readonly PeercastStation m_peercastStation = new PeercastStation();

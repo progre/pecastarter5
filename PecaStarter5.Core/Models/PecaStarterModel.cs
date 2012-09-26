@@ -28,9 +28,9 @@ namespace Progressive.PecaStarter5.Models
             m_externalYellowPagesList = tuple.Item2;
             YellowPagesList = tuple.Item1;
 
-            BroadcastModel = new BroadcastModel(Plugins, new PeercastService(m_externalYellowPagesList, Plugins, Configuration));
             Configuration = new ConfigurationDao(externalResource).Get();
             Configuration.DefaultLogPath = externalResource.DefaultLogPath;
+            BroadcastModel = new BroadcastModel(Plugins, new PeercastService(m_externalYellowPagesList, Plugins, Configuration));
         }
 
         public BroadcastModel BroadcastModel { get; private set; }

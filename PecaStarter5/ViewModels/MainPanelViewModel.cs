@@ -26,12 +26,12 @@ namespace Progressive.PecaStarter5.ViewModels
             m_model = model.BroadcastModel;
 
             // タブ情報の初期化
-            RelayListViewModel = new RelayListViewModel(model.BroadcastModel.Service, model.YellowPagesList);
+            RelayListViewModel = new RelayListViewModel(model.BroadcastModel, model.YellowPagesList);
             m_channelViewModel = new ChannelViewModel(model.YellowPagesList, model.Configuration);
             SettingsViewModel = new SettingsViewModel(model.Configuration);
             PluginSettingsViewModel = new PluginSettingsViewModel(model.Plugins);
             BroadcastControlViewModel = new BroadcastControlViewModel(this,
-                model.BroadcastModel, model.Configuration, model.BroadcastModel.Service);
+                model.BroadcastModel, model.Configuration);
 
             InitializeEvents();
         }

@@ -14,7 +14,7 @@ namespace Progressive.PecaStarter5.ViewModels.Controls
         private Configuration configuration;
 
         public BroadcastControlViewModel(MainPanelViewModel parent,
-            BroadcastModel broadcastModel, Configuration configuration, PeercastService service)
+            BroadcastModel broadcastModel, Configuration configuration)
         {
             this.configuration = configuration;
 
@@ -36,7 +36,7 @@ namespace Progressive.PecaStarter5.ViewModels.Controls
                     return;
                 }
                 var parameter = ViewModelDxo.ToBroadcastParameter(externalSourceViewModel);
-                var id = service.BroadcastAsync(
+                var id = broadcastModel.BroadcastAsync(
                     yp.Model, yp.AcceptedHash, yp.Parameters.Dictionary, parameter,
                     new Progress<string>(x => parent.Feedback = x)).ContinueWith(t =>
                 {
@@ -46,7 +46,6 @@ namespace Progressive.PecaStarter5.ViewModels.Controls
                         IsProcessing = false;
                         return;
                     }
-                    broadcastModel.AfterBroadcast(yp.Model, parameter);
                     BroadcastingChannel = new BroadcastingChannel(parameter.Name, t.Result);
                     IsProcessing = false;
                 }, TaskScheduler.FromCurrentSynchronizationContext());
@@ -70,7 +69,7 @@ namespace Progressive.PecaStarter5.ViewModels.Controls
                 IsProcessing = true;
                 parent.ExternalSourceViewModel.UpdateHistory();
                 var yp = parent.YellowPagesListViewModel.SelectedYellowPages;
-                service.UpdateAsync(
+                broadcastModel.UpdateAsync(
                     yp.Model, yp.Parameters.Dictionary,
                     ViewModelDxo.ToUpdateParameter(BroadcastingChannel.Id, parent.ExternalSourceViewModel),
                     new Progress<string>(x => parent.Feedback = x))
@@ -99,7 +98,7 @@ namespace Progressive.PecaStarter5.ViewModels.Controls
             {
                 IsProcessing = true;
                 var yp = parent.YellowPagesListViewModel.SelectedYellowPages;
-                service.StopAsync(yp.Model, yp.Parameters.Dictionary,
+                broadcastModel.StopAsync(yp.Model, yp.Parameters.Dictionary,
                     BroadcastingChannel.Name, BroadcastingChannel.Id,
                     new Progress<string>(x => parent.Feedback = x))
                     .ContinueWith(t =>
@@ -111,7 +110,6 @@ namespace Progressive.PecaStarter5.ViewModels.Controls
                             return;
                         }
                         BroadcastingChannel = null;
-                        broadcastModel.AfterStop();
                         IsProcessing = false;
                     }, TaskScheduler.FromCurrentSynchronizationContext());
             }, () =>

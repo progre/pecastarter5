@@ -10,12 +10,12 @@ namespace Progressive.PecaStarter5.ViewModels.Commands
     class ReloadCommand : ICommand
     {
         private readonly RelayListViewModel m_parent;
-        private readonly PeercastService m_peercastService;
+        private readonly BroadcastModel broadcastModel;
 
-        public ReloadCommand(RelayListViewModel parent, PeercastService peercastService)
+        public ReloadCommand(RelayListViewModel parent, BroadcastModel broadcastModel)
         {
             m_parent = parent;
-            m_peercastService = peercastService;
+            this.broadcastModel = broadcastModel;
         }
 
         #region ICommand メンバー
@@ -31,7 +31,7 @@ namespace Progressive.PecaStarter5.ViewModels.Commands
         {
             m_parent.IsLoading = true;
             OnCanExecuteChanged();
-            m_peercastService.GetChannelsAsync().ContinueWith(t =>
+            broadcastModel.GetChannelsAsync().ContinueWith(t =>
             {
                 if (t.IsFaulted)
                 {

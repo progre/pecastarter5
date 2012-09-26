@@ -13,10 +13,10 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
     {
         public event UnhandledExceptionEventHandler ExceptionThrown;
 
-        public RelayListViewModel(PeercastService peercastService, IEnumerable<IYellowPages> yellowPagesList)
+        public RelayListViewModel(BroadcastModel broadcastModel, IEnumerable<IYellowPages> yellowPagesList)
         {
             YellowPagesList = yellowPagesList;
-            ReloadCommand = new ReloadCommand(this, peercastService);
+            ReloadCommand = new ReloadCommand(this, broadcastModel);
             OpenCommand = new OpenCommand(this);
         }
 
