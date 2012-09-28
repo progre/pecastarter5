@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using Progressive.PecaStarter5.Models.Broadcasts;
 using Progressive.PecaStarter5.Models.Configurations;
@@ -23,7 +24,7 @@ namespace Progressive.PecaStarter5.Models
             m_externalResource = externalResource;
             m_peercast = new Peercast();
             m_peercastStation = new PeercastStation();
-            Plugins = externalResource.GetPlugins();
+            Plugins = externalResource.GetPlugins().Select(x => new ExternalPlugin(x));
             var tuple = GetYellowPagesLists();
             m_externalYellowPagesList = tuple.Item2;
             YellowPagesList = tuple.Item1;
@@ -36,7 +37,7 @@ namespace Progressive.PecaStarter5.Models
         public BroadcastModel BroadcastModel { get; private set; }
         public string Title { get; private set; }
         public Configuration Configuration { get; private set; }
-        public IEnumerable<IPlugin> Plugins { get; private set; }
+        public IEnumerable<ExternalPlugin> Plugins { get; private set; }
         public List<IYellowPages> YellowPagesList { get; private set; }
 
         public void Save()

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Progressive.PecaStarter5.Models.Configurations;
@@ -15,7 +16,7 @@ namespace Progressive.PecaStarter5.Models.Broadcasts
         private readonly PeercastService _service;
         private readonly Configuration configuration;
         private readonly IEnumerable<IExternalYellowPages> externalYellowPagesList;
-        private readonly IEnumerable<IPlugin> _plugins;
+        private readonly IEnumerable<ExternalPlugin> plugins;
         private readonly Peercast peercast = new Peercast();
         private readonly PeercastStation peercastStation = new PeercastStation();
 
@@ -24,12 +25,12 @@ namespace Progressive.PecaStarter5.Models.Broadcasts
 
         public BroadcastModel(Configuration configuration,
             IEnumerable<IExternalYellowPages> externalYellowPagesList,
-            IEnumerable<IPlugin> plugins)
+            IEnumerable<ExternalPlugin> plugins)
         {
             _service = new PeercastService();
             this.configuration = configuration;
             this.externalYellowPagesList = externalYellowPagesList;
-            _plugins = plugins;
+            plugins = plugins;
             timer = new BroadcastTimer();
             timer.Ticked += timer_Ticked;
         }
@@ -59,7 +60,7 @@ namespace Progressive.PecaStarter5.Models.Broadcasts
                 if (t.IsFaulted)
                     throw t.Exception;
                 // プラグイン処理
-                foreach (var plugin in _plugins)
+                foreach (var plugin in plugins.Where(x => x.IsEnabled).Select(x => x.Instance))
                     plugin.OnBroadcastedAsync(t.Result);
                 return t.Result;
             });
@@ -75,7 +76,7 @@ namespace Progressive.PecaStarter5.Models.Broadcasts
                 if (t.IsFaulted)
                     throw t.Exception;
                 // プラグイン処理
-                foreach (var plugin in _plugins)
+                foreach (var plugin in plugins.Where(x => x.IsEnabled).Select(x => x.Instance))
                     plugin.OnUpdatedAsync(t.Result);
             });
         }
@@ -90,7 +91,7 @@ namespace Progressive.PecaStarter5.Models.Broadcasts
                 if (t.IsFaulted)
                     throw t.Exception;
                 // プラグイン処理
-                foreach (var plugin in _plugins)
+                foreach (var plugin in plugins.Where(x => x.IsEnabled).Select(x => x.Instance))
                     plugin.OnStopedAsync(t.Result);
                 timer.EndTimer();
             });
@@ -105,7 +106,7 @@ namespace Progressive.PecaStarter5.Models.Broadcasts
         {
             timer.EndTimer();
 
-            foreach (var plugin in _plugins)
+            foreach (var plugin in plugins.Where(x => x.IsEnabled).Select(x => x.Instance))
             {
                 plugin.OnInterruptedAsync(parameter).ContinueWith(t =>
                 {
@@ -128,7 +129,7 @@ namespace Progressive.PecaStarter5.Models.Broadcasts
                     OnAsyncExceptionThrown(t.Exception);
 
                 // プラグイン処理
-                foreach (var plugin in _plugins)
+                foreach (var plugin in plugins.Where(x => x.IsEnabled).Select(x => x.Instance))
                     plugin.OnTickedAsync(name, t.Result.Item1, t.Result.Item2)
                         .ContinueWith(
                             t1 => OnAsyncExceptionThrown(t1.Exception),

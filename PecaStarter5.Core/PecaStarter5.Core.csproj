@@ -47,6 +47,7 @@
     <Compile Include="Models\Broadcasts\BroadcastTimer.cs" />
     <Compile Include="Models\Channels\BroadcastingChannel.cs" />
     <Compile Include="Models\Configurations\ConfigurationDao.cs" />
+    <Compile Include="Models\ExternalPlugin.cs" />
     <Compile Include="Models\YellowPages\IExternalYellowPages.cs" />
     <Compile Include="Models\IExternalResource.cs" />
     <Compile Include="Models\PecaStarterModel.cs" />

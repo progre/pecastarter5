@@ -34,6 +34,15 @@ namespace Progressive.Commons.ViewModels
             return true;
         }
 
+        protected bool SetProperty<T>(string propertyName, T obj, Action<T> setter, T value)
+        {
+            if (obj != null && obj.Equals(value))
+                return false;
+            setter(value);
+            OnPropertyChanged(propertyName);
+            return true;
+        }
+
         #region IDataErrorInfo メンバー
 
         public string Error
