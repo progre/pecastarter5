@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using Progressive.PecaStarter5.Plugin;
+using Progressive.PecaStarter5.Plugins;
 
 namespace Progressive.PecaStarter5.Models
 {
@@ -8,8 +8,10 @@ namespace Progressive.PecaStarter5.Models
     {
         Stream GetConfigurationInputStream();
         Stream GetConfigurationOutputStream();
+        Stream GetPluginSettingsInputStream(string pluginName);
+        Stream GetPluginSettingsOutputStream(string pluginName);
         IEnumerable<Stream> GetYellowPagesDefineInputStream();
-        IEnumerable<IPlugin> GetPlugins();
+        IList<ExternalPlugin> GetPlugins();
         string DefaultLogPath { get; }
     }
 }

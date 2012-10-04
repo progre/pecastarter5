@@ -12,7 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Logger.Views
+namespace Progressive.PecaStarter5.Plugins.Logger.Views
 {
     /// <summary>
     /// Setting.xaml の相互作用ロジック

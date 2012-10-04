@@ -99,6 +99,7 @@ namespace Progressive.PecaStarter5.ViewModel
             if (disposing)
             {
                 // マネージ リソースの解放処理をこの位置に記述します。
+                m_model.Dispose();
             }
             // アンマネージ リソースの解放処理をこの位置に記述します。
         }

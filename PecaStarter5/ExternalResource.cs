@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using Progressive.PecaStarter5.Models;
-using Progressive.PecaStarter5.Plugin;
+using Progressive.PecaStarter5.Plugins;
 
 namespace Progressive.PecaStarter5
 {
@@ -49,6 +49,16 @@ namespace Progressive.PecaStarter5
             return new FileStream(ConfigurationFilePath, FileMode.Create);
         }
 
+        public Stream GetPluginSettingsInputStream(string pluginName)
+        {
+            return new FileStream(PluginDirectoryPath + pluginName, FileMode.Open);
+        }
+
+        public Stream GetPluginSettingsOutputStream(string pluginName)
+        {
+            return new FileStream(PluginDirectoryPath + pluginName, FileMode.Create);
+        }
+
         public IEnumerable<Stream> GetYellowPagesDefineInputStream()
         {
             foreach (var path in Directory.GetFiles(YellowPagesDirectoryPath, "*.xml"))
@@ -57,29 +67,38 @@ namespace Progressive.PecaStarter5
             }
         }
 
-        public IEnumerable<IPlugin> GetPlugins()
+        public IList<ExternalPlugin> GetPlugins()
         {
             var iPluginName = typeof(IPlugin).FullName;
 
-            return Directory.GetFiles(PluginDirectoryPath, "*.dll")
-                .Select(x => LoadAssemblyFile(x))
-                .Where(x => x != null)
-                .SelectMany(x => x.GetTypes())
-                .Where(x => x.IsClass && !x.IsAbstract && !x.IsNotPublic
-                    && x.GetInterface(iPluginName) != null)
-                .Select(x => (IPlugin)Activator.CreateInstance(x));
-        }
-
-        private Assembly LoadAssemblyFile(string path)
-        {
+            var list = new List<ExternalPlugin>();
+            string[] files;
             try
             {
-                return Assembly.LoadFile(path);
+                files = Directory.GetFiles(PluginDirectoryPath, "*.dll");
             }
             catch
             {
-                return null;
+                return Enumerable.Empty<ExternalPlugin>().ToArray();
             }
+            foreach (var path in files)
+            {
+                try
+                {
+                    var assembly = Assembly.LoadFile(path);
+                    list.AddRange(assembly.GetTypes()
+                        .Where(x => x.IsClass && !x.IsAbstract && !x.IsNotPublic
+                            && x.GetInterface(iPluginName) != null)
+                        .Select(x => new ExternalPlugin(
+                            Path.GetFileNameWithoutExtension(path),
+                            (IPlugin)Activator.CreateInstance(x))));
+                }
+                catch
+                {
+                    continue;
+                }
+            }
+            return list;
         }
     }
 }

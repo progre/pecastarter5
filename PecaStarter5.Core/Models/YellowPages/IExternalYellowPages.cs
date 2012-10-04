@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Progressive.PecaStarter5.Plugin;
+using Progressive.PecaStarter5.Plugins;
 
 namespace Progressive.PecaStarter5.Models.YellowPages
 {
@@ -31,12 +31,6 @@ namespace Progressive.PecaStarter5.Models.YellowPages
         /// <param name="listeners"></param>
         /// <returns></returns>
         Task OnTickedAsync(string name, int relays, int listeners);
-        /// <summary>
-        /// 配信中のチャンネル情報を取り込んだ時に通知されるメソッド
-        /// </summary>
-        /// <param name="parameter"></param>
-        /// <returns></returns>
-        Task OnInterruptedAsync(InterruptedParameter parameter);
 
         string Name { get; }
     }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Progressive.Commons.ViewModels;
 using Progressive.PecaStarter5.Models;
-using Progressive.PecaStarter5.Plugin;
+using Progressive.PecaStarter5.Plugins;
 using System.Windows.Input;
 using Progressive.Commons.ViewModels.Commands;
 using System.Windows;

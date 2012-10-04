@@ -1,10 +1,8 @@
-﻿using System.Threading.Tasks;
-using Progressive.PecaStarter5.Plugin;
-using Logger.Views;
-using System.Windows;
-using System;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
-using System.Collections.Generic;
+using System.Threading.Tasks;
+using Progressive.PecaStarter5.Plugins.Logger.Views;
 
 namespace Progressive.PecaStarter5.Plugins.Logger
 {
@@ -14,41 +12,43 @@ namespace Progressive.PecaStarter5.Plugins.Logger
 
         public Logger()
         {
-            BasePath = "";
+            pluginInfo = new PluginInfo(
+                name: "Logger",
+                displayName: "ログ出力",
+                version: Assembly.GetExecutingAssembly().GetName().Version,
+                hasSettingsDialog: true);
         }
 
-        public string Name { get { return "ログ出力"; } }
-        public Version Version { get { return Assembly.GetExecutingAssembly().GetName().Version; } }
-        public bool IsEnabled { get; set; }
-        public string BasePath { get; set; }
+        public string BasePath
+        {
+            get { return Repository["BasePath"] as string ?? ""; }
+            set { Repository["BasePath"] = value; }
+        }
 
         #region IPlugin メンバー
 
-        public bool HasSettingsDialog { get { return true; } }
+        private readonly PluginInfo pluginInfo;
+        public PluginInfo PluginInfo { get { return pluginInfo; } }
+
+        public Dictionary<string, object> Repository { get; set; }
+
+        public void Initialize()
+        {
+            if (!Repository.ContainsKey("BasePath"))
+                Repository["BasePath"] = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + Path.DirectorySeparatorChar + "log";
+        }
 
         public void ShowSettingsDialog()
         {
-            new Settings().ShowDialog();
-        }
-
-        public IDictionary<string, object> Repository
-        {
-            get
-            {
-                throw new System.NotImplementedException();
-            }
-            set
-            {
-                throw new System.NotImplementedException();
-            }
+            var view = new Settings();
+            view.DataContext = this;
+            view.ShowDialog();
         }
 
         public Task OnBroadcastedAsync(BroadcastingParameter parameter)
         {
             return Task.Factory.StartNew(() =>
             {
-                if (!IsEnabled)
-                    return;
                 m_logger = Models.Logger.StartNew(BasePath, parameter.BroadcastParameter.Name);
                 var param = parameter.BroadcastParameter;
                 m_logger.Insert("", "", param.Genre, param.Description, param.Comment);
@@ -59,8 +59,6 @@ namespace Progressive.PecaStarter5.Plugins.Logger
         {
             return Task.Factory.StartNew(() =>
             {
-                if (!IsEnabled)
-                    return;
                 if (m_logger == null)
                     return;
                 var param = parameter.UpdateParameter;
@@ -72,8 +70,6 @@ namespace Progressive.PecaStarter5.Plugins.Logger
         {
             return Task.Factory.StartNew(() =>
             {
-                if (!IsEnabled)
-                    return;
                 if (m_logger == null)
                     return;
                 m_logger.Insert("", "", "", "", "（配信終了）");
@@ -84,8 +80,6 @@ namespace Progressive.PecaStarter5.Plugins.Logger
         {
             return Task.Factory.StartNew(() =>
             {
-                if (!IsEnabled)
-                    return;
                 if (m_logger == null)
                     return;
                 m_logger.Insert(relays.ToString(), listeners.ToString(), "", "", "");
@@ -96,11 +90,14 @@ namespace Progressive.PecaStarter5.Plugins.Logger
         {
             return Task.Factory.StartNew(() =>
             {
-                if (!IsEnabled)
-                    return;
                 m_logger = Models.Logger.StartNew(BasePath, parameter.Name);
                 m_logger.Insert("", "", parameter.Genre, parameter.Description, parameter.Comment);
             });
+        }
+
+        public void Terminate()
+        {
+            m_logger = null;
         }
 
         #endregion

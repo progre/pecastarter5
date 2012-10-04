@@ -5,7 +5,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Codeplex.Data;
-using Progressive.PecaStarter5.Plugin;
+using Progressive.PecaStarter5.Plugins;
 
 namespace Progressive.PecaStarter5.Models.YellowPages
 {
@@ -150,13 +150,12 @@ namespace Progressive.PecaStarter5.Models.YellowPages
 
         public Task OnTickedAsync(string name, int relays, int listeners)
         {
-            throw new System.NotImplementedException();
-        }
-
-        public Task OnInterruptedAsync(InterruptedParameter parameter)
-        {
-            // nop
-            return Task.Factory.StartNew(() => { });
+            var nvc = new NameValueCollection();
+            //foreach (var param in StopParameters)
+            //{
+            //    nvc.Add(param, GetParameterValue(param, parameter));
+            //}
+            return Post(StopUrl, nvc);
         }
 
         #endregion

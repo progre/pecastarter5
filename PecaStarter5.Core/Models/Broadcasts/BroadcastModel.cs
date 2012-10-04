@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Progressive.PecaStarter5.Models.Configurations;
 using Progressive.PecaStarter5.Models.YellowPages;
-using Progressive.PecaStarter5.Plugin;
+using Progressive.PecaStarter5.Plugins;
 using Progressive.Peercast4Net;
 using Progressive.Peercast4Net.Datas;
 
@@ -12,13 +12,13 @@ namespace Progressive.PecaStarter5.Models.Broadcasts
 {
     public class BroadcastModel
     {
-        private readonly BroadcastTimer timer;
-        private readonly PeercastService _service;
+        private readonly PeercastService _service = new PeercastService();
+        private readonly Peercast peercast = new Peercast();
+        private readonly PeercastStation peercastStation = new PeercastStation();
+        private readonly BroadcastTimer timer = new BroadcastTimer();
         private readonly Configuration configuration;
         private readonly IEnumerable<IExternalYellowPages> externalYellowPagesList;
         private readonly IEnumerable<ExternalPlugin> plugins;
-        private readonly Peercast peercast = new Peercast();
-        private readonly PeercastStation peercastStation = new PeercastStation();
 
         /// <summary>非同期にエラーが発生した場合に通知されるイベント</summary>
         public event UnhandledExceptionEventHandler AsyncExceptionThrown;
@@ -27,11 +27,9 @@ namespace Progressive.PecaStarter5.Models.Broadcasts
             IEnumerable<IExternalYellowPages> externalYellowPagesList,
             IEnumerable<ExternalPlugin> plugins)
         {
-            _service = new PeercastService();
             this.configuration = configuration;
             this.externalYellowPagesList = externalYellowPagesList;
-            plugins = plugins;
-            timer = new BroadcastTimer();
+            this.plugins = plugins;
             timer.Ticked += timer_Ticked;
         }
 
@@ -59,6 +57,7 @@ namespace Progressive.PecaStarter5.Models.Broadcasts
             {
                 if (t.IsFaulted)
                     throw t.Exception;
+                timer.BeginTimer(yellowPages, parameter.Name);
                 // プラグイン処理
                 foreach (var plugin in plugins.Where(x => x.IsEnabled).Select(x => x.Instance))
                     plugin.OnBroadcastedAsync(t.Result);

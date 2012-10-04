@@ -54,6 +54,18 @@ namespace Progressive.PecaStarter5.Models.YellowPages.YellowPagesXml
             }
         }
 
+        private static string[] DefaultTickedParameters
+        {
+            get
+            {
+                return new[]{
+                    "name",
+                    "password",
+                    "listeners"
+                };
+            }
+        }
+
         private static string[] ExcludeParameters
         {
             get
@@ -121,6 +133,12 @@ namespace Progressive.PecaStarter5.Models.YellowPages.YellowPagesXml
                 return DefaultUpdateParameters;
             }
         }
+
+        public IList<string> TickedParameters
+        {
+            get { return DefaultTickedParameters; }
+        }
+
         public IList<string> StopParameters
         {
             get

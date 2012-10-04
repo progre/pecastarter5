@@ -1,8 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System;
 using System.Collections.Generic;
-using System;
+using System.Threading.Tasks;
 
-namespace Progressive.PecaStarter5.Plugin
+namespace Progressive.PecaStarter5.Plugins
 {
     /// <summary>
     /// プラグイン
@@ -10,26 +10,21 @@ namespace Progressive.PecaStarter5.Plugin
     public interface IPlugin
     {
         /// <summary>
-        /// プラグインの表示名
+        /// プラグイン情報
         /// </summary>
-        string Name { get; }
+        PluginInfo PluginInfo { get; }
         /// <summary>
-        /// プラグインのバージョン
+        /// 終了時にディスクに保存され、次回起動時に復元される
         /// </summary>
-        Version Version { get; }
+        Dictionary<string, object> Repository { get; set; }
         /// <summary>
-        /// 設定ダイアログがあるかどうか
+        /// 初期化
         /// </summary>
-        /// <returns></returns>
-        bool HasSettingsDialog { get; }
+        void Initialize();
         /// <summary>
         /// 設定ダイアログを開く
         /// </summary>
         void ShowSettingsDialog();
-        /// <summary>
-        /// 終了時にディスクに保存され、次回起動時に復元される
-        /// </summary>
-        IDictionary<string, object> Repository { get; set; }
         /// <summary>
         /// 配信開始時に通知されるメソッド
         /// </summary>
@@ -62,9 +57,45 @@ namespace Progressive.PecaStarter5.Plugin
         /// <param name="parameter"></param>
         /// <returns></returns>
         Task OnInterruptedAsync(InterruptedParameter parameter);
+        /// <summary>
+        /// 終了処理
+        /// </summary>
+        void Terminate();
     }
 
-    public interface IPluginCommands
+    /// <summary>
+    /// プラグイン情報
+    /// </summary>
+    public struct PluginInfo
     {
+        public PluginInfo(string name, string displayName, Version version, bool hasSettingsDialog)
+        {
+            this.name = name;
+            this.displayName = displayName;
+            this.version = version;
+            this.hasSettingsDialog = hasSettingsDialog;
+        }
+
+        private string name;
+        /// <summary>
+        /// プラグイン名
+        /// </summary>
+        public string Name { get { return name; } }
+        private string displayName;
+        /// <summary>
+        /// プラグインの表示名
+        /// </summary>
+        public string DisplayName { get { return displayName; } }
+        private Version version;
+        /// <summary>
+        /// プラグインのバージョン
+        /// </summary>
+        public Version Version { get { return version; } }
+        private bool hasSettingsDialog;
+        /// <summary>
+        /// 設定ダイアログがあるかどうか
+        /// </summary>
+        /// <returns></returns>
+        public bool HasSettingsDialog { get { return hasSettingsDialog; } }
     }
 }

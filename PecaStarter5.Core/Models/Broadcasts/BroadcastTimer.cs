@@ -12,7 +12,7 @@ namespace Progressive.PecaStarter5.Models.Broadcasts
 
         public void BeginTimer(IYellowPages yellowPages, string name)
         {
-            const int period = 10 * 60 * 1000;
+            const int period = 10 /* 60*/ * 1000;
             m_timer = new Timer(Ticked, Tuple.Create(yellowPages, name), period, period);
         }
 

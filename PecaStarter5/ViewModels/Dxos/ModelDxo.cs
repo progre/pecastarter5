@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Progressive.PecaStarter5.Plugin;
+using Progressive.PecaStarter5.Plugins;
 using Progressive.Peercast4Net.Datas;
 
 namespace Progressive.PecaStarter5.ViewModels.Dxos

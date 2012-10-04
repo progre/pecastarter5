@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Progressive.PecaStarter5.Models.YellowPages;
-using Progressive.PecaStarter5.Plugin;
+using Progressive.PecaStarter5.Plugins;
 using Progressive.Peercast4Net;
 using Progressive.Peercast4Net.Datas;
 
