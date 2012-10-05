@@ -11,6 +11,8 @@ namespace Progressive.PecaStarter5.Models.YellowPages
 {
     class WebApiYellowPages : YellowPagesBase, IExternalYellowPages
     {
+        private string password = "";
+
         public override bool IsExternal { get { return true; } }
         public string BroadcastUrl { get; set; }
         public string UpdateUrl { get; set; }
@@ -47,6 +49,7 @@ namespace Progressive.PecaStarter5.Models.YellowPages
 
         public Task OnBroadcastedAsync(BroadcastingParameter parameter)
         {
+            password = parameter.YellowPagesParameters["password"];
             var nvc = new NameValueCollection();
             foreach (var param in BroadcastParameters)
             {
@@ -90,6 +93,7 @@ namespace Progressive.PecaStarter5.Models.YellowPages
 
         public Task OnUpdatedAsync(UpdatedParameter parameter)
         {
+            password = parameter.YellowPagesParameters["password"];
             var nvc = new NameValueCollection();
             foreach (var param in UpdateParameters)
             {
@@ -150,12 +154,14 @@ namespace Progressive.PecaStarter5.Models.YellowPages
 
         public Task OnTickedAsync(string name, int relays, int listeners)
         {
+            if (string.IsNullOrEmpty(password))
+                return Task.Factory.StartNew(() => { });
+
             var nvc = new NameValueCollection();
-            //foreach (var param in StopParameters)
-            //{
-            //    nvc.Add(param, GetParameterValue(param, parameter));
-            //}
-            return Post(StopUrl, nvc);
+            nvc.Add("name", name);
+            nvc.Add("password", password);
+            nvc.Add("listeners", Math.Min(relays, listeners).ToString());
+            return Post(UpdateUrl, nvc);
         }
 
         #endregion

@@ -110,7 +110,6 @@ namespace Progressive.PecaStarter5.Models.Broadcasts
             {
                 // 停止
                 progress.Report("通信中...");
-                peercast.StopAsync(id).Wait();
 
                 var stoppedParameter = new StoppedParameter
                 {
@@ -124,6 +123,8 @@ namespace Progressive.PecaStarter5.Models.Broadcasts
                 {
                     Find(externalYellowPagesList, yellowPages.Name).OnStopedAsync(stoppedParameter).Wait();
                 }
+
+                peercast.StopAsync(id).Wait();
 
                 progress.Report("チャンネルを切断しました");
                 return stoppedParameter;
