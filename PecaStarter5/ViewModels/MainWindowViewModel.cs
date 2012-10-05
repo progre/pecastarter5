@@ -1,11 +1,12 @@
 ﻿using System;
 using Progressive.Commons.ViewModels;
 using Progressive.PecaStarter5.Models;
+using Progressive.PecaStarter5.Models.Configurations;
 using Progressive.PecaStarter5.ViewModels;
 
 namespace Progressive.PecaStarter5.ViewModel
 {
-    public class MainWindowViewModel : ViewModelBase, IDisposable
+    internal class MainWindowViewModel : ViewModelBase, IDisposable
     {
         private bool m_disposed;
         private PecaStarterModel m_model;
@@ -98,6 +99,7 @@ namespace Progressive.PecaStarter5.ViewModel
             if (disposing)
             {
                 // マネージ リソースの解放処理をこの位置に記述します。
+                m_model.Dispose();
             }
             // アンマネージ リソースの解放処理をこの位置に記述します。
         }

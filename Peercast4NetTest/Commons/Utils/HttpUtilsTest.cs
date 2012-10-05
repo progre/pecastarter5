@@ -9,7 +9,7 @@ using Progressive.Peercast4Net.Commons;
 
 namespace Progressive.Peercast4NetTest.Commons.Utils
 {
-    public class HttpUtilsTest
+    internal class HttpUtilsTest
     {
         [Fact]
         public void ToRfc3986Test()

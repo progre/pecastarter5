@@ -7,7 +7,7 @@ namespace CreteLib
     /// <summary>
     /// HTMLのノードの情報を持つクラス
     /// </summary>
-    public class HtmlNode
+    internal class HtmlNode
     {
         //タグ名
         private String _tagName = null;

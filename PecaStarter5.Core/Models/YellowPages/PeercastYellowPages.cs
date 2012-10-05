@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
-namespace Progressive.PecaStarter5.Models
+namespace Progressive.PecaStarter5.Models.YellowPages
 {
-    class PeercastYellowPages : YellowPages
+    class PeercastYellowPages : YellowPagesBase
     {
         public string Header { get; set; }
 

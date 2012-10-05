@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.IO;
 using System.Xml.Serialization;
 
-namespace Progressive.PecaStarter5.Models
+namespace Progressive.PecaStarter5.Models.Configurations
 {
     public class Configuration
     {

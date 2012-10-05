@@ -4,7 +4,7 @@ using Progressive.PecaStarter5.ViewModels.Pages;
 
 namespace Progressive.PecaStarter5.ViewModels.Commands
 {
-    public class OpenCommand : ICommand
+    internal class OpenCommand : ICommand
     {
         private readonly RelayListViewModel m_parent;
 

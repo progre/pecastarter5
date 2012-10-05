@@ -36,6 +36,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -43,21 +44,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\BroadcastTimer.cs" />
+    <Compile Include="Models\Broadcasts\BroadcastModel.cs" />
+    <Compile Include="Models\Broadcasts\BroadcastTimer.cs" />
     <Compile Include="Models\Channels\BroadcastingChannel.cs" />
-    <Compile Include="Models\Daos\ConfigurationDao.cs" />
-    <Compile Include="Models\ExternalYellowPages\IExternalYellowPages.cs" />
+    <Compile Include="Models\Configurations\ConfigurationDao.cs" />
+    <Compile Include="Models\ExternalPlugin.cs" />
+    <Compile Include="Models\PluginSettings.cs" />
+    <Compile Include="Models\PluginsModel.cs" />
+    <Compile Include="Models\YellowPages\IExternalYellowPages.cs" />
     <Compile Include="Models\IExternalResource.cs" />
     <Compile Include="Models\PecaStarterModel.cs" />
     <Compile Include="Models\PeercastType.cs" />
-    <Compile Include="Models\Plugins\IPlugin.cs" />
-    <Compile Include="Models\Plugins\LoggerPlugin.cs" />
-    <Compile Include="Models\Plugins\Parameters.cs" />
-    <Compile Include="Models\Services\PeercastService.cs" />
+    <Compile Include="Models\Broadcasts\PeercastService.cs" />
     <Compile Include="Models\YellowPages\IYellowPages.cs" />
-    <Compile Include="Models\Logger.cs" />
     <Compile Include="Models\YellowPages\PeercastYellowPages.cs" />
-    <Compile Include="Models\Configuration.cs" />
+    <Compile Include="Models\Configurations\Configuration.cs" />
     <Compile Include="Models\YellowPages\WebApiYellowPages.cs" />
     <Compile Include="Models\YellowPages\YellowPages.cs" />
     <Compile Include="Models\YellowPages\YellowPagesXml\PeercastYellowPagesPaser.cs" />
@@ -71,6 +72,10 @@
       <Project>{55EFCA17-BE39-4976-BA28-E5C0FABF8E89}</Project>
       <Name>PecaStarter5.ExternalLibrary</Name>
       <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\PecaStarter5.Plugin\PecaStarter5.Plugin.csproj">
+      <Project>{104854C7-DFC8-4FE8-B8B3-8809B776D62A}</Project>
+      <Name>PecaStarter5.Plugin</Name>
     </ProjectReference>
     <ProjectReference Include="..\Peercast4Net\Peercast4Net.csproj">
       <Project>{F6BD0F22-BD5F-4E1B-A80A-BF47E28D1558}</Project>

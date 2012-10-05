@@ -2,9 +2,9 @@
 using System.IO;
 using System.Text;
 
-namespace Progressive.PecaStarter5.Models
+namespace Progressive.PecaStarter5.Plugins.Logger.Models
 {
-    public class Logger
+    internal class Logger
     {
         private string path;
         private string name;

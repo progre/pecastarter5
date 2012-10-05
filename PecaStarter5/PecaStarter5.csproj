@@ -56,6 +56,7 @@
   <ItemGroup>
     <Reference Include="AsyncCtpLibrary, Version=1.0.4107.18181, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\lib\AsyncCtpLibrary.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -76,6 +77,7 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="WPFToolkit.Extended, Version=1.6.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
       <HintPath>..\packages\Extended.Wpf.Toolkit.1.6.0\lib\net40\WPFToolkit.Extended.dll</HintPath>
+      <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -119,11 +121,14 @@
     <Compile Include="ViewModels\Controls\ChannelNameTextBoxWithHistoryViewModel.cs" />
     <Compile Include="ViewModels\Controls\ParameterTextBoxWithHistoryViewModel.cs" />
     <Compile Include="ViewModels\Controls\TextBoxWithHistoryViewModel.cs" />
+    <Compile Include="ViewModels\Dxos\ModelDxo.cs" />
     <Compile Include="ViewModels\Dxos\ViewModelDxo.cs" />
     <Compile Include="ViewModels\MainPanelViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\Pages\ChannelViewModel.cs" />
     <Compile Include="ViewModels\Pages\ExternalSourceViewModel.cs" />
+    <Compile Include="ViewModels\Pages\PluginColumnViewModel.cs" />
+    <Compile Include="ViewModels\Pages\PluginSettingsViewModel.cs" />
     <Compile Include="ViewModels\Pages\RelayListViewModel.cs" />
     <Compile Include="ViewModels\Pages\SettingsViewModel.cs" />
     <Compile Include="ViewModels\Pages\YellowPagesListViewModel.cs" />
@@ -148,6 +153,9 @@
     <Compile Include="Views\Pages\ExternalSource.xaml.cs">
       <DependentUpon>ExternalSource.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Pages\PluginColumn.xaml.cs">
+      <DependentUpon>PluginColumn.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Pages\RelayChannel.xaml.cs">
       <DependentUpon>RelayChannel.xaml</DependentUpon>
     </Compile>
@@ -162,6 +170,9 @@
     </Compile>
     <Compile Include="Views\Pages\YellowPagesList.xaml.cs">
       <DependentUpon>YellowPagesList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Pages\PluginSettings.xaml.cs">
+      <DependentUpon>PluginSettings.xaml</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -192,6 +203,11 @@
     <ProjectReference Include="..\PecaStarter5.ExternalLibrary\PecaStarter5.ExternalLibrary.csproj">
       <Project>{55EFCA17-BE39-4976-BA28-E5C0FABF8E89}</Project>
       <Name>PecaStarter5.ExternalLibrary</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\PecaStarter5.Plugin\PecaStarter5.Plugin.csproj">
+      <Project>{104854C7-DFC8-4FE8-B8B3-8809B776D62A}</Project>
+      <Name>PecaStarter5.Plugin</Name>
       <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\Peercast4Net\Peercast4Net.csproj">
@@ -283,6 +299,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\Pages\PluginColumn.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Pages\RelayChannel.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -313,6 +333,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\Pages\PluginSettings.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\Styles\BusyAnimationStyle.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

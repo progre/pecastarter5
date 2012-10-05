@@ -2,21 +2,21 @@
 using System.Collections.Generic;
 using System.Windows.Input;
 using Progressive.Commons.ViewModels;
-using Progressive.PecaStarter5.Models;
-using Progressive.PecaStarter5.Models.Services;
+using Progressive.PecaStarter5.Models.Broadcasts;
+using Progressive.PecaStarter5.Models.YellowPages;
 using Progressive.PecaStarter5.ViewModels.Commands;
 using Progressive.Peercast4Net.Datas;
 
 namespace Progressive.PecaStarter5.ViewModels.Pages
 {
-    public class RelayListViewModel : ViewModelBase
+    internal class RelayListViewModel : ViewModelBase
     {
         public event UnhandledExceptionEventHandler ExceptionThrown;
 
-        public RelayListViewModel(PeercastService peercastService, IEnumerable<IYellowPages> yellowPagesList)
+        public RelayListViewModel(BroadcastModel broadcastModel, IEnumerable<IYellowPages> yellowPagesList)
         {
             YellowPagesList = yellowPagesList;
-            ReloadCommand = new ReloadCommand(this, peercastService);
+            ReloadCommand = new ReloadCommand(this, broadcastModel);
             OpenCommand = new OpenCommand(this);
         }
 
@@ -87,7 +87,7 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
         }
     }
 
-    public class SelectedEventArgs : EventArgs
+    internal class SelectedEventArgs : EventArgs
     {
         public IChannel Channel { get; private set; }
         public IYellowPages YellowPages { get; private set; }

@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Progressive.Commons.ViewModels
 {
-    public class ViewModelBase : INotifyPropertyChanged, IDataErrorInfo
+    internal class ViewModelBase : INotifyPropertyChanged, IDataErrorInfo
     {
         #region INotifyPropertyChanged メンバー
 
@@ -30,6 +30,15 @@ namespace Progressive.Commons.ViewModels
             if (obj != null && obj.Equals(value))
                 return false;
             obj = value;
+            OnPropertyChanged(propertyName);
+            return true;
+        }
+
+        protected bool SetProperty<T>(string propertyName, T obj, Action<T> setter, T value)
+        {
+            if (obj != null && obj.Equals(value))
+                return false;
+            setter(value);
             OnPropertyChanged(propertyName);
             return true;
         }

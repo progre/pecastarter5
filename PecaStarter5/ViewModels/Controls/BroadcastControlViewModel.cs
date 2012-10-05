@@ -2,19 +2,21 @@
 using System.Threading.Tasks;
 using Progressive.Commons.ViewModels;
 using Progressive.Commons.ViewModels.Commands;
-using Progressive.PecaStarter5.Models;
+using Progressive.PecaStarter5.Models.Broadcasts;
 using Progressive.PecaStarter5.Models.Channels;
+using Progressive.PecaStarter5.Models.Configurations;
 using Progressive.PecaStarter5.ViewModels.Dxos;
 
 namespace Progressive.PecaStarter5.ViewModels.Controls
 {
-    public class BroadcastControlViewModel : ViewModelBase
+    internal class BroadcastControlViewModel : ViewModelBase
     {
-        private PecaStarterModel m_model;
+        private Configuration configuration;
 
-        public BroadcastControlViewModel(MainPanelViewModel parent, PecaStarterModel model)
+        public BroadcastControlViewModel(MainPanelViewModel parent,
+            BroadcastModel broadcastModel, Configuration configuration)
         {
-            m_model = model;
+            this.configuration = configuration;
 
             var externalSourceViewModel = parent.ExternalSourceViewModel;
             BroadcastCommand = new DelegateCommand(() =>
@@ -34,7 +36,7 @@ namespace Progressive.PecaStarter5.ViewModels.Controls
                     return;
                 }
                 var parameter = ViewModelDxo.ToBroadcastParameter(externalSourceViewModel);
-                var id = model.Service.BroadcastAsync(
+                var id = broadcastModel.BroadcastAsync(
                     yp.Model, yp.AcceptedHash, yp.Parameters.Dictionary, parameter,
                     new Progress<string>(x => parent.Feedback = x)).ContinueWith(t =>
                 {
@@ -44,8 +46,7 @@ namespace Progressive.PecaStarter5.ViewModels.Controls
                         IsProcessing = false;
                         return;
                     }
-                    model.Broadcast(yp.Model, parameter);
-                    BroadcastingChannel = new BroadcastingChannel(parameter.Name, t.Result);
+                    BroadcastingChannel = new BroadcastingChannel(parameter.Name, t.Result.Id);
                     IsProcessing = false;
                 }, TaskScheduler.FromCurrentSynchronizationContext());
             }, () =>
@@ -68,7 +69,7 @@ namespace Progressive.PecaStarter5.ViewModels.Controls
                 IsProcessing = true;
                 parent.ExternalSourceViewModel.UpdateHistory();
                 var yp = parent.YellowPagesListViewModel.SelectedYellowPages;
-                model.Service.UpdateAsync(
+                broadcastModel.UpdateAsync(
                     yp.Model, yp.Parameters.Dictionary,
                     ViewModelDxo.ToUpdateParameter(BroadcastingChannel.Id, parent.ExternalSourceViewModel),
                     new Progress<string>(x => parent.Feedback = x))
@@ -97,7 +98,7 @@ namespace Progressive.PecaStarter5.ViewModels.Controls
             {
                 IsProcessing = true;
                 var yp = parent.YellowPagesListViewModel.SelectedYellowPages;
-                model.Service.StopAsync(yp.Model, yp.Parameters.Dictionary,
+                broadcastModel.StopAsync(yp.Model, yp.Parameters.Dictionary,
                     BroadcastingChannel.Name, BroadcastingChannel.Id,
                     new Progress<string>(x => parent.Feedback = x))
                     .ContinueWith(t =>
@@ -109,7 +110,6 @@ namespace Progressive.PecaStarter5.ViewModels.Controls
                             return;
                         }
                         BroadcastingChannel = null;
-                        model.Stop();
                         IsProcessing = false;
                     }, TaskScheduler.FromCurrentSynchronizationContext());
             }, () =>
@@ -150,7 +150,7 @@ namespace Progressive.PecaStarter5.ViewModels.Controls
         public DelegateCommand BroadcastCommand { get; private set; }
         public DelegateCommand UpdateCommand { get; private set; }
         public DelegateCommand StopCommand { get; private set; }
-        public Configuration Configuration { get { return m_model.Configuration; } } // カウントダウンボタンが使用
+        public Configuration Configuration { get { return configuration; } } // カウントダウンボタンが使用
 
         public bool IsBroadcasting
         {

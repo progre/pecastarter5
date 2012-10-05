@@ -1,19 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Collections.Specialized;
+using System.Linq;
 using System.Net;
+using System.Text;
 using System.Threading.Tasks;
 using Codeplex.Data;
-using Progressive.PecaStarter5.Models.ExternalYellowPages;
-using Progressive.Peercast4Net;
-using Progressive.PecaStarter5.Models.Plugins;
+using Progressive.PecaStarter5.Plugins;
 
-namespace Progressive.PecaStarter5.Models
+namespace Progressive.PecaStarter5.Models.YellowPages
 {
-    class WebApiYellowPages : YellowPages, IExternalYellowPages
+    class WebApiYellowPages : YellowPagesBase, IExternalYellowPages
     {
+        private string password = "";
+
         public override bool IsExternal { get { return true; } }
         public string BroadcastUrl { get; set; }
         public string UpdateUrl { get; set; }
@@ -48,8 +47,9 @@ namespace Progressive.PecaStarter5.Models
 
         #region IPlugin メンバー
 
-        public Task OnBroadcastedAsync(BroadcastedParameter parameter)
+        public Task OnBroadcastedAsync(BroadcastingParameter parameter)
         {
+            password = parameter.YellowPagesParameters["password"];
             var nvc = new NameValueCollection();
             foreach (var param in BroadcastParameters)
             {
@@ -58,7 +58,7 @@ namespace Progressive.PecaStarter5.Models
             return Post(BroadcastUrl, nvc);
         }
 
-        private string GetParameterValue(string parameterKey, BroadcastedParameter parameter)
+        private string GetParameterValue(string parameterKey, BroadcastingParameter parameter)
         {
             switch (parameterKey)
             {
@@ -93,6 +93,7 @@ namespace Progressive.PecaStarter5.Models
 
         public Task OnUpdatedAsync(UpdatedParameter parameter)
         {
+            password = parameter.YellowPagesParameters["password"];
             var nvc = new NameValueCollection();
             foreach (var param in UpdateParameters)
             {
@@ -126,7 +127,7 @@ namespace Progressive.PecaStarter5.Models
             }
         }
 
-        public Task OnStopedAsync(StopedParameter parameter)
+        public Task OnStopedAsync(StoppedParameter parameter)
         {
             var nvc = new NameValueCollection();
             foreach (var param in StopParameters)
@@ -136,7 +137,7 @@ namespace Progressive.PecaStarter5.Models
             return Post(StopUrl, nvc);
         }
 
-        private string GetParameterValue(string parameterKey, StopedParameter parameter)
+        private string GetParameterValue(string parameterKey, StoppedParameter parameter)
         {
             switch (parameterKey)
             {
@@ -153,13 +154,14 @@ namespace Progressive.PecaStarter5.Models
 
         public Task OnTickedAsync(string name, int relays, int listeners)
         {
-            throw new System.NotImplementedException();
-        }
+            if (string.IsNullOrEmpty(password))
+                return Task.Factory.StartNew(() => { });
 
-        public Task OnInterruptedAsync(InterruptedParameter parameter)
-        {
-            // nop
-            return Task.Factory.StartNew(() => { });
+            var nvc = new NameValueCollection();
+            nvc.Add("name", name);
+            nvc.Add("password", password);
+            nvc.Add("listeners", Math.Min(relays, listeners).ToString());
+            return Post(UpdateUrl, nvc);
         }
 
         #endregion

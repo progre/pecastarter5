@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Xml.Linq;
-using System.Threading.Tasks;
 using System.Net;
+using System.Threading.Tasks;
+using System.Xml.Linq;
 
-namespace Progressive.PecaStarter5.Models.YellowPagesXml
+namespace Progressive.PecaStarter5.Models.YellowPages.YellowPagesXml
 {
-    public abstract class YellowPagesParser
+    internal abstract class YellowPagesParser
     {
         protected XDocument Xml { get; private set; }
 

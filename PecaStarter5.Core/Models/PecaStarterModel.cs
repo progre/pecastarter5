@@ -1,93 +1,50 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Progressive.PecaStarter5.Models.Daos;
-using Progressive.PecaStarter5.Models.ExternalYellowPages;
-using Progressive.PecaStarter5.Models.Plugins;
-using Progressive.PecaStarter5.Models.Services;
-using Progressive.PecaStarter5.Models.YellowPagesXml;
+using System.Collections.Generic;
+using Progressive.PecaStarter5.Models.Broadcasts;
+using Progressive.PecaStarter5.Models.Configurations;
+using Progressive.PecaStarter5.Models.YellowPages;
+using Progressive.PecaStarter5.Models.YellowPages.YellowPagesXml;
+using Progressive.PecaStarter5.Plugins;
 using Progressive.Peercast4Net;
-using Progressive.Peercast4Net.Datas;
 
 namespace Progressive.PecaStarter5.Models
 {
     // TODO: VMにあるロジック・エンティティを可能な限りここに移動
-    public class PecaStarterModel
+    public class PecaStarterModel : IDisposable
     {
-        private readonly Peercast m_peercast;
-        private readonly PeercastStation m_peercastStation;
+        private readonly Peercast m_peercast = new Peercast();
+        private readonly PeercastStation m_peercastStation = new PeercastStation();
         private readonly IExternalResource m_externalResource;
-        private readonly BroadcastTimer m_timer;
         private readonly List<IExternalYellowPages> m_externalYellowPagesList;
-        private readonly IEnumerable<IPlugin> m_plugins;
-
-        /// <summary>非同期にエラーが発生した場合に通知されるイベント</summary>
-        public event UnhandledExceptionEventHandler AsyncExceptionThrown;
+        private readonly PluginsModel pluginsModel;
 
         public PecaStarterModel(string title, IExternalResource externalResource)
         {
             Title = title;
             m_externalResource = externalResource;
-            m_peercast = new Peercast();
-            m_peercastStation = new PeercastStation();
-            LoggerPlugin = new LoggerPlugin();
-            m_plugins = new IPlugin[] { LoggerPlugin };
             var tuple = GetYellowPagesLists();
             m_externalYellowPagesList = tuple.Item2;
             YellowPagesList = tuple.Item1;
 
-            m_timer = new BroadcastTimer();
-            m_timer.Ticked += s =>
-            {
-                var tuple1 = (Tuple<IYellowPages, string>)s;
-                Service.OnTickedAsync(tuple1.Item1, tuple1.Item2).ContinueWith(t =>
-                {
-                    if (t.IsFaulted)
-                        OnAsyncExceptionThrown(t.Exception);
-                });
-            };
-
-            Configuration = new ConfigurationDao(externalResource).Get();
+            var dao = new ConfigurationDao(externalResource);
+            pluginsModel = new PluginsModel(dao, externalResource.GetPlugins());
+            Configuration = dao.Get();
             Configuration.DefaultLogPath = externalResource.DefaultLogPath;
-            Service = new PeercastService(m_externalYellowPagesList, m_plugins, Configuration);
+            BroadcastModel = new BroadcastModel(Configuration, m_externalYellowPagesList, pluginsModel.Plugins);
         }
 
+        public BroadcastModel BroadcastModel { get; private set; }
         public string Title { get; private set; }
-        public PeercastService Service { get; private set; }
-        public LoggerPlugin LoggerPlugin { get; private set; }
         public Configuration Configuration { get; private set; }
         public List<IYellowPages> YellowPagesList { get; private set; }
+        public IEnumerable<ExternalPlugin> Plugins { get { return pluginsModel.Plugins; } }
 
         public void Save()
         {
-            new ConfigurationDao(m_externalResource).Put(Configuration);
-        }
-
-        public void Broadcast(IYellowPages yellowPages, BroadcastParameter parameter)
-        {
-            m_timer.BeginTimer(yellowPages, parameter.Name);
-        }
-
-        public void Interrupt(IYellowPages yellowPages, InterruptedParameter parameter)
-        {
-            m_timer.EndTimer();
-
-            foreach (var plugin in m_plugins)
-            {
-                plugin.OnInterruptedAsync(parameter).ContinueWith(t =>
-                {
-                    if (t.IsFaulted)
-                        OnAsyncExceptionThrown(t.Exception);
-                });
-            }
-
-            m_timer.BeginTimer(yellowPages, parameter.Name);
-        }
-
-        public void Stop()
-        {
-            m_timer.EndTimer();
+            var dao = new ConfigurationDao(m_externalResource);
+            dao.Put(Configuration);
+            pluginsModel.Save();
         }
 
         private Tuple<List<IYellowPages>, List<IExternalYellowPages>> GetYellowPagesLists()
@@ -106,10 +63,13 @@ namespace Progressive.PecaStarter5.Models
             return Tuple.Create(yellowPagesList, externalYellowPagesList);
         }
 
-        private void OnAsyncExceptionThrown(Exception ex)
+        #region IDisposable メンバー
+
+        public void Dispose()
         {
-            if (AsyncExceptionThrown != null)
-                AsyncExceptionThrown(this, new UnhandledExceptionEventArgs(ex, false));
+            pluginsModel.Dispose();
         }
+
+        #endregion
     }
 }

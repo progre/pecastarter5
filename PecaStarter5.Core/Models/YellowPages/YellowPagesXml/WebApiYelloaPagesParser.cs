@@ -1,13 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
-using Progressive.PecaStarter5.Models.ExternalYellowPages;
-using System.Threading.Tasks;
-using Progressive.Peercast4Net;
 
-namespace Progressive.PecaStarter5.Models.YellowPagesXml
+namespace Progressive.PecaStarter5.Models.YellowPages.YellowPagesXml
 {
-    public class WebApiYellowPagesParser : YellowPagesParser
+    internal class WebApiYellowPagesParser : YellowPagesParser
     {
         private static string[] DefaultBroadcastParameters
         {
@@ -53,6 +50,18 @@ namespace Progressive.PecaStarter5.Models.YellowPagesXml
                         "name",
                         "password",
                         "result_format",
+                };
+            }
+        }
+
+        private static string[] DefaultTickedParameters
+        {
+            get
+            {
+                return new[]{
+                    "name",
+                    "password",
+                    "listeners"
                 };
             }
         }
@@ -124,6 +133,12 @@ namespace Progressive.PecaStarter5.Models.YellowPagesXml
                 return DefaultUpdateParameters;
             }
         }
+
+        public IList<string> TickedParameters
+        {
+            get { return DefaultTickedParameters; }
+        }
+
         public IList<string> StopParameters
         {
             get

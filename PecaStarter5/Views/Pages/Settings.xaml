@@ -22,8 +22,6 @@
             <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
         </Grid.RowDefinitions>
         <Label Grid.Column="0" Grid.Row="0" Content="本体種別:"/>
         <StackPanel Margin="4" Grid.Column="1" Grid.Row="0">
@@ -42,15 +40,5 @@
         <Label Grid.Column="0" Grid.Row="4" Content="切断遅延:"/>
         <ct:NulllessIntegerUpDown Grid.Column="1" Grid.Row="4" HorizontalAlignment="Left" Width="54"
                 Minimum="0" Value="{Binding Delay}"/>
-        <CheckBox Name="LoggingCheckBox" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="5" Content="配信ログを取る"
-                IsEnabled="{Binding IsLocked}" IsChecked="{Binding Logging}"/>
-        <Label Grid.Column="0" Grid.Row="6" Content="ログの保存場所:"
-                IsEnabled="{Binding ElementName=LoggingCheckBox, Path=IsChecked}"/>
-        <DockPanel Grid.Column="1" Grid.Row="6"
-                IsEnabled="{Binding ElementName=LoggingCheckBox, Path=IsChecked}">
-            <Button Content="..." DockPanel.Dock="Right" Width="auto" Click="Button_Click"
-                    DataContext="{Binding LogPath, Mode=TwoWay}"/>
-            <TextBox Text="{Binding LogPath}"/>
-        </DockPanel>
     </Grid>
 </UserControl>

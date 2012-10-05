@@ -1,0 +1,23 @@
+﻿<UserControl x:Class="Progressive.PecaStarter5.Views.Pages.PluginSettings"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:c="clr-namespace:Progressive.Commons.Views.Converters"
+    xmlns:ct="clr-namespace:Progressive.Commons.Views.Controls"
+    xmlns:xctk="clr-namespace:Xceed.Wpf.Toolkit;assembly=WPFToolkit.Extended"
+    xmlns:l="clr-namespace:Progressive.PecaStarter5.Views.Pages"
+    Height="Auto">
+    <UserControl.Resources>
+        <ResourceDictionary Source="..\Styles\ResourceDictionary.xaml"/>
+    </UserControl.Resources>
+    <DockPanel>
+        <ListBox HorizontalContentAlignment="Stretch" ItemsSource="{Binding Plugins}">
+            <ListBox.Resources>
+            </ListBox.Resources>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <l:PluginColumn/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </DockPanel>
+</UserControl>

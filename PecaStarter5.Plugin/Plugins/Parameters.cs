@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using Progressive.Peercast4Net.Datas;
 
-namespace Progressive.PecaStarter5.Models.Plugins
+namespace Progressive.PecaStarter5.Plugins
 {
-    public class BroadcastedParameter
+    public class BroadcastingParameter
     {
         public Dictionary<string, string> YellowPagesParameters { get; set; }
         public int Bitrate { get; set; }
@@ -17,7 +17,7 @@ namespace Progressive.PecaStarter5.Models.Plugins
         public UpdateParameter UpdateParameter { get; set; }
     }
 
-    public class StopedParameter
+    public class StoppedParameter
     {
         public Dictionary<string, string> YellowPagesParameters { get; set; }
         public string Name { get; set; }
@@ -26,15 +26,6 @@ namespace Progressive.PecaStarter5.Models.Plugins
 
     public class InterruptedParameter
     {
-        public InterruptedParameter(IChannel channel)
-        {
-            Name = channel.Name;
-            Genre = channel.Genre;
-            Description = channel.Description;
-            Contact = channel.ContactUrl;
-            Comment = channel.Comment;
-        }
-
         public string Name { get; set; }
         public string Genre { get; set; }
         public string Description { get; set; }

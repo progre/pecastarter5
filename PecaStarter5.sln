@@ -11,6 +11,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PecaStarter5.ExternalLibrar
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PecaStarter5.Core", "PecaStarter5.Core\PecaStarter5.Core.csproj", "{AD7CE32A-D2F6-4B6F-9C53-28B2F471C8F9}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{E895DFC9-DE7C-47AA-B93E-42BBECE15286}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PecaStarter5.Plugin", "PecaStarter5.Plugin\PecaStarter5.Plugin.csproj", "{104854C7-DFC8-4FE8-B8B3-8809B776D62A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logger", "Plugins\Logger\Logger.csproj", "{A297E480-F955-45D3-8B84-230F06B0CFAF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,8 +77,31 @@ Global
 		{AD7CE32A-D2F6-4B6F-9C53-28B2F471C8F9}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{AD7CE32A-D2F6-4B6F-9C53-28B2F471C8F9}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{AD7CE32A-D2F6-4B6F-9C53-28B2F471C8F9}.Release|x86.ActiveCfg = Release|Any CPU
+		{104854C7-DFC8-4FE8-B8B3-8809B776D62A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{104854C7-DFC8-4FE8-B8B3-8809B776D62A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{104854C7-DFC8-4FE8-B8B3-8809B776D62A}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{104854C7-DFC8-4FE8-B8B3-8809B776D62A}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{104854C7-DFC8-4FE8-B8B3-8809B776D62A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{104854C7-DFC8-4FE8-B8B3-8809B776D62A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{104854C7-DFC8-4FE8-B8B3-8809B776D62A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{104854C7-DFC8-4FE8-B8B3-8809B776D62A}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{104854C7-DFC8-4FE8-B8B3-8809B776D62A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{104854C7-DFC8-4FE8-B8B3-8809B776D62A}.Release|x86.ActiveCfg = Release|Any CPU
+		{A297E480-F955-45D3-8B84-230F06B0CFAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A297E480-F955-45D3-8B84-230F06B0CFAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A297E480-F955-45D3-8B84-230F06B0CFAF}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{A297E480-F955-45D3-8B84-230F06B0CFAF}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{A297E480-F955-45D3-8B84-230F06B0CFAF}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A297E480-F955-45D3-8B84-230F06B0CFAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A297E480-F955-45D3-8B84-230F06B0CFAF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A297E480-F955-45D3-8B84-230F06B0CFAF}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{A297E480-F955-45D3-8B84-230F06B0CFAF}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{A297E480-F955-45D3-8B84-230F06B0CFAF}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A297E480-F955-45D3-8B84-230F06B0CFAF} = {E895DFC9-DE7C-47AA-B93E-42BBECE15286}
 	EndGlobalSection
 EndGlobal

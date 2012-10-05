@@ -5,11 +5,13 @@ using System.Windows.Data;
 
 namespace Progressive.Commons.Views.Converters
 {
-    public class BoolVisibilityConverter : IValueConverter
+    internal class BoolVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (bool)value ? Visibility.Visible : Visibility.Collapsed;
+            return "invert" != (string)parameter ?
+                (bool)value ? Visibility.Visible : Visibility.Collapsed :
+                (bool)value ? Visibility.Collapsed : Visibility.Visible;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -18,7 +20,7 @@ namespace Progressive.Commons.Views.Converters
         }
     }
 
-    public class ReferenceVisibilityConverter : IValueConverter
+    internal class ReferenceVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -31,7 +33,7 @@ namespace Progressive.Commons.Views.Converters
         }
     }
 
-    public class EmptyStringVisibilityConverter : IValueConverter
+    internal class EmptyStringVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

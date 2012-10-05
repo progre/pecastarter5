@@ -6,7 +6,7 @@ namespace CreteLib
     /// <summary>
     /// 順序の付いたノードのコレクションを表します
     /// </summary>
-    public class HtmlNodeList : IEnumerable
+    internal class HtmlNodeList : IEnumerable
     {
         //ノードのリスト
         private List<HtmlNode> _nodeList = null;
@@ -68,7 +68,7 @@ namespace CreteLib
         /// <summary>
         /// HtmlNodeListの反復処理を行います
         /// </summary>
-        public class HtmlNodeEnumerator : IEnumerator
+        internal class HtmlNodeEnumerator : IEnumerator
         {
             //現在位置
             private int _pointer = -1;

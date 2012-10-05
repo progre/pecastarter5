@@ -1,7 +1,8 @@
-﻿using System.Threading;
-using System;
+﻿using System;
+using System.Threading;
+using Progressive.PecaStarter5.Models.YellowPages;
 
-namespace Progressive.PecaStarter5.Models
+namespace Progressive.PecaStarter5.Models.Broadcasts
 {
     class BroadcastTimer
     {

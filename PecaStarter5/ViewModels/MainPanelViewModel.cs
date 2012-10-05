@@ -1,34 +1,39 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
 using Progressive.Commons.ViewModels;
 using Progressive.PecaStarter5.Models;
+using Progressive.PecaStarter5.Models.Broadcasts;
 using Progressive.PecaStarter5.Models.Channels;
-using Progressive.PecaStarter5.Models.Plugins;
+using Progressive.PecaStarter5.Models.YellowPages;
 using Progressive.PecaStarter5.ViewModels.Controls;
+using Progressive.PecaStarter5.ViewModels.Dxos;
 using Progressive.PecaStarter5.ViewModels.Pages;
 using Progressive.Peercast4Net;
-using System.Threading.Tasks;
 
 namespace Progressive.PecaStarter5.ViewModels
 {
-    public class MainPanelViewModel : ViewModelBase
+    internal class MainPanelViewModel : ViewModelBase
     {
         public const int YellowPagesTabIndex = 2;
         public const int ExternalSourceTabIndex = 3;
 
-        private readonly PecaStarterModel m_model;
+        private readonly BroadcastModel m_model;
         private readonly ChannelViewModel m_channelViewModel;
 
         public MainPanelViewModel(PecaStarterModel model)
         {
             // Models
-            m_model = model;
+            m_model = model.BroadcastModel;
 
             // タブ情報の初期化
-            RelayListViewModel = new RelayListViewModel(model.Service, model.YellowPagesList);
+            RelayListViewModel = new RelayListViewModel(model.BroadcastModel, model.YellowPagesList);
             m_channelViewModel = new ChannelViewModel(model.YellowPagesList, model.Configuration);
-            SettingsViewModel = new SettingsViewModel(model.Configuration, model.LoggerPlugin);
-            BroadcastControlViewModel = new BroadcastControlViewModel(this, model);
+            SettingsViewModel = new SettingsViewModel(model.Configuration);
+            PluginSettingsViewModel = new PluginSettingsViewModel(model.Plugins);
+            BroadcastControlViewModel = new BroadcastControlViewModel(this,
+                model.BroadcastModel, model.Configuration);
 
             InitializeEvents();
         }
@@ -72,6 +77,7 @@ namespace Progressive.PecaStarter5.ViewModels
             get { return m_channelViewModel.ExternalSourceViewModel; }
         }
         public SettingsViewModel SettingsViewModel { get; private set; }
+        public PluginSettingsViewModel PluginSettingsViewModel { get; private set; }
 
         private void InitializeEvents()
         {
@@ -102,7 +108,7 @@ namespace Progressive.PecaStarter5.ViewModels
                 // ソースタブに移動
                 SelectedIndex = ExternalSourceTabIndex;
                 // plugin処理
-                m_model.Interrupt(e.YellowPages, new InterruptedParameter(ch));
+                m_model.Interrupt(e.YellowPages, ModelDxo.ToInterruptedParameter(ch));
             };
             RelayListViewModel.ExceptionThrown += (sender, e) => OnException((Exception)e.ExceptionObject);
 

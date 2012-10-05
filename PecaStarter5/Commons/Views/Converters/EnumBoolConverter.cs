@@ -4,7 +4,7 @@ using System.Windows.Data;
 
 namespace Progressive.Commons.Views.Converters
 {
-    public class EnumBoolConverter : IValueConverter
+    internal class EnumBoolConverter : IValueConverter
     {
         #region IValueConverter Members
 

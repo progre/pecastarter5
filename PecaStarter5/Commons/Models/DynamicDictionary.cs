@@ -9,7 +9,7 @@ using System.Collections.ObjectModel;
 namespace Progressive.PecaStarter5.Commons.Models
 {
     // The class derived from DynamicObject.
-    public class DynamicStringDictionary : DynamicObject, INotifyPropertyChanged
+    internal class DynamicStringDictionary : DynamicObject, INotifyPropertyChanged
     {
         #region INotifyPropertyChanged メンバー
 
