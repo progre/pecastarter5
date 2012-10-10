@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PecaStarter5.Plugin", "Peca
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logger", "Plugins\Logger\Logger.csproj", "{A297E480-F955-45D3-8B84-230F06B0CFAF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Twitter", "Plugins\Twitter\Twitter.csproj", "{BA2ECC7B-AB08-41E6-9A95-BDCAC698AD77}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -97,11 +99,22 @@ Global
 		{A297E480-F955-45D3-8B84-230F06B0CFAF}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{A297E480-F955-45D3-8B84-230F06B0CFAF}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{A297E480-F955-45D3-8B84-230F06B0CFAF}.Release|x86.ActiveCfg = Release|Any CPU
+		{BA2ECC7B-AB08-41E6-9A95-BDCAC698AD77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA2ECC7B-AB08-41E6-9A95-BDCAC698AD77}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA2ECC7B-AB08-41E6-9A95-BDCAC698AD77}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{BA2ECC7B-AB08-41E6-9A95-BDCAC698AD77}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{BA2ECC7B-AB08-41E6-9A95-BDCAC698AD77}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{BA2ECC7B-AB08-41E6-9A95-BDCAC698AD77}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA2ECC7B-AB08-41E6-9A95-BDCAC698AD77}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA2ECC7B-AB08-41E6-9A95-BDCAC698AD77}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{BA2ECC7B-AB08-41E6-9A95-BDCAC698AD77}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{BA2ECC7B-AB08-41E6-9A95-BDCAC698AD77}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{A297E480-F955-45D3-8B84-230F06B0CFAF} = {E895DFC9-DE7C-47AA-B93E-42BBECE15286}
+		{BA2ECC7B-AB08-41E6-9A95-BDCAC698AD77} = {E895DFC9-DE7C-47AA-B93E-42BBECE15286}
 	EndGlobalSection
 EndGlobal
