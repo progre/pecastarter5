@@ -75,7 +75,10 @@ namespace Progressive.PecaStarter5
             string[] files;
             try
             {
-                files = Directory.GetFiles(PluginDirectoryPath, "*.dll");
+                files = Directory.GetFiles(PluginDirectoryPath, "*.dll")
+                    .Concat(Directory.GetDirectories(PluginDirectoryPath)
+                        .SelectMany(x => Directory.GetFiles(x, "*.dll")))
+                    .ToArray();
             }
             catch
             {
