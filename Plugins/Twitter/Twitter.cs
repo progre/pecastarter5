@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 using Progressive.Peercast4Net.Datas;
 using System.Reflection;
+using Progressive.PecaStarter5.Plugins.Twitter.Views;
+using System.Collections.ObjectModel;
 
 namespace Progressive.PecaStarter5.Plugins.Twitter
 {
@@ -16,7 +18,18 @@ namespace Progressive.PecaStarter5.Plugins.Twitter
             pluginInfo = new PluginInfo("Twitter",
                 "Twitter",
                 Assembly.GetExecutingAssembly().GetName().Version,
-                false);
+                true);
+        }
+
+        public bool HasPeercastHashtag
+        {
+            get { return (bool)Repository["HasPeercastHashtag"]; }
+            set { Repository["HasPeercastHashtag"] = value; }
+        }
+        public bool HasPecaStarterHashtag
+        {
+            get { return (bool)Repository["HasPecaStarterHashtag"]; }
+            set { Repository["HasPecaStarterHashtag"] = value; }
         }
 
         #region IPlugin メンバー
@@ -27,32 +40,39 @@ namespace Progressive.PecaStarter5.Plugins.Twitter
             get { return pluginInfo; }
         }
 
-        public Dictionary<string, object> Repository { get { return null; } set { } }
+        public Dictionary<string, object> Repository { get; set; }
 
         public void Initialize()
         {
+            if (!Repository.ContainsKey("HasPeercastHashtag"))
+                Repository["HasPeercastHashtag"] = true;
+            if (!Repository.ContainsKey("HasPecaStarterHashtag"))
+                Repository["HasPecaStarterHashtag"] = true;
         }
 
         public void ShowSettingsDialog()
         {
+            var view = new Settings();
+            view.DataContext = this;
+            view.ShowDialog();
         }
 
         public Task OnBroadcastedAsync(BroadcastingParameter parameter)
         {
-            return Task.Factory.StartNew(() => Process.Start(
-                "https://twitter.com/intent/tweet?text="
-                   + GetMessage(parameter.BroadcastParameter)));
+            var list = new List<string>();
+            if ((bool)Repository["HasPeercastHashtag"])
+                list.Add("peercast");
+            if ((bool)Repository["HasPecaStarterHashtag"])
+                list.Add("pecastarter");
+            return Task.Factory.StartNew(() => new TwitterModel().Tweet(
+                GetMessage(parameter.BroadcastParameter), list));
         }
 
         private string GetMessage(BroadcastParameter parameter)
         {
-            var message = "Peercastで配信中！" + parameter.Name + " [" + parameter.Genre + " - " + parameter.Description + "]「" + parameter.Comment + "」";
-            if (message.Length > 140)
-            {
-                message.Remove(138);
-                message += "…";
-            }
-            return message;
+            return "Peercastで配信中！" + parameter.Name
+                + " [" + parameter.Genre + " - " + parameter.Description + "]「"
+                + parameter.Comment + "」";
         }
 
         public Task OnUpdatedAsync(UpdatedParameter parameter)
