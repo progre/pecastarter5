@@ -3,6 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:System="clr-namespace:System;assembly=mscorlib"
     xmlns:c="clr-namespace:Progressive.PecaStarter.View.Control"
+    xmlns:c2="clr-namespace:Progressive.Commons.Views.Controls"
     xmlns:e="clr-namespace:Xceed.Wpf.Toolkit;assembly=WPFToolkit.Extended">
     <Style TargetType="Button">
         <Setter Property="Height" Value="23"/>
@@ -34,6 +35,11 @@
         <Setter Property="Height" Value="28"/>
     </Style>
     <Style TargetType="TextBox">
+        <Setter Property="Height" Value="24"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}"/>
+    </Style>
+    <Style TargetType="c2:AllSelectableTextBox">
         <Setter Property="Height" Value="24"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}"/>
