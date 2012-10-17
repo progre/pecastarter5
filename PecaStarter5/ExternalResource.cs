@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using Progressive.PecaStarter5.Models;
 using Progressive.PecaStarter5.Plugins;
+using System.Text.RegularExpressions;
 
 namespace Progressive.PecaStarter5
 {
@@ -93,7 +94,7 @@ namespace Progressive.PecaStarter5
                         .Where(x => x.IsClass && !x.IsAbstract && !x.IsNotPublic
                             && x.GetInterface(iPluginName) != null)
                         .Select(x => new ExternalPlugin(
-                            Path.GetFileNameWithoutExtension(path),
+                            GetRelativeFileNameWithoutExtension(path),
                             (IPlugin)Activator.CreateInstance(x))));
                 }
                 catch
@@ -102,6 +103,12 @@ namespace Progressive.PecaStarter5
                 }
             }
             return list;
+        }
+
+        private string GetRelativeFileNameWithoutExtension(string path)
+        {
+            return Regex.Replace(path.Replace(PluginDirectoryPath, ""),
+                @"\.DLL", "", RegexOptions.IgnoreCase);
         }
     }
 }
