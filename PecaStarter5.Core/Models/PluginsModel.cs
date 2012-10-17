@@ -85,7 +85,7 @@ namespace Progressive.PecaStarter5.Models
                 plugin.Instance.PluginInfo.Name,
                 new PluginSettings
                 {
-                    IsEnabled = true,
+                    IsEnabled = plugin.IsEnabled,
                     Repository = plugin.Instance.Repository
                 });
         }
