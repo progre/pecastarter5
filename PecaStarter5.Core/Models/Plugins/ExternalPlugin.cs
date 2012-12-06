@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Progressive.PecaStarter5.Plugins;
 
-namespace Progressive.PecaStarter5.Models
+namespace Progressive.PecaStarter5.Models.Plugins
 {
     public class ExternalPlugin
     {

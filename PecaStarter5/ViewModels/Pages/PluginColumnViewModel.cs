@@ -3,6 +3,7 @@ using System.Windows.Input;
 using Progressive.Commons.ViewModels;
 using Progressive.Commons.ViewModels.Commands;
 using Progressive.PecaStarter5.Models;
+using Progressive.PecaStarter5.Models.Plugins;
 
 namespace Progressive.PecaStarter5.ViewModels.Pages
 {

@@ -6,6 +6,7 @@ using System.Reflection;
 using Progressive.PecaStarter5.Models;
 using Progressive.PecaStarter5.Plugins;
 using System.Text.RegularExpressions;
+using Progressive.PecaStarter5.Models.Plugins;
 
 namespace Progressive.PecaStarter5
 {

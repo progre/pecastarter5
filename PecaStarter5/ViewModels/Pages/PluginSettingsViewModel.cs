@@ -8,6 +8,7 @@ using Progressive.PecaStarter5.Plugins;
 using System.Windows.Input;
 using Progressive.Commons.ViewModels.Commands;
 using System.Windows;
+using Progressive.PecaStarter5.Models.Plugins;
 
 namespace Progressive.PecaStarter5.ViewModels.Pages
 {
