@@ -7,6 +7,7 @@ using Progressive.PecaStarter5.Models.YellowPages;
 using Progressive.PecaStarter5.Models.YellowPages.YellowPagesXml;
 using Progressive.PecaStarter5.Plugins;
 using Progressive.Peercast4Net;
+using Progressive.PecaStarter5.Models.Plugins;
 
 namespace Progressive.PecaStarter5.Models
 {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Runtime.Serialization;
 
-namespace Progressive.PecaStarter5.Models
+namespace Progressive.PecaStarter5.Models.Plugins
 {
     [DataContractAttribute]
     class PluginSettingsList

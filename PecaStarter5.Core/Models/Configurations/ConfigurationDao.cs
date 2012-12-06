@@ -6,6 +6,7 @@ using System.Xml;
 using System;
 using System.Collections;
 using System.Linq;
+using Progressive.PecaStarter5.Models.Plugins;
 
 namespace Progressive.PecaStarter5.Models.Configurations
 {

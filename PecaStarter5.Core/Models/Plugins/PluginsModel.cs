@@ -6,7 +6,7 @@ using Progressive.PecaStarter5.Plugins;
 using Progressive.PecaStarter5.Models.Configurations;
 using System.Threading.Tasks;
 
-namespace Progressive.PecaStarter5.Models
+namespace Progressive.PecaStarter5.Models.Plugins
 {
     class PluginsModel : IDisposable
     {
