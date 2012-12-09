@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Plugins\IBroadcastController.cs" />
     <Compile Include="Plugins\IPlugin.cs" />
     <Compile Include="Plugins\Parameters.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

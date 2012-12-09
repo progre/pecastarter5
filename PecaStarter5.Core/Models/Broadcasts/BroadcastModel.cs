@@ -1,19 +1,18 @@
-﻿using System;
+﻿using Progressive.PecaStarter5.Models.Configurations;
+using Progressive.PecaStarter5.Models.Plugins;
+using Progressive.PecaStarter5.Models.YellowPages;
+using Progressive.Peercast4Net;
+using Progressive.Peercast4Net.Datas;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Progressive.PecaStarter5.Models.Configurations;
-using Progressive.PecaStarter5.Models.YellowPages;
-using Progressive.PecaStarter5.Plugins;
-using Progressive.Peercast4Net;
-using Progressive.Peercast4Net.Datas;
-using Progressive.PecaStarter5.Models.Plugins;
 
 namespace Progressive.PecaStarter5.Models.Broadcasts
 {
     public class BroadcastModel
     {
-        private readonly PeercastService _service = new PeercastService();
+        private readonly PeercastService service = new PeercastService();
         private readonly Peercast peercast = new Peercast();
         private readonly PeercastStation peercastStation = new PeercastStation();
         private readonly BroadcastTimer timer = new BroadcastTimer();
@@ -48,28 +47,34 @@ namespace Progressive.PecaStarter5.Models.Broadcasts
             }
         }
 
-        public Task<BroadcastingParameter> BroadcastAsync(IYellowPages yellowPages, int? acceptedHash,
+        public Task<Progressive.PecaStarter5.Plugins.BroadcastingParameter> BroadcastAsync(IYellowPages yellowPages, int? acceptedHash,
             Dictionary<string, string> yellowPagesParameter,
             BroadcastParameter parameter, IProgress<string> progress)
         {
-            return _service.BroadcastAsync(Peercast, externalYellowPagesList,
+            return service.BroadcastAsync(Peercast, externalYellowPagesList,
                 yellowPages, acceptedHash, yellowPagesParameter, parameter, progress)
                 .ContinueWith(t =>
             {
                 if (t.IsFaulted)
                     throw t.Exception;
-                timer.BeginTimer(yellowPages, parameter.Name);
+                var broadcasting = t.Result;
+                timer.BeginTimer(yellowPages, broadcasting.Id);
                 // プラグイン処理
-                foreach (var plugin in plugins.Where(x => x.IsEnabled).Select(x => x.Instance))
-                    plugin.OnBroadcastedAsync(t.Result);
-                return t.Result;
+                foreach (var plugin in plugins
+                    .Where(x => x.IsEnabled).Select(x => x.Instance))
+                {
+                    plugin.OnBroadcastedAsync(broadcasting).ContinueWith(t1 =>
+                        OnAsyncExceptionThrown(t1.Exception),
+                        TaskContinuationOptions.OnlyOnFaulted);
+                }
+                return broadcasting;
             });
         }
 
         public Task UpdateAsync(IYellowPages yellowPages, Dictionary<string, string> yellowPagesParameter,
             UpdateParameter parameter, IProgress<string> progress)
         {
-            return _service.UpdateAsync(Peercast, externalYellowPagesList,
+            return service.UpdateAsync(Peercast, externalYellowPagesList,
                 yellowPages, yellowPagesParameter, parameter, progress)
                 .ContinueWith(t =>
             {
@@ -84,7 +89,7 @@ namespace Progressive.PecaStarter5.Models.Broadcasts
         public Task StopAsync(IYellowPages yellowPages, Dictionary<string, string> yellowPagesParameter,
             string name, string id, IProgress<string> progress)
         {
-            return _service.StopAsync(Peercast, externalYellowPagesList,
+            return service.StopAsync(Peercast, externalYellowPagesList,
                 yellowPages, yellowPagesParameter, name, id, progress)
                 .ContinueWith(t =>
             {
@@ -99,10 +104,10 @@ namespace Progressive.PecaStarter5.Models.Broadcasts
 
         public Task<IEnumerable<IChannel>> GetChannelsAsync()
         {
-            return _service.GetChannelsAsync(Peercast);
+            return service.GetChannelsAsync(Peercast);
         }
 
-        public void Interrupt(IYellowPages yellowPages, InterruptedParameter parameter)
+        public void Interrupt(IYellowPages yellowPages, Progressive.PecaStarter5.Plugins.InterruptedParameter parameter)
         {
             timer.EndTimer();
 
@@ -115,26 +120,36 @@ namespace Progressive.PecaStarter5.Models.Broadcasts
                 });
             }
 
-            timer.BeginTimer(yellowPages, parameter.Name);
+            timer.BeginTimer(yellowPages, parameter.Id);
         }
 
-        private void timer_Ticked(object state)
+        private void timer_Ticked(long count, IYellowPages yellowPages, string id)
         {
-            var tuple1 = (Tuple<IYellowPages, string>)state;
-            var yellowPages = tuple1.Item1;
-            var name = tuple1.Item2;
-            _service.OnTickedAsync(Peercast, yellowPages, name).ContinueWith(t =>
+            try
             {
-                if (t.IsFaulted)
-                    OnAsyncExceptionThrown(t.Exception);
+                IChannel channel = null;
+                // 10分おき
+                if (count % 10 == 0)
+                {
+                    channel = service.OnTickedAsync(Peercast, yellowPages, id).Result;
+                }
 
                 // プラグイン処理
-                foreach (var plugin in plugins.Where(x => x.IsEnabled).Select(x => x.Instance))
-                    plugin.OnTickedAsync(name, t.Result.Item1, t.Result.Item2)
-                        .ContinueWith(
-                            t1 => OnAsyncExceptionThrown(t1.Exception),
-                            TaskContinuationOptions.OnlyOnFaulted);
-            });
+                foreach (var plugin in plugins
+                    .Where(x => x.IsEnabled).Select(x => x.Instance)
+                    .Where(x => x.PluginConfiguration.TickInterval % count == 0))
+                {
+                    if (channel == null)
+                    {
+                        channel = peercast.GetChannelAsync(id).Result;
+                    }
+                    plugin.OnTickedAsync(channel).Wait();
+                }
+            }
+            catch (Exception ex)
+            {
+                OnAsyncExceptionThrown(ex);
+            }
         }
 
         private void OnAsyncExceptionThrown(Exception ex)

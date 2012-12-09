@@ -15,10 +15,11 @@ namespace Progressive.PecaStarter5.Plugins.Twitter
     {
         public Twitter()
         {
-            pluginInfo = new PluginInfo("Twitter",
+            info = new PluginInfo("Twitter",
                 "Twitter",
                 Assembly.GetExecutingAssembly().GetName().Version,
                 true);
+            configuration = new PluginConfiguration(0);
         }
 
         public bool HasPeercastHashtag
@@ -34,11 +35,11 @@ namespace Progressive.PecaStarter5.Plugins.Twitter
 
         #region IPlugin メンバー
 
-        private readonly PluginInfo pluginInfo;
-        public PluginInfo PluginInfo
-        {
-            get { return pluginInfo; }
-        }
+        private readonly PluginInfo info;
+        public PluginInfo PluginInfo { get { return info; } }
+
+        private readonly PluginConfiguration configuration;
+        public PluginConfiguration PluginConfiguration { get { return configuration; } }
 
         public Dictionary<string, object> Repository { get; set; }
 
@@ -85,7 +86,7 @@ namespace Progressive.PecaStarter5.Plugins.Twitter
             return null;
         }
 
-        public Task OnTickedAsync(string name, int relays, int listeners)
+        public Task OnTickedAsync(IChannel channel)
         {
             return null;
         }

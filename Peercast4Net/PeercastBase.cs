@@ -27,13 +27,18 @@ namespace Progressive.Peercast4Net
 
         public Task<IEnumerable<IChannel>> GetChannelsAsync()
         {
-            return GetXmlStatusAsync().ContinueWith(t=>t.Result.Channels);
+            return GetXmlStatusAsync().ContinueWith(t => t.Result.Channels);
+        }
+
+        public Task<IChannel> GetChannelAsync(string id)
+        {
+            return GetXmlStatusAsync().ContinueWith(t => t.Result.GetChannel(id));
         }
 
         [Obsolete]
         public Task<Tuple<int, int>> GetListenersAsync(string name)
         {
-            return GetXmlStatusAsync().ContinueWith(t=>t.Result.GetHits(name));
+            return GetXmlStatusAsync().ContinueWith(t => t.Result.GetHits(name));
         }
 
         public abstract Task<Tuple<string, int>> BroadcastAsync(

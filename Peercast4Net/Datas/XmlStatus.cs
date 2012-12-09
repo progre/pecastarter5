@@ -19,6 +19,14 @@ namespace Progressive.Peercast4Net.Datas
             get { return ChannelElements.Select(x => CreateChannel(x)); }
         }
 
+        public IChannel GetChannel(string id)
+        {
+            return ChannelElements
+                .Where(x => x.Attribute("id").Value == id)
+                .Select(CreateChannel)
+                .FirstOrDefault();
+        }
+
         private Channel CreateChannel(XElement channel)
         {
             var founds = FoundChannelElements;

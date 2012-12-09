@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Progressive.PecaStarter5.Models.YellowPages;
-using Progressive.PecaStarter5.Plugins;
 using Progressive.Peercast4Net;
 using Progressive.Peercast4Net.Datas;
 
@@ -11,7 +10,7 @@ namespace Progressive.PecaStarter5.Models.Broadcasts
 {
     internal class PeercastService
     {
-        public Task<BroadcastingParameter> BroadcastAsync(
+        public Task<Progressive.PecaStarter5.Plugins.BroadcastingParameter> BroadcastAsync(
             IPeercast peercast, IEnumerable<IExternalYellowPages> externalYellowPagesList,
             IYellowPages yellowPages, int? acceptedHash,
             Dictionary<string, string> yellowPagesParameter,
@@ -37,7 +36,7 @@ namespace Progressive.PecaStarter5.Models.Broadcasts
                     new Peercast4Net.Datas.YellowPages() { Name = yellowPages.Name, Url = yellowPages.Host },
                     param).Result;
 
-                var broadcastedParameter = new BroadcastingParameter
+                var broadcastedParameter = new Progressive.PecaStarter5.Plugins.BroadcastingParameter
                 {
                     Bitrate = tuple.Item2,
                     Id = tuple.Item1,
@@ -71,7 +70,7 @@ namespace Progressive.PecaStarter5.Models.Broadcasts
             });
         }
 
-        public Task<UpdatedParameter> UpdateAsync(
+        public Task<Progressive.PecaStarter5.Plugins.UpdatedParameter> UpdateAsync(
             IPeercast peercast, IEnumerable<IExternalYellowPages> externalYellowPagesList,
             IYellowPages yellowPages, Dictionary<string, string> yellowPagesParameter,
             UpdateParameter parameter, IProgress<string> progress)
@@ -84,7 +83,7 @@ namespace Progressive.PecaStarter5.Models.Broadcasts
                 param.Genre = yellowPages.GetPrefix(yellowPagesParameter) + param.Genre;
                 peercast.UpdateAsync(param).Wait();
 
-                var updatedParameter = new UpdatedParameter
+                var updatedParameter = new Progressive.PecaStarter5.Plugins.UpdatedParameter
                 {
                     YellowPagesParameters = yellowPagesParameter,
                     UpdateParameter = parameter
@@ -101,7 +100,7 @@ namespace Progressive.PecaStarter5.Models.Broadcasts
             });
         }
 
-        public Task<StoppedParameter> StopAsync(
+        public Task<Progressive.PecaStarter5.Plugins.StoppedParameter> StopAsync(
             IPeercast peercast, IEnumerable<IExternalYellowPages> externalYellowPagesList,
             IYellowPages yellowPages, Dictionary<string, string> yellowPagesParameter,
             string name, string id, IProgress<string> progress)
@@ -111,7 +110,7 @@ namespace Progressive.PecaStarter5.Models.Broadcasts
                 // 停止
                 progress.Report("通信中...");
 
-                var stoppedParameter = new StoppedParameter
+                var stoppedParameter = new Progressive.PecaStarter5.Plugins.StoppedParameter
                 {
                     Name = name,
                     Id = id,
@@ -136,19 +135,20 @@ namespace Progressive.PecaStarter5.Models.Broadcasts
             return peercast.GetChannelsAsync();
         }
 
-        public Task<Tuple<int, int>> OnTickedAsync(IPeercast peercast, IYellowPages yellowPages, string name)
+        public Task<IChannel> OnTickedAsync(IPeercast peercast, IYellowPages yellowPages, string id)
         {
             return Task.Factory.StartNew(() =>
             {
-                var tuple = peercast.GetListenersAsync(name).Result;
+                var channel = peercast.GetChannelAsync(id).Result;
 
                 // 外部YPに通知
                 if (yellowPages.IsExternal)
                 {
-                    ((IExternalYellowPages)yellowPages).OnTickedAsync(name, tuple.Item1, tuple.Item2).Wait();
+                    ((IExternalYellowPages)yellowPages).OnTickedAsync(
+                        channel.Name, channel.TotalRelays, channel.TotalListeners).Wait();
                 }
 
-                return tuple;
+                return channel;
             });
         }
 

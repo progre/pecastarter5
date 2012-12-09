@@ -3,6 +3,7 @@ using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
 using Progressive.PecaStarter5.Plugins.Logger.Views;
+using Progressive.Peercast4Net.Datas;
 
 namespace Progressive.PecaStarter5.Plugins.Logger
 {
@@ -12,11 +13,12 @@ namespace Progressive.PecaStarter5.Plugins.Logger
 
         public Logger()
         {
-            pluginInfo = new PluginInfo(
+            info = new PluginInfo(
                 name: "Logger",
                 displayName: "ログ出力",
                 version: Assembly.GetExecutingAssembly().GetName().Version,
                 hasSettingsDialog: true);
+            configuration = new PluginConfiguration(10);
         }
 
         public string BasePath
@@ -27,8 +29,11 @@ namespace Progressive.PecaStarter5.Plugins.Logger
 
         #region IPlugin メンバー
 
-        private readonly PluginInfo pluginInfo;
-        public PluginInfo PluginInfo { get { return pluginInfo; } }
+        private readonly PluginInfo info;
+        public PluginInfo PluginInfo { get { return info; } }
+
+        private readonly PluginConfiguration configuration;
+        public PluginConfiguration PluginConfiguration { get { return configuration; } }
 
         public Dictionary<string, object> Repository { get; set; }
 
@@ -76,13 +81,16 @@ namespace Progressive.PecaStarter5.Plugins.Logger
             });
         }
 
-        public Task OnTickedAsync(string name, int relays, int listeners)
+        public Task OnTickedAsync(IChannel channel)
         {
             return Task.Factory.StartNew(() =>
             {
                 if (m_logger == null)
                     return;
-                m_logger.Insert(relays.ToString(), listeners.ToString(), "", "", "");
+                m_logger.Insert(
+                    channel.TotalRelays.ToString(),
+                    channel.TotalListeners.ToString(),
+                    "", "", "");
             });
         }
 

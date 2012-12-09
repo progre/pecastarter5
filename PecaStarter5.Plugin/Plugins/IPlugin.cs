@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Progressive.Peercast4Net.Datas;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -13,6 +14,10 @@ namespace Progressive.PecaStarter5.Plugins
         /// プラグイン情報
         /// </summary>
         PluginInfo PluginInfo { get; }
+        /// <summary>
+        /// プラグイン動作設定
+        /// </summary>
+        PluginConfiguration PluginConfiguration { get; }
         /// <summary>
         /// 終了時にディスクに保存され、次回起動時に復元される
         /// </summary>
@@ -50,7 +55,7 @@ namespace Progressive.PecaStarter5.Plugins
         /// <param name="relays"></param>
         /// <param name="listeners"></param>
         /// <returns></returns>
-        Task OnTickedAsync(string name, int relays, int listeners);
+        Task OnTickedAsync(IChannel channel);
         /// <summary>
         /// 配信中のチャンネル情報を取り込んだ時に通知されるメソッド
         /// </summary>
@@ -66,7 +71,7 @@ namespace Progressive.PecaStarter5.Plugins
     /// <summary>
     /// プラグイン情報
     /// </summary>
-    public struct PluginInfo
+    public class PluginInfo
     {
         public PluginInfo(string name, string displayName, Version version, bool hasSettingsDialog)
         {
@@ -76,26 +81,43 @@ namespace Progressive.PecaStarter5.Plugins
             this.hasSettingsDialog = hasSettingsDialog;
         }
 
-        private string name;
+        private readonly string name;
         /// <summary>
         /// プラグイン名
         /// </summary>
         public string Name { get { return name; } }
-        private string displayName;
+        private readonly string displayName;
         /// <summary>
         /// プラグインの表示名
         /// </summary>
         public string DisplayName { get { return displayName; } }
-        private Version version;
+        private readonly Version version;
         /// <summary>
         /// プラグインのバージョン
         /// </summary>
         public Version Version { get { return version; } }
-        private bool hasSettingsDialog;
+        private readonly bool hasSettingsDialog;
         /// <summary>
         /// 設定ダイアログがあるかどうか
         /// </summary>
         /// <returns></returns>
         public bool HasSettingsDialog { get { return hasSettingsDialog; } }
+    }
+
+    /// <summary>
+    /// プラグイン動作設定
+    /// </summary>
+    public class PluginConfiguration
+    {
+        public PluginConfiguration(int tickInterval)
+        {
+            this.tickInterval = tickInterval;
+        }
+
+        private readonly int tickInterval;
+        /// <summary>
+        /// OnTickedAsyncを何分間隔で要求するか
+        /// </summary>
+        public int TickInterval { get { return tickInterval; } }
     }
 }

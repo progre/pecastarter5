@@ -5,7 +5,7 @@ using Progressive.Peercast4Net.Commons;
 
 namespace Progressive.Peercast4Net.Daos
 {
-    class PeercastDaoBase : IDisposable
+    public class PeercastDaoBase : IDisposable
     {
         protected const string ViewXmlUrl = "/admin?cmd=viewxml";
 

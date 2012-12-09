@@ -6,22 +6,31 @@ namespace Progressive.PecaStarter5.Models.Broadcasts
 {
     class BroadcastTimer
     {
-        private Timer m_timer; // スレッドタイマが最も軽量
+        private Timer timer; // スレッドタイマが最も軽量
+        private long count;
 
-        public event TimerCallback Ticked;
+        public event Action<long, IYellowPages, string> Ticked;
 
-        public void BeginTimer(IYellowPages yellowPages, string name)
+        public void BeginTimer(IYellowPages yellowPages, string id)
         {
-            const int period = 10 * 60 * 1000;
-            m_timer = new Timer(Ticked, Tuple.Create(yellowPages, name), period, period);
+            const int Period = 1 * 60 * 1000;
+            this.count = 0;
+            this.timer = new Timer(Callback, Tuple.Create(yellowPages, id), Period, Period);
+        }
+
+        private void Callback(object obj)
+        {
+            count++;
+            var tuple = (Tuple<IYellowPages, string>)obj;
+            Ticked(count, tuple.Item1, tuple.Item2);
         }
 
         public void EndTimer()
         {
-            if (m_timer == null)
+            if (timer == null)
                 return;
-            m_timer.Dispose();
-            m_timer = null;
+            timer.Dispose();
+            timer = null;
         }
     }
 }
