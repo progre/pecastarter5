@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Progressive.Peercast4Net.Daos;
@@ -27,23 +26,6 @@ namespace Progressive.Peercast4Net
                     return Tuple.Create(id, -1);
                 }
             });
-        }
-
-        public override async Task<IEnumerable<IChannel>> GetChannelsAsync()
-        {
-            using (var dao = new PeercastStationDao(Address))
-            {
-                var xml = await dao.GetViewXmlAsync();
-                return new XmlStatus(xml).Channels;
-            }
-        }
-
-        public override async Task<Tuple<int, int>> GetListenersAsync(string name)
-        {
-            using (var dao = new PeercastDao(Address))
-            {
-                return new XmlStatus(await dao.GetViewXmlAsync()).GetHits(name);
-            }
         }
 
         public override async Task StopAsync(string id)
