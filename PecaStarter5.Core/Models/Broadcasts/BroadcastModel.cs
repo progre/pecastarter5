@@ -147,7 +147,11 @@ namespace Progressive.PecaStarter5.Models.Broadcasts
                 // プラグイン処理
                 foreach (var plugin in plugins
                     .Where(x => x.IsEnabled).Select(x => x.Instance)
-                    .Where(x => count % x.PluginConfiguration.TickInterval == 0))
+                    .Where(x =>
+                    {
+                        var tickInterval = x.PluginConfiguration.TickInterval;
+                        return tickInterval > 0 && count % tickInterval == 0;
+                    }))
                 {
                     if (channel == null)
                     {
