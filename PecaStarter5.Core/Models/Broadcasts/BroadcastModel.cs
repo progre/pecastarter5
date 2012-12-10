@@ -113,11 +113,21 @@ namespace Progressive.PecaStarter5.Models.Broadcasts
 
             foreach (var plugin in plugins.Where(x => x.IsEnabled).Select(x => x.Instance))
             {
-                plugin.OnInterruptedAsync(parameter).ContinueWith(t =>
+                try
                 {
-                    if (t.IsFaulted)
-                        OnAsyncExceptionThrown(t.Exception);
-                });
+                    var task = plugin.OnInterruptedAsync(parameter);
+                    if (task == null)
+                        continue;
+                    task.ContinueWith(t =>
+                    {
+                        if (t.IsFaulted)
+                            OnAsyncExceptionThrown(t.Exception);
+                    });
+                }
+                catch (Exception ex)
+                {
+                    Task.Factory.StartNew(() => OnAsyncExceptionThrown(ex));
+                }
             }
 
             timer.BeginTimer(yellowPages, parameter.Id);
@@ -137,13 +147,16 @@ namespace Progressive.PecaStarter5.Models.Broadcasts
                 // プラグイン処理
                 foreach (var plugin in plugins
                     .Where(x => x.IsEnabled).Select(x => x.Instance)
-                    .Where(x => x.PluginConfiguration.TickInterval % count == 0))
+                    .Where(x => count % x.PluginConfiguration.TickInterval == 0))
                 {
                     if (channel == null)
                     {
                         channel = peercast.GetChannelAsync(id).Result;
                     }
-                    plugin.OnTickedAsync(channel).Wait();
+                    var task = plugin.OnTickedAsync(channel);
+                    if (task == null)
+                        continue;
+                    task.Wait();
                 }
             }
             catch (Exception ex)
