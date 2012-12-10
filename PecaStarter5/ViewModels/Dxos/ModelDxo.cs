@@ -13,6 +13,7 @@ namespace Progressive.PecaStarter5.ViewModels.Dxos
         {
             return new InterruptedParameter()
             {
+                Id = channel.Id,
                 Name = channel.Name,
                 Genre = channel.Genre,
                 Description = channel.Description,
