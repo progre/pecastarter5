@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Reflection;
 using System.Windows;
+using System.Windows.Threading;
 using Progressive.PecaStarter5.Models;
 using Progressive.PecaStarter5.ViewModel;
 
@@ -16,6 +17,8 @@ namespace Progressive.PecaStarter5
 
         public App()
         {
+            DispatcherSynchronizationContext.SetSynchronizationContext(
+                new DispatcherSynchronizationContext());
             _model = new PecaStarterModel(Title, new ExternalResource(ApplicationName, ApplicationPath));
             _viewModel = new MainWindowViewModel(_model);
             Resources.Add("DataContext", _viewModel);

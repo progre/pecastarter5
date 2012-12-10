@@ -82,6 +82,10 @@ namespace Progressive.PecaStarter5.ViewModels
         private void InitializeEvents()
         {
             var syncContext = SynchronizationContext.Current;
+            if (syncContext == null)
+            {
+                throw new Exception();
+            }
             m_model.AsyncExceptionThrown += (sender, e) =>
                 syncContext.Post(s => NotifyExceptionAlert((Exception)s), e.ExceptionObject);
 
