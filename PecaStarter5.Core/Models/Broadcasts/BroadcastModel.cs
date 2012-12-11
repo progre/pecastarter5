@@ -6,6 +6,7 @@ using Progressive.PecaStarter5.Models.Configurations;
 using Progressive.PecaStarter5.Models.Dxos;
 using Progressive.PecaStarter5.Models.Plugins;
 using Progressive.PecaStarter5.Models.YellowPages;
+using Progressive.PecaStarter5.Plugins;
 using Progressive.Peercast4Net;
 using Progressive.Peercast4Net.Datas;
 
@@ -81,7 +82,7 @@ namespace Progressive.PecaStarter5.Models.Broadcasts
         }
 
         public Task UpdateAsync(IYellowPages yellowPages, Dictionary<string, string> yellowPagesParameter,
-            UpdateParameter parameter, IProgress<string> progress)
+            Progressive.Peercast4Net.Datas.UpdateParameter parameter, IProgress<string> progress)
         {
             return service.UpdateAsync(Peercast, externalYellowPagesList,
                 yellowPages, yellowPagesParameter, parameter, progress)
@@ -126,7 +127,9 @@ namespace Progressive.PecaStarter5.Models.Broadcasts
         {
             timer.EndTimer();
 
-            foreach (var plugin in plugins.Where(x => x.IsEnabled).Select(x => x.Instance))
+            foreach (var plugin in plugins
+                .Where(x => x.IsEnabled)
+                .Select(x => x.Instance))
             {
                 try
                 {
@@ -160,13 +163,7 @@ namespace Progressive.PecaStarter5.Models.Broadcasts
                 }
 
                 // プラグイン処理
-                foreach (var plugin in plugins
-                    .Where(x => x.IsEnabled).Select(x => x.Instance)
-                    .Where(x =>
-                    {
-                        var tickInterval = x.PluginConfiguration.TickInterval;
-                        return tickInterval > 0 && count % tickInterval == 0;
-                    }))
+                foreach (var plugin in GetCurrentTimePlugins(count))
                 {
                     if (channel == null)
                     {
@@ -182,6 +179,18 @@ namespace Progressive.PecaStarter5.Models.Broadcasts
             {
                 OnAsyncExceptionThrown(ex);
             }
+        }
+
+        private IEnumerable<IPlugin> GetCurrentTimePlugins(long count)
+        {
+            return plugins
+                .Where(x => x.IsEnabled)
+                .Select(x => x.Instance)
+                .Where(x =>
+                {
+                    var tickInterval = x.PluginConfiguration.TickInterval;
+                    return tickInterval > 0 && count % tickInterval == 0;
+                });
         }
 
         private void OnAsyncExceptionThrown(Exception ex)
