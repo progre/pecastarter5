@@ -1,12 +1,13 @@
-﻿using Progressive.PecaStarter5.Models.Configurations;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Progressive.PecaStarter5.Models.Configurations;
+using Progressive.PecaStarter5.Models.Dxos;
 using Progressive.PecaStarter5.Models.Plugins;
 using Progressive.PecaStarter5.Models.YellowPages;
 using Progressive.Peercast4Net;
 using Progressive.Peercast4Net.Datas;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Progressive.PecaStarter5.Models.Broadcasts
 {
@@ -20,8 +21,13 @@ namespace Progressive.PecaStarter5.Models.Broadcasts
         private readonly IEnumerable<IExternalYellowPages> externalYellowPagesList;
         private readonly IEnumerable<ExternalPlugin> plugins;
 
-        /// <summary>非同期にエラーが発生した場合に通知されるイベント</summary>
+        public IChannel Channel { get; private set; }
+
+        /// <summary>非同期にエラーが発生した時に通知されるイベント</summary>
         public event UnhandledExceptionEventHandler AsyncExceptionThrown;
+
+        /// <summary>チャンネル情報が更新された時に通知されるイベント</summary>
+        public event EventHandler<ChannelStatusChangedEventArgs> ChannelStatusChanged = (s, e) => { };
 
         public BroadcastModel(Configuration configuration,
             IEnumerable<IExternalYellowPages> externalYellowPagesList,
@@ -58,6 +64,9 @@ namespace Progressive.PecaStarter5.Models.Broadcasts
                 if (t.IsFaulted)
                     throw t.Exception;
                 var broadcasting = t.Result;
+                Channel = ChannelDxo.ToChannel(broadcasting);
+                ChannelStatusChanged(this,
+                    new ChannelStatusChangedEventArgs(Channel));
                 timer.BeginTimer(yellowPages, broadcasting.Id);
                 // プラグイン処理
                 foreach (var plugin in plugins
@@ -80,6 +89,9 @@ namespace Progressive.PecaStarter5.Models.Broadcasts
             {
                 if (t.IsFaulted)
                     throw t.Exception;
+                Channel = ChannelDxo.ToChannel(t.Result);
+                ChannelStatusChanged(this,
+                    new ChannelStatusChangedEventArgs(Channel));
                 // プラグイン処理
                 foreach (var plugin in plugins.Where(x => x.IsEnabled).Select(x => x.Instance))
                     plugin.OnUpdatedAsync(t.Result);
@@ -95,6 +107,9 @@ namespace Progressive.PecaStarter5.Models.Broadcasts
             {
                 if (t.IsFaulted)
                     throw t.Exception;
+                Channel = null;
+                ChannelStatusChanged(this,
+                    new ChannelStatusChangedEventArgs(Channel));
                 // プラグイン処理
                 foreach (var plugin in plugins.Where(x => x.IsEnabled).Select(x => x.Instance))
                     plugin.OnStopedAsync(t.Result);
@@ -174,5 +189,15 @@ namespace Progressive.PecaStarter5.Models.Broadcasts
             if (AsyncExceptionThrown != null)
                 AsyncExceptionThrown(this, new UnhandledExceptionEventArgs(ex, false));
         }
+    }
+
+    public class ChannelStatusChangedEventArgs : EventArgs
+    {
+        private readonly IChannel channel;
+        public ChannelStatusChangedEventArgs(IChannel channel)
+        {
+            this.channel = channel;
+        }
+        public IChannel Channel { get { return channel; } }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace Progressive.Peercast4Net.Datas
 {
-    class Channel : IChannel
+    public class Channel : IChannel
     {
         public string Name { get; set; }
         public string Id { get; set; }

@@ -14,8 +14,6 @@ namespace Progressive.PecaStarter5.Models
     // TODO: VMにあるロジック・エンティティを可能な限りここに移動
     public class PecaStarterModel : IDisposable
     {
-        private readonly Peercast m_peercast = new Peercast();
-        private readonly PeercastStation m_peercastStation = new PeercastStation();
         private readonly IExternalResource m_externalResource;
         private readonly List<IExternalYellowPages> m_externalYellowPagesList;
         private readonly PluginsModel pluginsModel;
