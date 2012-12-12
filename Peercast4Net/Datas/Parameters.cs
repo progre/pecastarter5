@@ -22,9 +22,9 @@ namespace Progressive.Peercast4Net.Datas
 
         #region ICloneable メンバー
 
-        public object Clone()
+        public BroadcastParameter Clone()
         {
-            return MemberwiseClone();
+            return (BroadcastParameter)MemberwiseClone();
         }
 
         #endregion

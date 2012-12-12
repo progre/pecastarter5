@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using Progressive.PecaStarter5.Models.Broadcasts;
 using Progressive.PecaStarter5.Models.Configurations;
 using Progressive.PecaStarter5.Models.Dxos;
 using Progressive.PecaStarter5.Models.Plugins;
 using Progressive.PecaStarter5.Models.YellowPages;
-using Progressive.PecaStarter5.Plugins;
 using Progressive.Peercast4Net;
 using Progressive.Peercast4Net.Datas;
 
-namespace Progressive.PecaStarter5.Models.Broadcasts
+namespace Progressive.PecaStarter5.Models.Contexts
 {
     public class BroadcastModel
     {
@@ -119,7 +118,7 @@ namespace Progressive.PecaStarter5.Models.Broadcasts
 
         public Task<IEnumerable<IChannel>> GetChannelsAsync()
         {
-            return service.GetChannelsAsync(Peercast);
+            return peercast.GetChannelsAsync();
         }
 
         public void Interrupt(IYellowPages yellowPages, Progressive.PecaStarter5.Plugins.InterruptedParameter parameter)

@@ -3,6 +3,7 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Threading;
 using Progressive.PecaStarter5.Models;
+using Progressive.PecaStarter5.Models.Contexts;
 using Progressive.PecaStarter5.ViewModel;
 
 namespace Progressive.PecaStarter5

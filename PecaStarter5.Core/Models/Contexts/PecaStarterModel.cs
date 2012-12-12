@@ -9,7 +9,7 @@ using Progressive.PecaStarter5.Plugins;
 using Progressive.Peercast4Net;
 using Progressive.PecaStarter5.Models.Plugins;
 
-namespace Progressive.PecaStarter5.Models
+namespace Progressive.PecaStarter5.Models.Contexts
 {
     // TODO: VMにあるロジック・エンティティを可能な限りここに移動
     public class PecaStarterModel : IDisposable
