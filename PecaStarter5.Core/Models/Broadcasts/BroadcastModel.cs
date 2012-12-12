@@ -20,7 +20,7 @@ namespace Progressive.PecaStarter5.Models.Broadcasts
         private readonly BroadcastTimer timer = new BroadcastTimer();
         private readonly Configuration configuration;
         private readonly IEnumerable<IExternalYellowPages> externalYellowPagesList;
-        private readonly IEnumerable<ExternalPlugin> plugins;
+        private readonly PluginList plugins;
 
         public IChannel Channel { get; private set; }
 
@@ -32,7 +32,7 @@ namespace Progressive.PecaStarter5.Models.Broadcasts
 
         public BroadcastModel(Configuration configuration,
             IEnumerable<IExternalYellowPages> externalYellowPagesList,
-            IEnumerable<ExternalPlugin> plugins)
+            PluginList plugins)
         {
             this.configuration = configuration;
             this.externalYellowPagesList = externalYellowPagesList;
@@ -70,8 +70,7 @@ namespace Progressive.PecaStarter5.Models.Broadcasts
                     new ChannelStatusChangedEventArgs(Channel));
                 timer.BeginTimer(yellowPages, broadcasting.Id);
                 // プラグイン処理
-                foreach (var plugin in plugins
-                    .Where(x => x.IsEnabled).Select(x => x.Instance))
+                foreach (var plugin in plugins.EnabledPlugins)
                 {
                     plugin.OnBroadcastedAsync(broadcasting).ContinueWith(t1 =>
                         OnAsyncExceptionThrown(t1.Exception),
@@ -94,7 +93,7 @@ namespace Progressive.PecaStarter5.Models.Broadcasts
                 ChannelStatusChanged(this,
                     new ChannelStatusChangedEventArgs(Channel));
                 // プラグイン処理
-                foreach (var plugin in plugins.Where(x => x.IsEnabled).Select(x => x.Instance))
+                foreach (var plugin in plugins.EnabledPlugins)
                     plugin.OnUpdatedAsync(t.Result);
             });
         }
@@ -112,7 +111,7 @@ namespace Progressive.PecaStarter5.Models.Broadcasts
                 ChannelStatusChanged(this,
                     new ChannelStatusChangedEventArgs(Channel));
                 // プラグイン処理
-                foreach (var plugin in plugins.Where(x => x.IsEnabled).Select(x => x.Instance))
+                foreach (var plugin in plugins.EnabledPlugins)
                     plugin.OnStopedAsync(t.Result);
                 timer.EndTimer();
             });
@@ -127,9 +126,7 @@ namespace Progressive.PecaStarter5.Models.Broadcasts
         {
             timer.EndTimer();
 
-            foreach (var plugin in plugins
-                .Where(x => x.IsEnabled)
-                .Select(x => x.Instance))
+            foreach (var plugin in plugins.EnabledPlugins)
             {
                 try
                 {
@@ -163,7 +160,7 @@ namespace Progressive.PecaStarter5.Models.Broadcasts
                 }
 
                 // プラグイン処理
-                foreach (var plugin in GetCurrentTimePlugins(count))
+                foreach (var plugin in plugins.GetCurrentTimePlugins(count))
                 {
                     if (channel == null)
                     {
@@ -179,18 +176,6 @@ namespace Progressive.PecaStarter5.Models.Broadcasts
             {
                 OnAsyncExceptionThrown(ex);
             }
-        }
-
-        private IEnumerable<IPlugin> GetCurrentTimePlugins(long count)
-        {
-            return plugins
-                .Where(x => x.IsEnabled)
-                .Select(x => x.Instance)
-                .Where(x =>
-                {
-                    var tickInterval = x.PluginConfiguration.TickInterval;
-                    return tickInterval > 0 && count % tickInterval == 0;
-                });
         }
 
         private void OnAsyncExceptionThrown(Exception ex)

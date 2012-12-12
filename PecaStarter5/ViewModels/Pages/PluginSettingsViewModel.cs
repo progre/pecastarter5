@@ -14,7 +14,7 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
 {
     class PluginSettingsViewModel : ViewModelBase
     {
-        public PluginSettingsViewModel(IEnumerable<ExternalPlugin> plugins)
+        public PluginSettingsViewModel(PluginList plugins)
         {
             Plugins = plugins.Select(x => new PluginColumnViewModel(x)).ToList();
         }

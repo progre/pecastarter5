@@ -51,6 +51,7 @@
     <Compile Include="Models\Configurations\ConfigurationDao.cs" />
     <Compile Include="Models\Dxos\ChannelDxo.cs" />
     <Compile Include="Models\Plugins\ExternalPlugin.cs" />
+    <Compile Include="Models\Plugins\PluginList.cs" />
     <Compile Include="Models\Plugins\PluginSettings.cs" />
     <Compile Include="Models\Plugins\PluginsModel.cs" />
     <Compile Include="Models\YellowPages\IExternalYellowPages.cs" />

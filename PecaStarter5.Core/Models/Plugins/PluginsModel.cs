@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Progressive.PecaStarter5.Plugins;
-using Progressive.PecaStarter5.Models.Configurations;
 using System.Threading.Tasks;
+using Progressive.PecaStarter5.Models.Configurations;
 
 namespace Progressive.PecaStarter5.Models.Plugins
 {
@@ -12,7 +10,7 @@ namespace Progressive.PecaStarter5.Models.Plugins
     {
         private readonly ConfigurationDao dao;
 
-        public PluginsModel(ConfigurationDao dao, IEnumerable<ExternalPlugin> plugins)
+        public PluginsModel(ConfigurationDao dao, PluginList plugins)
         {
             this.dao = dao;
             Plugins = plugins;
@@ -30,7 +28,7 @@ namespace Progressive.PecaStarter5.Models.Plugins
             InitializeAll();
         }
 
-        public IEnumerable<ExternalPlugin> Plugins { get; private set; }
+        public PluginList Plugins { get; private set; }
 
         private void InitializeAll()
         {
@@ -73,9 +71,8 @@ namespace Progressive.PecaStarter5.Models.Plugins
 
         public void Save()
         {
-            Parallel.ForEach(
-                Plugins.Where(x => x.IsEnabled),
-                plugin => Save(dao, plugin));
+            Parallel.ForEach(Plugins.EnabledExternalPlugins, plugin =>
+                Save(dao, plugin));
         }
 
         private void Save(ConfigurationDao dao, ExternalPlugin plugin)

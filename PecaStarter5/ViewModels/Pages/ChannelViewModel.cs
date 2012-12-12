@@ -19,7 +19,8 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
         public void LoadChannel(IYellowPages yellowPages, IChannel channel)
         {
             // YPタブを指定のYPに
-            YellowPagesListViewModel.SelectedYellowPagesModel = yellowPages;
+            if (yellowPages != null)
+                YellowPagesListViewModel.SelectedYellowPagesModel = yellowPages;
             var genre = YellowPagesListViewModel.SelectedYellowPages.Parse(channel.Genre);
 
             // ソースタブに値を反映

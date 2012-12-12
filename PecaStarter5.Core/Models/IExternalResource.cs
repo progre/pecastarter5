@@ -12,7 +12,7 @@ namespace Progressive.PecaStarter5.Models
         Stream GetPluginSettingsInputStream(string pluginName);
         Stream GetPluginSettingsOutputStream(string pluginName);
         IEnumerable<Stream> GetYellowPagesDefineInputStream();
-        IList<ExternalPlugin> GetPlugins();
+        PluginList GetPlugins();
         string DefaultLogPath { get; }
     }
 }

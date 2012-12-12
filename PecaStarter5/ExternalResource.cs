@@ -69,11 +69,11 @@ namespace Progressive.PecaStarter5
             }
         }
 
-        public IList<ExternalPlugin> GetPlugins()
+        public PluginList GetPlugins()
         {
             var iPluginName = typeof(IPlugin).FullName;
 
-            var list = new List<ExternalPlugin>();
+            var list = new PluginList();
             string[] files;
             try
             {
@@ -84,7 +84,7 @@ namespace Progressive.PecaStarter5
             }
             catch
             {
-                return Enumerable.Empty<ExternalPlugin>().ToArray();
+                return new PluginList();
             }
             foreach (var path in files)
             {

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Progressive.Commons.ViewModels;
@@ -88,6 +87,20 @@ namespace Progressive.PecaStarter5.ViewModels
             }
             m_model.AsyncExceptionThrown += (sender, e) =>
                 syncContext.Post(s => NotifyExceptionAlert((Exception)s), e.ExceptionObject);
+            m_model.ChannelStatusChanged += (sender, e) =>
+            {
+                syncContext.Post(_ =>
+                {
+                    if (BroadcastControlViewModel.IsProcessing)
+                        return;
+
+                    var channel = e.Channel;
+                    if (channel != null)
+                        m_channelViewModel.LoadChannel(null, e.Channel);
+                    else
+                        BroadcastControlViewModel.StopCommand.Execute(null);
+                }, null);
+            };
 
             BroadcastControlViewModel.PropertyChanged += (sender, e) =>
             {

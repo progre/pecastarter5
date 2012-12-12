@@ -37,7 +37,7 @@ namespace Progressive.PecaStarter5.Models
         public string Title { get; private set; }
         public Configuration Configuration { get; private set; }
         public List<IYellowPages> YellowPagesList { get; private set; }
-        public IEnumerable<ExternalPlugin> Plugins { get { return pluginsModel.Plugins; } }
+        public PluginList Plugins { get { return pluginsModel.Plugins; } }
 
         public void Save()
         {
