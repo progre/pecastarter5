@@ -33,9 +33,7 @@ namespace Progressive.PecaStarter5.Models.Plugins
         private void InitializeAll()
         {
             Parallel.ForEach(Plugins, plugin =>
-            {
-                plugin.IsEnabled = Load(dao, plugin).IsEnabled;
-            });
+                plugin.IsEnabled = Load(dao, plugin).IsEnabled);
         }
 
         private void Initialize(ExternalPlugin plugin)
