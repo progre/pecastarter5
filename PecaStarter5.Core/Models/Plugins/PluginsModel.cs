@@ -56,9 +56,8 @@ namespace Progressive.PecaStarter5.Models.Plugins
 
         public void Dispose()
         {
-            Parallel.ForEach(
-                Plugins.Where(x => x.IsEnabled),
-                plugin => Terminate(plugin));
+            Parallel.ForEach(Plugins.EnabledExternalPlugins, plugin =>
+                Terminate(plugin));
         }
 
         #endregion
