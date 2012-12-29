@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              WindowStartupLocation="CenterOwner"
              mc:Ignorable="d"
-             Title="Logger"
+             Title="Twitter"
              SizeToContent="WidthAndHeight">
     <StackPanel VerticalAlignment="Center">
         <CheckBox Margin="5" VerticalAlignment="Center" Content="#peercast ハッシュタグを付ける"
