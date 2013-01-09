@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Progressive.PecaStarter5.Models.YellowPages;
 using Progressive.Peercast4Net;
@@ -53,9 +54,16 @@ namespace Progressive.PecaStarter5.Models.Broadcasts
                 return;
             }
             progress.Report("規約の更新を確認中...");
-            if (!IsUpdatedYellowPagesAsync(yellowPages, acceptedHash.Value).Result)
+            try
             {
-                return;
+                if (!IsUpdatedYellowPagesAsync(yellowPages, acceptedHash.Value).Result)
+                {
+                    return;
+                }
+            }
+            catch (WebException ex)
+            {
+                throw new YellowPagesException("イエローページへのアクセスに失敗しました（" + ex.Message + "）");
             }
             throw new YellowPagesException("イエローページの規約が更新されています。規約を再確認してください。");
         }
