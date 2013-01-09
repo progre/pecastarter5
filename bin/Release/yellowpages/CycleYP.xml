@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<yellowpages>
-  <name>Cycle YP</name>
-  <notice check="false">http://cyp.sytes.net/</notice>
-  <peercast>
-    <host>cyp.sytes.net</host>
-    <prefix header="cyp"/>
-  </peercast>
-</yellowpages>
