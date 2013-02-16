@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PecaStarter5", "PecaStarter5\PecaStarter5.csproj", "{30B63A5E-4A39-421C-A852-3F9EA0C3C4AE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Peercast4Net", "Peercast4Net\Peercast4Net.csproj", "{F6BD0F22-BD5F-4E1B-A80A-BF47E28D1558}"
@@ -18,6 +18,13 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logger", "Plugins\Logger\Logger.csproj", "{A297E480-F955-45D3-8B84-230F06B0CFAF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Twitter", "Plugins\Twitter\Twitter.csproj", "{BA2ECC7B-AB08-41E6-9A95-BDCAC698AD77}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{F0DA43A2-7103-4A5D-B12E-FD3BE134C050}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
