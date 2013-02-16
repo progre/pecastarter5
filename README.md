@@ -18,7 +18,7 @@ Peercastが起動され、Windows Media EncoderまたはKTE等のエンコードが開始されている
 
 サポート
 --------
-* [最新版のダウンロード](https://github.com/progre/pecastarter5_bin/archive/master.zip)
+* [最新版のダウンロード](https://github.com/progre/pecastarter5-bin/archive/master.zip)
 * [既知の不具合一覧](https://github.com/progre/pecastarter5/issues)
 * [ソースコード](https://github.com/progre/pecastarter5/)
 * [ぷろぐれ ポータルサイト](http://www.prgrssv.net/)
