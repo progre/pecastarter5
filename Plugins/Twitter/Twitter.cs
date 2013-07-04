@@ -71,7 +71,7 @@ namespace Progressive.PecaStarter5.Plugins.Twitter
 
         private string GetMessage(BroadcastParameter parameter)
         {
-            return "Peercastで配信中！" + parameter.Name
+            return "PeerCastで配信中！" + parameter.Name
                 + " [" + parameter.Genre + " - " + parameter.Description + "]「"
                 + parameter.Comment + "」";
         }

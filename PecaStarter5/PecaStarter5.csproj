@@ -268,7 +268,7 @@
     <Content Include="yellowpages\TurfYP.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="yellowpages\wp.xml">
+    <Content Include="yellowpages\dp.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

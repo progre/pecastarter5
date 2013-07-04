@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<yellowpages>
+  <name>DP</name>
+  <notice>http://dp.prgrssv.net/</notice>
+  <peercast>
+    <host>root-dp.prgrssv.net</host>
+    <prefix header="dp">
+    </prefix>
+  </peercast>
+</yellowpages>
