@@ -270,6 +270,7 @@
     </Content>
     <Content Include="yellowpages\dp.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
   <ItemGroup>

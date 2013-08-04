@@ -12,7 +12,7 @@ using System.Windows;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("PROGRESSIVE")]
 [assembly: AssemblyProduct("PecaStarter5")]
-[assembly: AssemblyCopyright("Copyright ©  2012 PROGRESSIVE")]
+[assembly: AssemblyCopyright("Copyright ©  2013 PROGRESSIVE")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -51,5 +51,5 @@ using System.Windows;
 // すべての値を指定するか、下のように '*' を使ってビルドおよびリビジョン番号を 
 // 既定値にすることができます:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("5.1.5.1")]
+[assembly: AssemblyVersion("5.1.5.2")]
 //[assembly: AssemblyFileVersion("1.0.0.0")]

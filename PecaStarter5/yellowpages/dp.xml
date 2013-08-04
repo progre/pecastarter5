@@ -5,6 +5,7 @@
   <peercast>
     <host>root-dp.prgrssv.net</host>
     <prefix header="dp">
+      <listeners_invisibility/>
     </prefix>
   </peercast>
 </yellowpages>
