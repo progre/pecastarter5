@@ -29,13 +29,23 @@ namespace Progressive.Peercast4Net.Daos
             return (int)json.result.yellowPageId;
         }
 
-        public async Task<List<Tuple<int, string>>> GetYellowPagesAsync()
+        public async Task RemoveYellowPageAsync(int yellowPageId)
+        {
+            var json = DynamicJson.Parse(await UploadAsync(ApiUrl, GetJsonRpc("removeYellowPage",
+                DynamicJson.Serialize(new
+                {
+                    yellowPageId = yellowPageId,
+                }))));
+            return;
+        }
+
+        public async Task<List<Tuple<int, string, string>>> GetYellowPagesAsync()
         {
             var json = DynamicJson.Parse(await UploadAsync(ApiUrl, GetJsonRpc("getYellowPages")));
-            var list = new List<Tuple<int, string>>();
+            var list = new List<Tuple<int, string, string>>();
             foreach (dynamic yp in (object[])json.result)
             {
-                list.Add(Tuple.Create((int)yp.yellowPageId, (string)yp.name));
+                list.Add(Tuple.Create((int)yp.yellowPageId, (string)yp.name, (string)yp.uri));
             }
             return list;
         }
