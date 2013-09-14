@@ -17,7 +17,7 @@
     </UserControl.Resources>
     <DockPanel>
         <Button DockPanel.Dock="Right" Command="{Binding Command}"  CommandParameter="{Binding}"/>
-        <ComboBox Height="24" IsEditable="True" IsTextSearchEnabled="False"
+        <ComboBox Name="combo" Height="24" IsEditable="True" IsTextSearchEnabled="False"
             ItemsSource="{Binding History}" SelectedItem="{Binding Value, Mode=OneWay}" Text="{Binding Value, ValidatesOnDataErrors=True}"
             ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}">
             <ComboBox.Resources>

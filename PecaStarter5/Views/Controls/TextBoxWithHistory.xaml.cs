@@ -12,6 +12,11 @@ namespace Progressive.PecaStarter5.Views.Controls
         public TextBoxWithHistory()
         {
             InitializeComponent();
+
+            combo.LostKeyboardFocus += (object sender, KeyboardFocusChangedEventArgs e) => // Google日本語入力だとイベントが飛ばないことがあるので仕方なく
+            {
+                combo.GetBindingExpression(ComboBox.TextProperty).UpdateSource();
+            };
         }
 
         private void ComboBoxItem_MouseUp(object sender, MouseButtonEventArgs e)
