@@ -9,7 +9,7 @@ namespace Progressive.PecaStarter5.Models.Configurations
         public Configuration()
         {
             Port = 7144;
-            SelectedYellowPages = "WP";
+            SelectedYellowPages = "DP";
             YellowPagesList = new List<YellowPages>();
             StreamUrl = "http://localhost:8080";
             NameHistory = new Collection<string>();
@@ -27,6 +27,7 @@ namespace Progressive.PecaStarter5.Models.Configurations
         public string SelectedYellowPages { get; set; }
         public List<YellowPages> YellowPagesList { get; set; }
         public string StreamUrl { get; set; }
+        public string Type { get; set; }
         public Collection<string> NameHistory { get; set; }
         public Collection<string> GenreHistory { get; set; }
         public Collection<string> DescriptionHistory { get; set; }

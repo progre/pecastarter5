@@ -21,6 +21,7 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
 
             this.configuration = configuration;
             StreamUrl = configuration.StreamUrl;
+            Type = configuration.Type;
             Name.History = new ObservableCollection<string>(configuration.NameHistory);
             configuration.NameHistory = Name.History;
             Genre.History = new ObservableCollection<string>(configuration.GenreHistory);
@@ -50,6 +51,19 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
                     return;
                 configuration.StreamUrl = value;
                 OnPropertyChanged("StreamUrl");
+            }
+        }
+
+        [Required(ErrorMessage = "ストリーム種別は必須です")]
+        public string Type
+        {
+            get { return configuration.Type; }
+            set
+            {
+                if (configuration.Type == value)
+                    return;
+                configuration.Type = value;
+                OnPropertyChanged("Type");
             }
         }
 

@@ -26,28 +26,34 @@
             <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
         <Label Grid.Column="0" Grid.Row="0" Content="ストリームURL:"/>
         <TextBox Grid.Column="1" Grid.Row="0"
                 IsEnabled="{Binding IsLocked, Converter={StaticResource NotConverter}}"
                  Text="{Binding StreamUrl, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
-        <Label Grid.Column="0" Grid.Row="1" Content="チャンネル名:"/>
-        <UserControl Grid.Column="1" Grid.Row="1"
+        <Label Grid.Column="0" Grid.Row="1" Content="ストリーム種別:"/>
+        <ComboBox Grid.Column="1" Grid.Row="1" SelectedValue="{Binding Type}" SelectedValuePath="Content">
+            <ComboBoxItem>WMV</ComboBoxItem>
+            <ComboBoxItem>FLV</ComboBoxItem>
+        </ComboBox>
+        <Label Grid.Column="0" Grid.Row="2" Content="チャンネル名:"/>
+        <UserControl Grid.Column="1" Grid.Row="2"
                 IsEnabled="{Binding IsLocked, Converter={StaticResource NotConverter}}">
             <c:TextBoxWithHistory DataContext="{Binding Name}"/>
         </UserControl>
-        <Label Grid.Column="0" Grid.Row="2" Content="ジャンル:"/>
-        <DockPanel Grid.Column="1" Grid.Row="2">
+        <Label Grid.Column="0" Grid.Row="3" Content="ジャンル:"/>
+        <DockPanel Grid.Column="1" Grid.Row="3">
             <Label ToolTip="プレフィックス"
                    Content="{Binding Prefix}" Visibility="{Binding Prefix, Converter={StaticResource EmptyStringVisibilityConverter}}"/>
             <c:TextBoxWithHistory DataContext="{Binding Genre}"/>
         </DockPanel>
-        <Label Grid.Column="0" Grid.Row="3" Content="詳細:"/>
-        <c:TextBoxWithHistory Grid.Column="1" Grid.Row="3" DataContext="{Binding Description}"/>
-        <Label Grid.Column="0" Grid.Row="4" Content="コンタクトURL:"/>
-        <c2:AllSelectableTextBox Grid.Column="1" Grid.Row="4"
+        <Label Grid.Column="0" Grid.Row="4" Content="詳細:"/>
+        <c:TextBoxWithHistory Grid.Column="1" Grid.Row="4" DataContext="{Binding Description}"/>
+        <Label Grid.Column="0" Grid.Row="5" Content="コンタクトURL:"/>
+        <c2:AllSelectableTextBox Grid.Column="1" Grid.Row="5"
                  Text="{Binding ContactUrl, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
-        <Label Grid.Column="0" Grid.Row="5" Content="コメント:"/>
-        <c:TextBoxWithHistory Grid.Column="1" Grid.Row="5" DataContext="{Binding Comment}"/>
+        <Label Grid.Column="0" Grid.Row="6" Content="コメント:"/>
+        <c:TextBoxWithHistory Grid.Column="1" Grid.Row="6" DataContext="{Binding Comment}"/>
     </Grid>
 </UserControl>

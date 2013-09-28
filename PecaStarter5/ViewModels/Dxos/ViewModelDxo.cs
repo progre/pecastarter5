@@ -13,7 +13,7 @@ namespace Progressive.PecaStarter5.ViewModels.Dxos
                 Name = viewModel.Name.Value,
                 Genre = viewModel.Genre.Value,
                 Description = viewModel.Description.Value,
-                Type = "WMV",
+                Type = viewModel.Type,
                 ContactUrl = viewModel.ContactUrl,
                 Comment = viewModel.Comment.Value,
                 TrackArtist = "",
