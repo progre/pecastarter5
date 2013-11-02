@@ -33,7 +33,8 @@
                 IsEnabled="{Binding IsLocked, Converter={StaticResource NotConverter}}"
                  Text="{Binding StreamUrl, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
         <Label Grid.Column="0" Grid.Row="1" Content="ストリーム種別:"/>
-        <ComboBox Grid.Column="1" Grid.Row="1" SelectedValue="{Binding Type}" SelectedValuePath="Content">
+        <ComboBox Grid.Column="1" Grid.Row="1" SelectedValue="{Binding Type}" SelectedValuePath="Content"
+                IsEnabled="{Binding IsLocked, Converter={StaticResource NotConverter}}">
             <ComboBoxItem>WMV</ComboBoxItem>
             <ComboBoxItem>FLV</ComboBoxItem>
         </ComboBox>
