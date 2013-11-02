@@ -18,7 +18,10 @@ namespace Progressive.Peercast4Net
                 {
                     var ypId = GetOrCreateYellowPagesIdAwait(dao, yellowPages);
 
-                    var id = dao.BroadcastChannelAsync(ypId, parameter.StreamUrl, "ASF(WMV or WMA)",
+                    var id = dao.BroadcastChannelAsync(ypId, parameter.StreamUrl,
+                        parameter.Type == "WMV" ? "ASF(WMV or WMA)"
+                        : parameter.Type == "FLV" ? "Flash Video (FLV)"
+                        : "",
                         parameter.Name, parameter.ContactUrl, -1, "",
                         parameter.Genre, parameter.Description, parameter.Comment,
                         parameter.TrackTitle, parameter.TrackArtist, parameter.TrackGenre,
