@@ -40,8 +40,8 @@ namespace Progressive.Peercast4Net.Daos
             }
             catch (WebException)
             {
-                throw new PeercastException("Peercastへの接続に失敗しました。" + Environment.NewLine
-                    + "Peercastが起動しているか、またはポート番号が正しいか確認してください。");
+                throw new PeercastException("PeerCastへの接続に失敗しました。" + Environment.NewLine
+                    + "PeerCastが起動しているか、またはポート番号が正しいか確認してください。");
             }
         }
     }

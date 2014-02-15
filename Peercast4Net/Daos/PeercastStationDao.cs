@@ -82,7 +82,7 @@ namespace Progressive.Peercast4Net.Daos
             var json = DynamicJson.Parse(await UploadAsync(ApiUrl, GetJsonRpc("broadcastChannel", jsonObject)));
             if (!json.IsDefined("result"))
             {
-                throw new PeercastException("Peercastがエラーを返しました:" + Environment.NewLine + json.error.message);
+                throw new PeercastException("PeerCastがエラーを返しました:" + Environment.NewLine + json.error.message);
             }
             return json.result;
         }
@@ -118,7 +118,7 @@ namespace Progressive.Peercast4Net.Daos
             var json = DynamicJson.Parse(await UploadAsync(ApiUrl, GetJsonRpc("setChannelInfo", jsonObject)));
             if (json.IsDefined("error"))
             {
-                throw new PeercastException("Peercastがエラーを返しました:" + Environment.NewLine + json.error.message);
+                throw new PeercastException("PeerCastがエラーを返しました:" + Environment.NewLine + json.error.message);
             }
         }
 
@@ -128,7 +128,7 @@ namespace Progressive.Peercast4Net.Daos
             var json = DynamicJson.Parse(await UploadAsync(ApiUrl, GetJsonRpc("stopChannel", jsonObject)));
             if (json.IsDefined("error"))
             {
-                throw new PeercastException("Peercastがエラーを返しました:" + Environment.NewLine + json.error.message);
+                throw new PeercastException("PeerCastがエラーを返しました:" + Environment.NewLine + json.error.message);
             }
         }
 
@@ -140,8 +140,8 @@ namespace Progressive.Peercast4Net.Daos
             }
             catch (WebException)
             {
-                throw new PeercastException("Peercastへの接続に失敗しました。" + Environment.NewLine
-                    + "Peercastが起動しているか、またはポート番号が正しいか確認してください。");
+                throw new PeercastException("PeerCastへの接続に失敗しました。" + Environment.NewLine
+                    + "PeerCastが起動しているか、またはポート番号が正しいか確認してください。");
             }
         }
 
