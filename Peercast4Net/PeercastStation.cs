@@ -19,6 +19,7 @@ namespace Progressive.Peercast4Net
                     var ypId = GetOrCreateYellowPagesIdAwait(dao, yellowPages);
 
                     var id = dao.BroadcastChannelAsync(ypId, parameter.StreamUrl,
+                        parameter.StreamUrl.Contains("rtmp://") ? "RTMP Source" : "http",
                         parameter.Type == "WMV" ? "ASF(WMV or WMA)"
                         : parameter.Type == "FLV" ? "Flash Video (FLV)"
                         : "",

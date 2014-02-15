@@ -50,7 +50,7 @@ namespace Progressive.Peercast4Net.Daos
             return list;
         }
 
-        public async Task<string> BroadcastChannelAsync(int yellowPageId, string sourceUri, string contentReader,
+        public async Task<string> BroadcastChannelAsync(int yellowPageId, string sourceUri, string sourceStream, string contentReader,
             string name, string url, int bitrate, string mimeType, string genre, string desc, string comment,
             string trackName, string trackCreator, string trackGenre, string trackAlbum, string trackUrl)
         {
@@ -58,6 +58,7 @@ namespace Progressive.Peercast4Net.Daos
             {
                 yellowPageId = yellowPageId,
                 sourceUri = sourceUri,
+                sourceStream = sourceStream,
                 contentReader = contentReader,
                 info = new
                 {

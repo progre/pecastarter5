@@ -40,7 +40,7 @@ namespace Progressive.PecaStarter5.ViewModels.Pages
         }
 
         [Required(ErrorMessage = "ストリームURLは必須です")]
-        [RegularExpression("^(http|mms)://.+$", ErrorMessage = "http://で始めてください")]
+        [RegularExpression("^(http|mms|rtmp)://.+$", ErrorMessage = "http://、mms://、rtmp://で始めてください")]
         [CustomValidation(typeof(ParameterValidator), "ValidateParameter", ErrorMessage = "文字数の制限を超えています")]
         public string StreamUrl
         {
