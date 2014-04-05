@@ -3,7 +3,7 @@
   <name>DP</name>
   <notice>http://dp.prgrssv.net/</notice>
   <peercast>
-    <host>root-dp.prgrssv.net</host>
+    <host>pcp-dp.prgrssv.net</host>
     <prefix header="dp">
       <listeners_invisibility/>
     </prefix>
