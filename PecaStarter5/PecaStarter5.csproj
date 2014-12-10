@@ -253,9 +253,6 @@
   </ItemGroup>
   <ItemGroup>
     <SplashScreen Include="Resources\splash.png" />
-    <Content Include="yellowpages\CycleYP.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="yellowpages\hktv.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -267,10 +264,6 @@
     </Content>
     <Content Include="yellowpages\TurfYP.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="yellowpages\dp.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
   <ItemGroup>
