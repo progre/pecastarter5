@@ -57,15 +57,16 @@ namespace Progressive.Peercast4Net
         private int GetOrCreateYellowPagesIdAwait(PeercastStationDao dao, YellowPages yellowPages)
         {
             var ypName = yellowPages.Name;
+            var ypUrl = "pcp://" + yellowPages.Url + "/";
             var ypInfo = dao.GetYellowPagesAsync().Result.FirstOrDefault(x => x.Item2 == ypName);
             if (ypInfo == null)
             {
-                return dao.AddYellowPageAsync("pcp", yellowPages.Name, "pcp://" + yellowPages.Url).Result;
+                return dao.AddYellowPageAsync("pcp", yellowPages.Name, ypUrl).Result;
             }
-            if (ypInfo.Item3 != yellowPages.Url)
+            if (ypInfo.Item3 != ypUrl)
             {
                 dao.RemoveYellowPageAsync(ypInfo.Item1).Wait();
-                return dao.AddYellowPageAsync("pcp", yellowPages.Name, "pcp://" + yellowPages.Url).Result;
+                return dao.AddYellowPageAsync("pcp", yellowPages.Name, ypUrl).Result;
             }
             return ypInfo.Item1;
         }
