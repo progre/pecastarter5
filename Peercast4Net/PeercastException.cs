@@ -5,14 +5,14 @@ using System.Text;
 
 namespace Progressive.Peercast4Net
 {
-    public class PeercastException : Exception
+    public class PeerCastException : Exception
     {
-        public PeercastException()
+        public PeerCastException()
             : base()
         {
         }
 
-        public PeercastException(string message)
+        public PeerCastException(string message)
             : base(message)
         {
         }

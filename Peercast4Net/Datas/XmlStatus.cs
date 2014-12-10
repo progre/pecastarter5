@@ -134,7 +134,7 @@ namespace Progressive.Peercast4Net.Datas
                     return channel.Attribute("id").Value;
                 }
             }
-            return Peercast.NullId;
+            return PeerCast.NullId;
         }
 
         public bool IsExistOnRelaysById(string id)

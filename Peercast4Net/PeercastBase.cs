@@ -7,7 +7,7 @@ using Progressive.Peercast4Net.Datas;
 
 namespace Progressive.Peercast4Net
 {
-    public abstract class PeercastBase : IPeercast
+    public abstract class PeerCastBase : IPeerCast
     {
         #region IPeercast メンバー
 

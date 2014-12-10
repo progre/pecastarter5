@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PecaStarter5", "PecaStarter5\PecaStarter5.csproj", "{30B63A5E-4A39-421C-A852-3F9EA0C3C4AE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Peercast4Net", "Peercast4Net\Peercast4Net.csproj", "{F6BD0F22-BD5F-4E1B-A80A-BF47E28D1558}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeerCast4Net", "Peercast4Net\PeerCast4Net.csproj", "{F6BD0F22-BD5F-4E1B-A80A-BF47E28D1558}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Peercast4NetTest", "Peercast4NetTest\Peercast4NetTest.csproj", "{FF19CE83-E021-460F-AE9C-7EF67C2DE239}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeerCast4NetTest", "Peercast4NetTest\PeerCast4NetTest.csproj", "{FF19CE83-E021-460F-AE9C-7EF67C2DE239}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PecaStarter5.ExternalLibrary", "PecaStarter5.ExternalLibrary\PecaStarter5.ExternalLibrary.csproj", "{55EFCA17-BE39-4976-BA28-E5C0FABF8E89}"
 EndProject

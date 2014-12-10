@@ -12,7 +12,7 @@ namespace Progressive.PecaStarter5.Models.Broadcasts
     class PeercastService
     {
         public Task<Progressive.PecaStarter5.Plugins.BroadcastingParameter> BroadcastAsync(
-            IPeercast peercast, IEnumerable<IExternalYellowPages> externalYellowPagesList,
+            IPeerCast peercast, IEnumerable<IExternalYellowPages> externalYellowPagesList,
             IYellowPages yellowPages, int? acceptedHash,
             Dictionary<string, string> yellowPagesParameter,
             BroadcastParameter parameter, IProgress<string> progress)
@@ -68,7 +68,7 @@ namespace Progressive.PecaStarter5.Models.Broadcasts
             throw new YellowPagesException("イエローページの規約が更新されています。規約を再確認してください。");
         }
 
-        private Progressive.PecaStarter5.Plugins.BroadcastingParameter StartBroadcastAwait(IPeercast peercast, BroadcastParameter parameter,
+        private Progressive.PecaStarter5.Plugins.BroadcastingParameter StartBroadcastAwait(IPeerCast peercast, BroadcastParameter parameter,
             IYellowPages yellowPages, Dictionary<string, string> yellowPagesParameter,
             IProgress<string> progress)
         {
@@ -89,7 +89,7 @@ namespace Progressive.PecaStarter5.Models.Broadcasts
         }
 
         public Task<Progressive.PecaStarter5.Plugins.UpdatedParameter> UpdateAsync(
-            IPeercast peercast, IEnumerable<IExternalYellowPages> externalYellowPagesList,
+            IPeerCast peercast, IEnumerable<IExternalYellowPages> externalYellowPagesList,
             IYellowPages yellowPages, Dictionary<string, string> yellowPagesParameter,
             UpdateParameter parameter, IProgress<string> progress)
         {
@@ -119,7 +119,7 @@ namespace Progressive.PecaStarter5.Models.Broadcasts
         }
 
         public Task<Progressive.PecaStarter5.Plugins.StoppedParameter> StopAsync(
-            IPeercast peercast, IEnumerable<IExternalYellowPages> externalYellowPagesList,
+            IPeerCast peercast, IEnumerable<IExternalYellowPages> externalYellowPagesList,
             IYellowPages yellowPages, Dictionary<string, string> yellowPagesParameter,
             string name, string id, IProgress<string> progress)
         {
@@ -148,7 +148,7 @@ namespace Progressive.PecaStarter5.Models.Broadcasts
             });
         }
 
-        public Task<IChannel> OnTickedAsync(IPeercast peercast, IYellowPages yellowPages, string id)
+        public Task<IChannel> OnTickedAsync(IPeerCast peercast, IYellowPages yellowPages, string id)
         {
             return Task.Factory.StartNew(() =>
             {

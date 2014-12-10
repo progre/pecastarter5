@@ -5,7 +5,7 @@ using Progressive.Peercast4Net.Datas;
 
 namespace Progressive.Peercast4Net
 {
-    public interface IPeercast
+    public interface IPeerCast
     {
         string Address { get; set; }
         Task<Tuple<string, int>> BroadcastAsync(YellowPages yellowPages, BroadcastParameter parameter);

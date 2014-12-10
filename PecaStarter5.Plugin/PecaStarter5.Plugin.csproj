@@ -46,9 +46,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Peercast4Net\Peercast4Net.csproj">
+    <ProjectReference Include="..\Peercast4Net\PeerCast4Net.csproj">
       <Project>{F6BD0F22-BD5F-4E1B-A80A-BF47E28D1558}</Project>
-      <Name>Peercast4Net</Name>
+      <Name>PeerCast4Net</Name>
       <Private>False</Private>
     </ProjectReference>
   </ItemGroup>

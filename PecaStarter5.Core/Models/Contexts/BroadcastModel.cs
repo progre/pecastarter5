@@ -14,8 +14,8 @@ namespace Progressive.PecaStarter5.Models.Contexts
     public class BroadcastModel
     {
         private readonly PeercastService service = new PeercastService();
-        private readonly Peercast peercast = new Peercast();
-        private readonly PeercastStation peercastStation = new PeercastStation();
+        private readonly PeerCast peercast = new PeerCast();
+        private readonly PeerCastStation peercastStation = new PeerCastStation();
         private readonly BroadcastTimer timer = new BroadcastTimer();
         private readonly Configuration configuration;
         private readonly IEnumerable<IExternalYellowPages> externalYellowPagesList;
@@ -52,11 +52,11 @@ namespace Progressive.PecaStarter5.Models.Contexts
             timer.Ticked += timer_Ticked;
         }
 
-        private IPeercast Peercast
+        private IPeerCast Peercast
         {
             get
             {
-                IPeercast peca;
+                IPeerCast peca;
                 if (configuration.PeercastType == PeercastType.Peercast)
                     peca = peercast;
                 else

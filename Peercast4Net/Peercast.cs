@@ -9,11 +9,11 @@ using Progressive.Peercast4Net.Utils;
 
 namespace Progressive.Peercast4Net
 {
-    public class Peercast : PeercastBase
+    public class PeerCast : PeerCastBase
     {
         public const string NullId = "00000000000000000000000000000000";
 
-        public Peercast()
+        public PeerCast()
         {
         }
 
@@ -28,7 +28,7 @@ namespace Progressive.Peercast4Net
                     var status = new XmlStatus(dao.GetViewXmlAsync().Result);
                     if (status.Exists(parameter.Name))
                     {
-                        throw new PeercastException("同名のチャンネルが既にあります。");
+                        throw new PeerCastException("同名のチャンネルが既にあります。");
                     }
 
                     dao.FetchAsync(parameter.StreamUrl, parameter.Name, parameter.Genre, parameter.Description,
@@ -41,7 +41,7 @@ namespace Progressive.Peercast4Net
                     if (NullId == tuple.Item1)
                     {
                         dao.StopAsync(tuple.Item1).Wait();
-                        throw new PeercastException("チャンネルの作成に失敗しました。" + Environment.NewLine
+                        throw new PeerCastException("チャンネルの作成に失敗しました。" + Environment.NewLine
                             + "エンコードが開始されているか、またはストリームURLが正しいか確認してください。");
                     }
 
