@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Progressive.Peercast4Net.Internal.Codeplex.Data;
 using Progressive.Peercast4Net.Utils;
 using System.Text;
+using Progressive.Peercast4Net.Datas;
 
 namespace Progressive.Peercast4Net.Daos
 {
@@ -82,7 +83,11 @@ namespace Progressive.Peercast4Net.Daos
             var json = DynamicJson.Parse(await UploadAsync(ApiUrl, GetJsonRpc("broadcastChannel", jsonObject)));
             if (!json.IsDefined("result"))
             {
-                throw new PeercastException("PeerCastがエラーを返しました:" + Environment.NewLine + json.error.message);
+                var status = new XmlStatus(GetViewXmlAsync().Result);
+                var id = status.GetChannelId(name);
+                if (id == Peercast.NullId)
+                    throw new PeercastException("PeerCastがエラーを返しました:" + Environment.NewLine + json.error.message);
+                return id;
             }
             return json.result;
         }
