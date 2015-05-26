@@ -15,6 +15,7 @@ namespace Progressive.Peercast4Net.Daos
         public PeercastDaoBase(string address)
         {
             client = new WebClient();
+            client.Headers.Add("X-Requested-With", "PeerCast4Net");
             this.address = address;
         }
 
