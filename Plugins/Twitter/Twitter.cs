@@ -84,6 +84,7 @@ namespace Progressive.PecaStarter5.Plugins.Twitter
                 var message = GetMessage(parameter.BroadcastParameter);
                 if (HasUrl)
                 {
+                    list.Add("peercast_yp");
                     message += " " + CreateUrl(parameter.Id, UPnP.GetExternalIPAddress(), parameter.Settings.Port);
                 }
                 new TwitterModel().Tweet(message, list);
