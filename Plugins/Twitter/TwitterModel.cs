@@ -11,11 +11,11 @@ namespace Progressive.PecaStarter5.Plugins.Twitter
     {
         public void Tweet(string message, IEnumerable<string> hashtags)
         {
-            var sb = new StringBuilder("https://twitter.com/intent/tweet?text=" + message);
+            var sb = new StringBuilder("https://twitter.com/intent/tweet?text=" + Uri.EscapeDataString(message));
             var hashtagsLength = 0;
             foreach (var hashtag in hashtags ?? Enumerable.Empty<string>())
             {
-                sb.Append((hashtagsLength <= 0 ? "&hashtags=" : ",") + hashtag);
+                sb.Append((hashtagsLength <= 0 ? "&hashtags=" : ",") + Uri.EscapeDataString(hashtag));
                 hashtagsLength += hashtag.Length + 2;
             }
             ClipTo140(message, hashtagsLength);
