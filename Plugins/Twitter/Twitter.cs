@@ -22,6 +22,16 @@ namespace Progressive.PecaStarter5.Plugins.Twitter
             configuration = new PluginConfiguration(0);
         }
 
+        public bool HasUrl
+        {
+            get { return (bool)Repository["HasUrl"]; }
+            set { Repository["HasUrl"] = value; }
+        }
+        public string UrlBase
+        {
+            get { return (string)Repository["UrlBase"]; }
+            set { Repository["UrlBase"] = value; }
+        }
         public bool HasPeercastHashtag
         {
             get { return (bool)Repository["HasPeercastHashtag"]; }
@@ -45,15 +55,19 @@ namespace Progressive.PecaStarter5.Plugins.Twitter
 
         public void Initialize()
         {
+            if (!Repository.ContainsKey("HasUrl"))
+                Repository["HasUrl"] = true;
+            if (!Repository.ContainsKey("UrlBase"))
+                Repository["UrlBase"] = "http://www.prgrssv.net/izayoi/pecaredirect/";
             if (!Repository.ContainsKey("HasPeercastHashtag"))
-                Repository["HasPeercastHashtag"] = true;
+                Repository["HasPeercastHashtag"] = false;
             if (!Repository.ContainsKey("HasPecaStarterHashtag"))
-                Repository["HasPecaStarterHashtag"] = true;
+                Repository["HasPecaStarterHashtag"] = false;
         }
 
         public void ShowSettingsDialog()
         {
-            var view = new Settings();
+            var view = new Views.Settings();
             view.DataContext = this;
             view.ShowDialog();
         }
@@ -65,8 +79,15 @@ namespace Progressive.PecaStarter5.Plugins.Twitter
                 list.Add("peercast");
             if ((bool)Repository["HasPecaStarterHashtag"])
                 list.Add("pecastarter");
-            return Task.Factory.StartNew(() => new TwitterModel().Tweet(
-                GetMessage(parameter.BroadcastParameter), list));
+            return Task.Factory.StartNew(() =>
+            {
+                var message = GetMessage(parameter.BroadcastParameter);
+                if (HasUrl)
+                {
+                    message += " " + CreateUrl(parameter.Id, UPnP.GetExternalIPAddress(), parameter.Settings.Port);
+                }
+                new TwitterModel().Tweet(message, list);
+            });
         }
 
         private string GetMessage(BroadcastParameter parameter)
@@ -74,6 +95,11 @@ namespace Progressive.PecaStarter5.Plugins.Twitter
             return "PeerCastで配信中！" + parameter.Name
                 + " [" + parameter.Genre + " - " + parameter.Description + "]「"
                 + parameter.Comment + "」";
+        }
+
+        private string CreateUrl(string id, string ip, int port)
+        {
+            return UrlBase + "?id=" + id + "&tip=" + ip + ":" + port;
         }
 
         public Task OnUpdatedAsync(UpdatedParameter parameter)

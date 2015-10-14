@@ -53,4 +53,9 @@ namespace Progressive.Peercast4Net.Datas
 
         #endregion
     }
+
+    public class Settings
+    {
+        public int Port { get; set; }
+    }
 }

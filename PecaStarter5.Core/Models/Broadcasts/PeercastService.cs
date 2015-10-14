@@ -79,12 +79,22 @@ namespace Progressive.PecaStarter5.Models.Broadcasts
                 new Peercast4Net.Datas.YellowPages() { Name = yellowPages.Name, Url = yellowPages.Host },
                 param).Result;
 
+            int port;
+            try
+            {
+                port = int.Parse(peercast.Address.Split(':')[1]);
+            }
+            catch (Exception)
+            {
+                port = 7144;
+            }
             return new Progressive.PecaStarter5.Plugins.BroadcastingParameter
             {
                 Bitrate = tuple.Item2,
                 Id = tuple.Item1,
                 YellowPagesParameters = yellowPagesParameter,
-                BroadcastParameter = parameter
+                BroadcastParameter = parameter,
+                Settings = new Settings { Port = port }
             };
         }
 

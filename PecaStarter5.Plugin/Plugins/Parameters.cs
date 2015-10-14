@@ -9,6 +9,7 @@ namespace Progressive.PecaStarter5.Plugins
         public int Bitrate { get; set; }
         public string Id { get; set; }
         public BroadcastParameter BroadcastParameter { get; set; }
+        public Settings Settings { get; set; }
     }
 
     public class UpdatedParameter

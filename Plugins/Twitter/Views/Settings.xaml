@@ -8,6 +8,20 @@
              Title="Twitter"
              SizeToContent="WidthAndHeight">
     <StackPanel VerticalAlignment="Center">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <CheckBox Margin="5" VerticalAlignment="Center" Content="URLを付ける"
+                IsChecked="{Binding HasUrl}"/>
+            <TextBox Grid.Column="1" Grid.Row="0"
+                IsEnabled="{Binding HasUrl}"
+                Text="{Binding UrlBase, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
+        </Grid>
         <CheckBox Margin="5" VerticalAlignment="Center" Content="#peercast ハッシュタグを付ける"
                   IsChecked="{Binding HasPeercastHashtag}"/>
         <CheckBox Margin="5" VerticalAlignment="Center" Content="#pecastarter ハッシュタグを付ける"

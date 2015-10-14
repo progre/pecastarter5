@@ -45,7 +45,7 @@ namespace Progressive.PecaStarter5.Plugins.Logger
 
         public void ShowSettingsDialog()
         {
-            var view = new Settings();
+            var view = new Views.Settings();
             view.DataContext = this;
             view.ShowDialog();
         }
