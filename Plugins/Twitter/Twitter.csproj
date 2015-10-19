@@ -49,7 +49,6 @@
     <Compile Include="Twitter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TwitterModel.cs" />
-    <Compile Include="UPnP.cs" />
     <Compile Include="Views\Settings.xaml.cs">
       <DependentUpon>Settings.xaml</DependentUpon>
     </Compile>

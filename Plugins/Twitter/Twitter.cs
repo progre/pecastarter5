@@ -8,6 +8,7 @@ using Progressive.Peercast4Net.Datas;
 using System.Reflection;
 using Progressive.PecaStarter5.Plugins.Twitter.Views;
 using System.Collections.ObjectModel;
+using System.Net;
 
 namespace Progressive.PecaStarter5.Plugins.Twitter
 {
@@ -85,7 +86,13 @@ namespace Progressive.PecaStarter5.Plugins.Twitter
                 if (HasUrl)
                 {
                     list.Add("peercast_yp");
-                    message += " " + CreateUrl(parameter.Id, UPnP.GetExternalIPAddress(), parameter.Settings.Port);
+                    var client = new WebClient();
+                    var ipApi = "http://ipv4bot.whatismyipaddress.com/";
+                    var ip = Encoding.ASCII.GetString(client.DownloadData(ipApi));
+                    var url = CreateUrl(parameter.Id, ip, parameter.Settings.Port);
+                    var shortUrlApi = "http://is.gd/create.php?format=simple&url=" + Uri.EscapeDataString(url);
+                    var shortUrl = Encoding.ASCII.GetString(client.DownloadData(shortUrlApi));
+                    message += " " + shortUrl;
                 }
                 new TwitterModel().Tweet(message, list);
             });
