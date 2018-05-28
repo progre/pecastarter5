@@ -78,7 +78,8 @@ namespace Progressive.Peercast4Net.Daos
                     genre = trackGenre,
                     album = trackAlbum,
                     url = trackUrl
-                }
+                },
+                networkType = "ipv4"
             });
             var json = DynamicJson.Parse(await UploadAsync(ApiUrl, GetJsonRpc("broadcastChannel", jsonObject)));
             if (!json.IsDefined("result"))
