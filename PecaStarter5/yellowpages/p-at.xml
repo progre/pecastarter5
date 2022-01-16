@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<yellowpages>
+  <name>p@</name>
+  <notice>https://p-at.net/terms</notice>
+  <peercast>
+    <host>root.p-at.net</host>
+    <prefix header="pp">
+      <listeners_invisibility/>
+    </prefix>
+  </peercast>
+</yellowpages>
